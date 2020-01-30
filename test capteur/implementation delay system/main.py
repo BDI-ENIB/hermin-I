@@ -28,12 +28,12 @@ def writeFile(data,file):
 uart_pc = machine.UART(0, 115200)
 os.dupterm(uart_pc)
 #sd
-nombreLigneParFichier = 100
+nombreLigneParFichier = 10
 #gps
 uart_gps = UART(1,9600)
 pycom.heartbeat(False)
 envoyerDonneeGPS=0
-frequence_cycle_GPS = 2 #le GPS est enregistré tous les "n" cycles
+frequence_cycle_GPS = 5 #le GPS est enregistré tous les 5 cycles
 #mpu
 i2c = I2C(0)
 sensor = MPU9250(i2c) #m/s^2, rad/s and uT
@@ -54,14 +54,13 @@ file=createFile(nom+('-')+str(numeroFichier))
 print("nouveau fichier :" , nom)
 pycom.rgbled(0x000000)
 
-periode_cycle = 200000
+periode_cycle = 100000
 numero_cycle = 0
 
 ref_time = time.ticks_us()
 
 while True:
     start_time = time.ticks_us()
-    writeFile(str(start_time),file)
 
     if numero_cycle % frequence_cycle_GPS == 0:
         gps_byte=uart_gps.readline()
@@ -78,6 +77,9 @@ while True:
             pycom.rgbled(0x00FF00)
         writeFile(str(gps_str),file)
 
+
+
+
     if numero_cycle % frequence_cycle_MPU == 0:
         mpu_str = str('acc(ms-2):'+str(sensor.acceleration)+'gyro(rads-1):'+str(sensor.gyro)+'mag(uT?):'+str(sensor.magnetic))
         print(mpu_str)
@@ -93,10 +95,6 @@ while True:
         file=createFile(nom+str('-')+str(numeroFichier))
         pycom.rgbled(0xFFC0CB)
 
-    writeFile("",file)
-
     end_time = time.ticks_us()
-    sleep_time = max(0,( periode_cycle - ( end_time - start_time ) )/1000000 )
-    print("wait :",sleep_time ," ; working time : "+ str(100-(100*( periode_cycle - ( end_time - start_time ) ))/periode_cycle)+"%")
-    print()
-    time.sleep(sleep_time )
+
+    time.sleep(( periode - ( end_time - start_time ) )/1000000 )

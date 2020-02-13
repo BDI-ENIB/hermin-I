@@ -38,6 +38,10 @@ frequence_cycle_GPS = 2 #le GPS est enregistré tous les "n" cycles
 i2c = I2C(0)
 sensor = MPU9250(i2c) #m/s^2, rad/s and uT
 frequence_cycle_MPU = 1
+#thermistance
+adc = machine.ADC(0)
+adc_c = adc.channel(pin='P13',attn=machine.ADC.ATTN_0DB) #pour une pile de 0.629V , print(adc_c.value()) donne 2070
+frequence_cycle_thermi = 1
 
 numeroFichier=0
 numero_ligne=0
@@ -79,9 +83,15 @@ while True:
         writeFile(str(gps_str),file)
 
     if numero_cycle % frequence_cycle_MPU == 0:
-        mpu_str = str('acc(ms-2):'+str(sensor.acceleration)+'gyro(rads-1):'+str(sensor.gyro)+'mag(uT?):'+str(sensor.magnetic))
+        mpu_str = str('acc'+str(sensor.acceleration)+'gyro'+str(sensor.gyro)+'mag'+str(sensor.magnetic))
         print(mpu_str)
         writeFile(mpu_str,file)
+
+    if numero_cycle % frequence_cycle_thermi ==0:
+        adc_c()
+        tension_thermi = adc_c.value()
+        print(tension_thermi)
+        writeFile(str(tension_thermi),file)
 
     numero_cycle +=1
     numero_ligne=numero_ligne+1

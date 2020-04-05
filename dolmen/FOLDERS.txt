@@ -1,6 +1,14 @@
 hermin-i
     README.txt
     FOLDERS.txt
+    GNUmakefile
     Dossier de projet DOLMEN DE SAINT JUST NOUGIER ALLEGRE.pdf
-    dossier1
-        fichier1
+    cpp
+        acceleration.hpp
+        altitude.hpp
+        communication.hpp
+        configuration.hpp
+        gyroscope.hpp
+        pressure.hpp
+        sensors.hpp
+        temperature.hpp

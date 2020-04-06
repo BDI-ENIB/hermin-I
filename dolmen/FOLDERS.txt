@@ -12,3 +12,19 @@ hermin-i
         pressure.hpp
         sensors.hpp
         temperature.hpp
+        dolmen.cpp
+        dolmen.hpp
+        date.hpp
+        frame.hpp
+        errorFrame.hpp
+        errorCommunication.hpp
+        errorConfig.hpp
+        errorData.hpp
+        errorSave.hpp
+        error.hpp
+    python
+        Window.py
+        Widget.py
+        Graph.py
+        Button.py
+        Label.py

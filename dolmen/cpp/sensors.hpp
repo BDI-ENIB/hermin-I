@@ -2,19 +2,24 @@
 #define DOLMEN_SENSORS_HPP 1
 #include <string>
 
-namespace dolmen {
+namespace dolmen
+{
 
-class Sensors {
-public :
-Sensors (int id, std::string name){
-    id_=id
-    name_=name
+  class Sensors
+  {
+    public :
+    Sensors (int id, std::string name)
+    {
+      id_=id;
+      name_=name;
+    }
+
+  void decoding();
+  private :
+  int id_;
+  std::string name_;
+};
+
 }
 
-void decoding();
-private :
-int id_;
-std::string name_;
-}
-
-}
+#endif

@@ -57,4 +57,4 @@ class TextToPrint(Widgets):
     def __init__(self,windows, title, position):
         Widgets.__init__(self,windows,title,position)
         self.windows.message = Label(self.windows, text=self.title)
-        self.windows.message.pack(side=self.position)
+        self.windows.message.pack(side=self.position) 

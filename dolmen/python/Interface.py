@@ -15,7 +15,6 @@ def home():
     fire_mode_interface.destroy()
 
 
-
 def admin():
     global fire_mode, admin_mode
     fire_mode.destroy()

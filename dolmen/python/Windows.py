@@ -6,14 +6,4 @@ class Windows(Frame):
         windows.geometry(str(x) + "x" + str(y))
         windows.title(title)
         
-        
-    def addLabel(self,textToPrint):
-        self.message = Label(self, text=textToPrint)
-        self.message.pack()
-        
-
-    def addButton(self, title,color,position,function,x,y):
-        self.button= Button(self, text=title, fg=color,command=function)
-        self.button.pack(side=position)
-        self.button.config( width = x, height = y )
-
+    

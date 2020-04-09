@@ -1,8 +1,8 @@
 
 import Windows
-import Button
-
+import Interface
+import Widgets
 interface=None
 
-
-Button.home()    
+while 1:
+    Interface.home()    

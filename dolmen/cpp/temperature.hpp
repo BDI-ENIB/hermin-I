@@ -1,26 +1,33 @@
 #ifndef DOLMEN_TEMPERATURE_HPP
 #define DOLMEN_TEMPERATURE_HPP 1
 #include <string>
-#include"sensors.hpp"
-namespace dolmen {
+#include "sensor.hpp"
 
-class Temperature : public Sensors{
-public :
-Temperature (int id, std::string name):
-    Sensors{id,name}{}
+namespace dolmen
+{
 
-double getTemperature(){
-    return temperature_;
+class Temperature : public Sensor
+{
+  public :
+    Temperature (int id, std::string name):
+    Sensor{id,name}{}
+
+    double getTemperature(){
+      return temperature_;
+    }
+
+    void setTemperature(double newTemperature){
+      temperature_=newTemperature;
+    }
+
+    void decoding(const std::string data) override
+    {
+      std::cout<<"test temperature";
+    }
+
+  private :
+    double temperature_;
+  };
 }
 
-void setTemperature(double newTemperature){
-    temperature_=newTemperature;
-}
-
-void decoding() override;
-private :
-double temperature_;
-};
-
-}
 #endif

@@ -5,7 +5,9 @@
 #include <iostream>
 #include <string>
 
-#include "sensors.hpp"
+#include "temperature.hpp"
+#include "pressure.hpp"
+
 
 namespace dolmen
 {
@@ -17,30 +19,27 @@ namespace dolmen
 
   public:
 
-    void decoding(std::string data, std::vector<std::string> ids)
+    void decoding(std::string data, std::vector<Sensor> sensors_list)
     {
       //reading data to determine the sensor
-      std::string id = (char)data[0] + (char)data[1];
-      int len = (ids.size())/2;
+      int id = data[0] + data[1];
+      bool found = false;
 
-      for (size_t i = 0; i < len; i++)
+      for (auto& elem : sensors_list)
       {
-        if (ids[i] == id)
+        if (elem.getID() == id)
         {
-          //
-          std::string name = ids[i+1];
-          name.decoding(data);
-        }
-        if (i == len && ids[i] != id)
-        {
-          //error to add
-          std::cout<<"error: unknown sensor";
+          elem.decoding(data);
+          found = true;
+          break;
         }
       }
+      if (found == false)
+      {
+        //error to add
+        std::cout<<"error: unknown sensor";
+      }
     }
-
-
-
   };
 } /* dolmen */
 

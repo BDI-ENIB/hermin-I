@@ -1,26 +1,30 @@
 #ifndef DOLMEN_PRESSURE_HPP
 #define DOLMEN_PRESSURE_HPP 1
 #include <string>
-#include"sensors.hpp"
+#include"sensor.hpp"
 namespace dolmen {
 
-class Pressure : public Sensors{
-public :
-Pressure (int id, std::string name):
-    Sensors{id,name}{}
+class Pressure : public Sensor
+{
+  public :
+  Pressure (int id, std::string name):
+    Sensor{id,name}{}
 
-double getPressure(){
-    return pressure_;
-}
+    double getPressure(){
+      return pressure_;
+    }
 
-void setPressure(double newPressure){
-    pressure_=newPressure;
-}
+    void setPressure(double newPressure){
+      pressure_=newPressure;
+    }
 
-void decoding() override;
-private :
-double pressure_;
-};
+    void decoding(const std::string data) override
+    {
+      std::cout<<"test pressure";
+    }
 
+    private :
+    double pressure_;
+  };
 }
 #endif

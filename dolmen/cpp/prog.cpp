@@ -20,8 +20,8 @@ int main(int argc, char const *argv[]) {
   vec.push_back(std::unique_ptr<dolmen::Sensor>(std::make_unique<dolmen::Pressure>(02, "pres")));*/
 
   std::vector<std::unique_ptr<dolmen::Sensor>> vec;
-  vec.push_back(std::make_unique<dolmen::Temperature>(01, "temp"));
-  vec.push_back(std::make_unique<dolmen::Pressure>(02, "pres"));
+  vec.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
+  vec.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
 
   for (auto& elem : vec) {
     std::cout << "\ntest" << "\n";
@@ -29,6 +29,7 @@ int main(int argc, char const *argv[]) {
   }
 
   std::cout << "\n";
-  //DolMen.decoding(data1, *vec);
+  DolMen.decoding(data1, std::move(vec));
+  std::cout << "\n";
   return 0;
 }

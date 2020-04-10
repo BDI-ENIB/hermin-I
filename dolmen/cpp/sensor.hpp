@@ -9,7 +9,7 @@ namespace dolmen
   class Sensor
   {
     public :
-      Sensor (int id, std::string name)
+      Sensor (int id = 0, std::string name = "Unnamed")
       {
         int id_=id;
         std::string name_=name;

@@ -19,21 +19,21 @@ namespace dolmen
 
   public:
 
-    void decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> *sensors_list)
+    void decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> sensors_list)
     {
       //reading data to determine the sensor
       std::cout << "\n j'entre dans dolmen::decoding \n";
       int id = data[0] + data[1];
       bool found = false;
 
-      for (auto& elem : sensors_list)
+      for (const auto& elem : sensors_list)
       {
-        /*if (elem->getID() == id)
+        if (elem->getID() == id)
         {
           elem->decoding(data);
           found = true;
           break;
-        }*/
+        }
       }
       if (found == false)
       {

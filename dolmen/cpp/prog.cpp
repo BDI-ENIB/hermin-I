@@ -29,6 +29,6 @@ int main(int argc, char const *argv[]) {
   }
 
   std::cout << "\n";
-  DolMen.decoding(data1, *vec);
+  //DolMen.decoding(data1, *vec);
   return 0;
 }

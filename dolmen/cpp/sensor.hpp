@@ -1,6 +1,7 @@
 #ifndef DOLMEN_SENSORS_HPP
 #define DOLMEN_SENSORS_HPP 1
 #include <string>
+#include <iostream>
 
 namespace dolmen
 {
@@ -14,7 +15,7 @@ namespace dolmen
         std::string name_=name;
       }
 
-      virtual ~Sensor() 
+      virtual ~Sensor()
       {
         //
       }
@@ -23,11 +24,15 @@ namespace dolmen
 
       int getID()
       {
+        std::cout << " j'affiche l'id ";
+        std:: cout << id_;
         return id_;
       }
 
       std::string getName()
       {
+        std::cout << " j'affiche le nom ";
+        std:: cout << name_;
         return name_;
       }
 

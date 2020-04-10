@@ -14,6 +14,11 @@ namespace dolmen
         std::string name_=name;
       }
 
+      virtual ~Sensor() 
+      {
+        //
+      }
+
       virtual void decoding(const std::string data) = 0;
 
       int getID()

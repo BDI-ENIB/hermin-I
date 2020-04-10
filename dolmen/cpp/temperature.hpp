@@ -12,11 +12,13 @@ class Temperature : public Sensor
     Temperature (int id, std::string name):
     Sensor{id,name}{}
 
-    double getTemperature(){
+    double getTemperature()
+    {
       return temperature_;
     }
 
-    void setTemperature(double newTemperature){
+    void setTemperature(double newTemperature)
+    {
       temperature_=newTemperature;
     }
 

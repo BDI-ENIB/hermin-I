@@ -9,11 +9,8 @@ namespace dolmen
   class Sensor
   {
     public :
-      Sensor (int id = 0, std::string name = "Unnamed")
-      {
-        int id_=id;
-        std::string name_=name;
-      }
+      Sensor (int id, std::string name):id_{id},name_{name}
+      {}
 
       virtual ~Sensor()
       {
@@ -24,15 +21,11 @@ namespace dolmen
 
       int getID()
       {
-        std::cout << " j'affiche l'id ";
-        std:: cout << id_;
         return id_;
       }
 
       std::string getName()
       {
-        std::cout << " j'affiche le nom ";
-        std:: cout << name_;
         return name_;
       }
 

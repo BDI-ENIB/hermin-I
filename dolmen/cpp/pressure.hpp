@@ -2,19 +2,23 @@
 #define DOLMEN_PRESSURE_HPP 1
 #include <string>
 #include"sensor.hpp"
-namespace dolmen {
+
+namespace dolmen
+{
 
 class Pressure : public Sensor
 {
   public :
-  Pressure (int id, std::string name):
-    Sensor{id,name}{}
+    Pressure (int id, std::string name):
+    Sensor{id, name}{}
 
-    double getPressure(){
+    double getPressure()
+    {
       return pressure_;
     }
 
-    void setPressure(double newPressure){
+    void setPressure(double newPressure)
+    {
       pressure_=newPressure;
     }
 
@@ -25,6 +29,7 @@ class Pressure : public Sensor
 
     private :
     double pressure_;
+    //int id;
   };
 }
 #endif

@@ -7,6 +7,7 @@
 
 #include "temperature.hpp"
 #include "pressure.hpp"
+#include "acceleration.hpp"
 
 
 namespace dolmen
@@ -23,11 +24,27 @@ namespace dolmen
     {
       //reading data to determine the sensor
       std::cout << "\n j'entre dans dolmen::decoding \n";
-      int id = data[0] + data[1];
-      bool found = false;
 
+      //reading the sensor id
+      std::string idstr;
+      if (isdigit(data[0])) {
+        idstr += data[0];
+      }
+      if (isdigit(data[1])) {
+        idstr += data[1];
+      }
+
+      //converting the sensor id into an int
+      int id = std::stoi(idstr);
+
+      std::cout << "\n id chaine = " << idstr << "\n";
+      std::cout << "\n id int = " << id << "\n";
+
+
+      bool found = false;
       for (const auto& elem : sensors_list)
       {
+        std::cout << elem->getID() << "=" << id << "?\n";
         if (elem->getID() == id)
         {
           elem->decoding(data);
@@ -38,7 +55,7 @@ namespace dolmen
       if (found == false)
       {
         //error to add
-        std::cout<<"error: unknown sensor";
+        std::cout<<"\n ---error: unknown sensor--- \n";
       }
     }
   };

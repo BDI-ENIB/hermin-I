@@ -28,12 +28,12 @@ namespace dolmen
 
       for (auto& elem : sensors_list)
       {
-        if (elem->getID() == id)
+        /*if (elem->getID() == id)
         {
           elem->decoding(data);
           found = true;
           break;
-        }
+        }*/
       }
       if (found == false)
       {

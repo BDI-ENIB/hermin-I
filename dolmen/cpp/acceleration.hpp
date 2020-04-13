@@ -1,10 +1,14 @@
 #ifndef DOLMEN_ACCELERATION_HPP
 #define DOLMEN_ACCELERATION_HPP 1
-#include <string>
-#include"sensor.hpp"
-namespace dolmen {
 
-  class Acceleration : public Sensor{
+#include <string>
+#include "sensor.hpp"
+
+namespace dolmen
+{
+
+  class Acceleration : public Sensor
+  {
     public :
     Acceleration (int id, std::string name):
     Sensor{id,name}{}

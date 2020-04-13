@@ -9,8 +9,8 @@ int main(int argc, char const *argv[]) {
 
   dolmen::Dolmen DolMen;
 
-  std::string data1 ="01blablabla";
-  std::string data2 ="02bliblibli";
+  std::string data1 ="01-3015"; //temperature ou pression
+  std::string data2 ="02-4258"; //temperature ou pression
 
   std::cout << data1 << "\n";
   std::cout << data2 << "\n";
@@ -26,9 +26,7 @@ int main(int argc, char const *argv[]) {
   }
 
   std::cout << "\n";
-  DolMen.decoding(data1, std::move(vec));
-  std::cout << "\n\n";
   DolMen.decoding(data2, std::move(vec));
-  std::cout << "\n";
+  std::cout << "\n\n";
   return 0;
 }

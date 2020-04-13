@@ -1,44 +1,56 @@
-#ifndef DOLMEN_GYSROSCOPE_HPP
-#define DOLMEN_GYSROSCOPE_HPP 1
+#ifndef DOLMEN_GYROSCOPE_HPP
+#define DOLMEN_GYROSCOPE_HPP 1
+
 #include <string>
-#include"sensors.hpp"
-namespace dolmen {
+#include "sensor.hpp"
 
-class Gyroscope : public Sensors{
-public :
-Gyroscope (int id, std::string name):
-    Sensors{id,name}{}
+namespace dolmen
+{
 
-double getX(){
-    return x_;
-}
+  class Gyroscope : public Sensor
+  {
+    public :
+    Gyroscope (int id, std::string name):
+    Sensor{id,name}{}
 
-void setX(double newX){
-    x_=newX;
-}
+    double getX()
+    {
+      return x_;
+    }
 
-double getY(){
-    return y_;
-}
+    void setX(double newX)
+    {
+      x_=newX;
+    }
 
-void setY(double newY){
-    y_=newY;
-}
+    double getY()
+    {
+      return y_;
+    }
 
-double getZ(){
-    return z_;
-}
+    void setY(double newY){
+      y_=newY;
+    }
 
-void setZ(double newZ){
-    z_=newZ;
-}
+    double getZ(){
+      return z_;
+    }
 
-void decoding() override;
-private :
-double x_;
-double y_;
-double z_;
-};
+    void setZ(double newZ)
+    {
+      z_=newZ;
+    }
+
+    void decoding(const std::string data) override
+    {
+      std::cout<<"test gyro";
+    }
+
+    private :
+    double x_;
+    double y_;
+    double z_;
+  };
 
 }
 #endif

@@ -8,6 +8,9 @@
 #include "temperature.hpp"
 #include "pressure.hpp"
 #include "acceleration.hpp"
+#include "gps.hpp"
+#include "gyroscope.hpp"
+#include "altitude.hpp"
 
 
 namespace dolmen
@@ -37,18 +40,19 @@ namespace dolmen
       //converting the sensor id into an int
       int id = std::stoi(idstr);
 
-      std::cout << "\n id chaine = " << idstr << "\n";
-      std::cout << "\n id int = " << id << "\n";
+      //std::cout << "\n id chaine = " << idstr << "\n";
+      //std::cout << "\n id int = " << id << "\n";
 
 
       bool found = false;
       for (const auto& elem : sensors_list)
       {
-        std::cout << elem->getID() << "=" << id << "?\n";
+        //std::cout << elem->getID() << "=" << id << "?\n";
         if (elem->getID() == id)
         {
           elem->decoding(data);
           found = true;
+          std::cout << "\nsensor found: " << id;
           break;
         }
       }

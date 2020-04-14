@@ -1,5 +1,22 @@
 from tkinter import *
 import Windows
+from PIL import Image, ImageTk
+import matplotlib.image as mpimg
+import numpy as np
+import matplotlib.pyplot as plt
+
+def addFrame(windows,position):
+    MyFrame = Frame(windows, borderwidth=2, relief=GROOVE)
+    MyFrame.pack(side=position, padx=500, pady=500)
+    windows.mainloop()
+    return MyFrame
+
+def addImage(windows,myphoto,position):
+    photo = PhotoImage(file=myphoto,master=windows)
+    canvas = Canvas(windows,width=1000, height=1000)
+    canvas.create_image(0, 0, anchor=NW, image=photo)
+    canvas.pack(side=position)
+    windows.mainloop()
 
 class Widgets():
     def __init__(self,windows, title,position):
@@ -16,7 +33,7 @@ class ButtonDisplay(Widgets):
         self.x=x
         self.y=y
         
-        self.windows.button= Button(self.windows, text=self.title, fg=self.color,command=self.function)
+        self.windows.button= Button(windows, text=self.title, fg=self.color,command=self.function)
         self.windows.button.pack(side=self.position)
         self.windows.button.config( width = self.x, height = self.y )
 
@@ -58,3 +75,4 @@ class TextToPrint(Widgets):
         Widgets.__init__(self,windows,title,position)
         self.windows.message = Label(self.windows, text=self.title)
         self.windows.message.pack(side=self.position) 
+

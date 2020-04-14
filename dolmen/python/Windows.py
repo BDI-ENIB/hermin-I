@@ -1,4 +1,6 @@
 from tkinter import *
+from PIL import Image, ImageTk
+
 class Windows(Frame):
     def __init__(self, windows,title, x,y,**kwargs):
         Frame.__init__(self, windows, width=x, height=y, **kwargs)

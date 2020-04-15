@@ -2,6 +2,7 @@
 #define DOLMEN_GPS_HPP 1
 
 #include <string>
+#include <vector>
 #include "sensor.hpp"
 
 namespace dolmen
@@ -13,24 +14,36 @@ namespace dolmen
     Gps (int id, std::string name):
     Sensor{id, name}{}
 
-    double getLatitude()
+    std::vector<double> getLatitude()
     {
-      return latitude_;
+      std::vector<double> vec;
+      vec.push_back((double)latDeg_);
+      vec.push_back((double)latMin_);
+      vec.push_back(latSec_);
+      return vec;
     }
 
-    void setLatitude(double newLatitude)
+    void setLatitude(int newDeg, int newMin, int newSec)
     {
-      latitude_=newLatitude;
+      latDeg_ = newDeg;
+      latSec_ = newSec;
+      latMin_ = newMin;
     }
 
-    double getLongitude()
+    std::vector<double> getLongitude()
     {
-      return longitude_;
+      std::vector<double> vec;
+      vec.push_back((double)lonDeg_);
+      vec.push_back((double)lonMin_);
+      vec.push_back(lonSec_);
+      return vec;
     }
 
-    void setLongitude(double newLongitude)
+    void setLongitude(int newDeg, int newMin, int newSec)
     {
-      longitude_=newLongitude;
+      lonDeg_ = newDeg;
+      lonSec_ = newSec;
+      lonMin_ = newMin;
     }
 
     void decoding(const std::string data) override
@@ -40,7 +53,6 @@ namespace dolmen
         int id = getID();
 
         //latitude
-
         //we consider being in the north hemisphere (0-90°N)
         int latDeg = 0;
         int latMin = 0;
@@ -58,7 +70,6 @@ namespace dolmen
           latDegStr += data[3];
         }
         latDeg = std::stoi(latDegStr);
-        //setTemperature(latDeg);
         std::cout << "\n latDeg = " << latDeg;
 
 
@@ -71,7 +82,6 @@ namespace dolmen
           latMinStr += data[5];
         }
         latMin = std::stoi(latMinStr);
-        //setTemperature(latDeg);
         std::cout << "\n latMin = " << latMin;
 
 
@@ -92,12 +102,10 @@ namespace dolmen
           latSecStr += data[9];
         }
         latSec = std::stod(latSecStr);
-        //setTemperature(latSec);
         std::cout << "\n latSec = " << latSec;
 
 
         //longitude
-
         int lonDeg = 1;
         int lonMin = 0;
         double lonSec = 0.0;
@@ -120,7 +128,6 @@ namespace dolmen
           lonDegStr += data[13];
         }
         lonDeg = lonDeg * std::stoi(lonDegStr);
-        //setTemperature(latDeg);
         std::cout << "\n lonDeg = " << lonDeg;
 
 
@@ -133,7 +140,6 @@ namespace dolmen
           lonMinStr += data[15];
         }
         lonMin = std::stoi(lonMinStr);
-        //setTemperature(latDeg);
         std::cout << "\n lonMin = " << lonMin;
 
 
@@ -154,7 +160,6 @@ namespace dolmen
           lonSecStr += data[19];
         }
         lonSec = std::stod(lonSecStr);
-        //setTemperature(latSec);
         std::cout << "\n lonSec = " << lonSec;
 
 
@@ -166,8 +171,12 @@ namespace dolmen
     }
 
     private :
-    double latitude_;
-    double longitude_;
+    int latDeg_;
+    int latMin_;
+    double latSec_;
+    int lonDeg_;
+    int lonMin_;
+    double lonSec_;
   };
 }
 #endif

@@ -28,7 +28,8 @@ namespace dolmen
       double pressure = 1.0;
       std::string presstr;
       int id = getID();
-      if (data.length() == 7)
+      std::cout << "test" << data[7];
+      if (data.length() == 8 && data[7] == ';')
       {
         //we check the sign
         (data[2] == '-')? pressure = -pressure : pressure = pressure;

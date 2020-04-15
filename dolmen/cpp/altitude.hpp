@@ -25,11 +25,12 @@ namespace dolmen
     void decoding(const std::string data) override
     {
       //altitude have to be calculated from other sensors's datas
-      int altitude = 0;
+      double altitude = 0;
 
       //with the pressure
 
-      double pressure = Pressure::getPressure(); //must be in hPa
+      //double pressure = dolmen::Pressure::getPressure(); //must be in hPa
+      double pressure = 0.0;
 
       double p0 = 1013.25;
       double g = 9.81;
@@ -38,7 +39,7 @@ namespace dolmen
 
       altitude = log(pressure/p0)*((2*Cp*T0)/(-7*g));
 
-      setAltitude(altitude)
+      setAltitude(altitude);
 
       std::cout << "\naltitude = " << altitude;
     }

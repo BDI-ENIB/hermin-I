@@ -28,7 +28,7 @@ namespace dolmen
       double temperature = 1.0;
       std::string tempstr;
       int id = getID();
-      if (data.length() == 7)
+      if (data.length() == 8 && data[7] == ';')
       {
         //we check the sign
         (data[2] == '-')? temperature = -temperature : temperature = temperature;

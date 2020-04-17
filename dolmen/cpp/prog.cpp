@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <fstream>
 
 #include "dolmen.hpp"
 
@@ -9,34 +10,47 @@ int main(int argc, char const *argv[]) {
 
   dolmen::Dolmen DolMen;
 
-  std::string data1 ="01-3015;"; //temperature ou pression
-  std::string data2 ="02-4258;"; //temperature ou pression
-  std::string data3 ="0448363225-007405623;"; //gps
-  std::string data4 = "03+1023-0213+0125;"; //acc
-  std::string data5 = "06+1023-0213+0125;"; //gyr
+  //reading the datas
+  std::ifstream trame("trame.txt");
 
-  std::cout << data1 << "\n";
-  std::cout << data2 << "\n";
-  std::cout << data3 << "\n";
-  std::cout << data4 << "\n";
-  std::cout << data5 << "\n";
+  if(trame)
+  {
+    //each line is a measurement of the rocket, with datas of each sensor
+    std::string line;
+    while(std::getline(trame,line))
+    {
+      //std::cout << line << "\n";
+      //extracting data from each line
+      std::string data;
+      for (auto& letter : line)
+      {
+        //sensor list
+        std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
 
-  std::vector<std::unique_ptr<dolmen::Sensor>> vec;
-
-  vec.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
-  vec.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
-  vec.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
-  vec.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
-  vec.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
-  vec.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
-
-  for (auto& elem : vec) {
-    std::cout << "\ntest" << "\n";
-    std::cout << "id: " << elem->getID() << "\nnom: " << elem->getName();
+        sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
+        sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
+        sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
+        sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
+        sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
+        sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
+        //
+        data += letter;
+        if (letter == ';')
+        {
+          std::cout << data << "\n";
+          std::cout << "\n";
+          std::string dataTxt = DolMen.decoding(data, std::move(sensorList));
+          std::cout << "\n\n";
+          DolMen.exportCsv(dataTxt);
+          data = "";
+        }
+      }
+      break;
+    }
   }
-
-  std::cout << "\n";
-  DolMen.decoding(data5, std::move(vec));
-  std::cout << "\n\n";
+  else
+  {
+    std::cout << "unable to open the file";
+  }
   return 0;
 }

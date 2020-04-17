@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "temperature.hpp"
 #include "pressure.hpp"
@@ -23,7 +24,14 @@ namespace dolmen
 
   public:
 
-    void decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> sensors_list)
+    void exportCsv(std::string dataTxt)
+    {
+      std::ofstream ofs{"test.csv"};
+      ofs << dataTxt;
+      ofs << "\n";
+    }
+
+    std::string decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> sensors_list)
     {
       //reading data to determine the sensor
       std::cout << "\n j'entre dans dolmen::decoding \n";
@@ -43,6 +51,7 @@ namespace dolmen
       //std::cout << "\n id chaine = " << idstr << "\n";
       //std::cout << "\n id int = " << id << "\n";
 
+      std::string dataTxt;
 
       bool found = false;
       for (const auto& elem : sensors_list)
@@ -51,6 +60,9 @@ namespace dolmen
         if (elem->getID() == id)
         {
           elem->decoding(data);
+          //dataTxt += elem->toCsv()
+          dataTxt += "blabla";
+          dataTxt += ",";
           found = true;
           std::cout << "\nsensor found: " << id;
           break;
@@ -61,6 +73,8 @@ namespace dolmen
         //error to add
         std::cout<<"\n ---error: unknown sensor--- \n";
       }
+
+      return dataTxt;
     }
   };
 } /* dolmen */

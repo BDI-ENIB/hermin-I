@@ -12,6 +12,8 @@ int main(int argc, char const *argv[]) {
 
   //reading the datas
   std::ifstream trame("trame.txt");
+  std::ofstream ofs{"report.csv"};
+  std::string dataTxt;
 
   if(trame)
   {
@@ -25,27 +27,29 @@ int main(int argc, char const *argv[]) {
       {
         //sensor list
         std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
-/*
+
         sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
         sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
         sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
         sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
         sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
-        sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));*/
+        sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
         //
         data += letter;
         if (letter == ';')
         {
-          /*std::cout << data << "\n";
+          std::cout << data << "\n";
           std::cout << "\n";
-          std::string dataTxt = DolMen.decoding(data, std::move(sensorList));
+          std::string dataTxt1 = DolMen.decoding(data, std::move(sensorList));
           std::cout << "\n\n";
-          DolMen.exportCsv(dataTxt);
-          data = "";*/
+          dataTxt += dataTxt1;
+          data = "";
         }
       }
-      break;
+      dataTxt += '\n';
     }
+    ofs << dataTxt;
+    std::cout << dataTxt;
   }
   else
   {

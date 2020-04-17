@@ -134,6 +134,10 @@ namespace dolmen
 
         std::cout << "\n gyrZ = " << gyrZ;
 
+        setX(gyrX);
+        setY(gyrY);
+        setY(gyrY);
+
       }
       else
       {
@@ -144,7 +148,11 @@ namespace dolmen
     std::string toCsv() override
     {
       std::string dataTxt;
-      dataTxt += "name";
+      dataTxt += std::to_string(x_);
+      dataTxt += ",";
+      dataTxt += std::to_string(y_);
+      dataTxt += ",";
+      dataTxt += std::to_string(z_);
       dataTxt += ",";
       return dataTxt;
     }

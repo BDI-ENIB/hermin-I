@@ -18,7 +18,7 @@ namespace dolmen
 
       virtual void decoding(const std::string data) = 0;
 
-      virtual std::string toCsv();
+      virtual std::string toCsv() = 0;
 
       int getID()
       {

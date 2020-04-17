@@ -67,7 +67,7 @@ namespace dolmen
     std::string toCsv() override
     {
       std::string dataTxt;
-      dataTxt += "name";
+      dataTxt += std::to_string(pressure_);
       dataTxt += ",";
       return dataTxt;
     }

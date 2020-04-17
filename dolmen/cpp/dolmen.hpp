@@ -34,13 +34,6 @@ namespace dolmen
       //
     }
 
-    void exportCsv(std::string dataTxt)
-    {
-      std::ofstream ofs{"test.csv"};
-      ofs << dataTxt;
-      ofs << "\n";
-    }
-
     std::string decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> sensors_list)
     {
       //reading data to determine the sensor
@@ -70,9 +63,9 @@ namespace dolmen
         if (elem->getID() == id)
         {
           elem->decoding(data);
-          dataTxt += "elem->getName()";
+          dataTxt += elem->getName();
           dataTxt += ",";
-          dataTxt += "elem->toCsv()";
+          dataTxt += elem->toCsv();
           dataTxt += ",";
           found = true;
           std::cout << "\nsensor found: " << id;

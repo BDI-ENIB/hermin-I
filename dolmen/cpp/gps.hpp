@@ -25,7 +25,7 @@ namespace dolmen
       return vec;
     }
 
-    void setLatitude(int newDeg, int newMin, int newSec)
+    void setLatitude(int newDeg, int newMin, double newSec)
     {
       latDeg_ = newDeg;
       latSec_ = newSec;
@@ -41,7 +41,7 @@ namespace dolmen
       return vec;
     }
 
-    void setLongitude(int newDeg, int newMin, int newSec)
+    void setLongitude(int newDeg, int newMin, double newSec)
     {
       lonDeg_ = newDeg;
       lonSec_ = newSec;
@@ -106,6 +106,8 @@ namespace dolmen
         latSec = std::stod(latSecStr);
         std::cout << "\n latSec = " << latSec;
 
+        setLatitude(latDeg, latMin, latSec);
+
 
         //longitude
         int lonDeg = 1;
@@ -164,6 +166,8 @@ namespace dolmen
         lonSec = std::stod(lonSecStr);
         std::cout << "\n lonSec = " << lonSec;
 
+        setLongitude(lonDeg, lonMin, lonSec);
+
 
       }
       else
@@ -175,7 +179,17 @@ namespace dolmen
     std::string toCsv() override
     {
       std::string dataTxt;
-      dataTxt += "name";
+      dataTxt += std::to_string(latDeg_);
+      dataTxt += ",";
+      dataTxt += std::to_string(latMin_);
+      dataTxt += ",";
+      dataTxt += std::to_string(latSec_);
+      dataTxt += ",";
+      dataTxt += std::to_string(lonDeg_);
+      dataTxt += ",";
+      dataTxt += std::to_string(lonMin_);
+      dataTxt += ",";
+      dataTxt += std::to_string(lonSec_);
       dataTxt += ",";
       return dataTxt;
     }

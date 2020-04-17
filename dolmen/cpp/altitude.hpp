@@ -14,6 +14,8 @@ namespace dolmen
     Altitude (int id, std::string name):
     Sensor{id,name}{}
 
+    ~Altitude(){}
+
     double getAltitude(){
       return altitude_;
     }
@@ -42,6 +44,14 @@ namespace dolmen
       setAltitude(altitude);
 
       std::cout << "\naltitude = " << altitude;
+    }
+
+    std::string toCsv() override
+    {
+      std::string dataTxt;
+      dataTxt += "name";
+      dataTxt += ",";
+      return dataTxt;
     }
 
     private :

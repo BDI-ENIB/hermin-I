@@ -24,6 +24,16 @@ namespace dolmen
 
   public:
 
+    Dolmen ()
+    {
+      //
+    }
+
+    ~Dolmen()
+    {
+      //
+    }
+
     void exportCsv(std::string dataTxt)
     {
       std::ofstream ofs{"test.csv"};
@@ -60,8 +70,9 @@ namespace dolmen
         if (elem->getID() == id)
         {
           elem->decoding(data);
-          //dataTxt += elem->toCsv()
-          dataTxt += "blabla";
+          dataTxt += "elem->getName()";
+          dataTxt += ",";
+          dataTxt += "elem->toCsv()";
           dataTxt += ",";
           found = true;
           std::cout << "\nsensor found: " << id;

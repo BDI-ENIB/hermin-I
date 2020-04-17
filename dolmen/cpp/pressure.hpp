@@ -13,6 +13,8 @@ namespace dolmen
     Pressure (int id, std::string name):
     Sensor{id, name}{}
 
+    ~Pressure(){}
+
     double getPressure()
     {
       return pressure_;
@@ -60,6 +62,14 @@ namespace dolmen
       {
         std::cout << "\nerror: bad data format";
       }
+    }
+
+    std::string toCsv() override
+    {
+      std::string dataTxt;
+      dataTxt += "name";
+      dataTxt += ",";
+      return dataTxt;
     }
 
 

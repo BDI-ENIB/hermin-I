@@ -13,6 +13,8 @@ namespace dolmen
     Acceleration (int id, std::string name):
     Sensor{id,name}{}
 
+    ~Acceleration(){}
+
     double getX()
     {
       return x_;
@@ -141,7 +143,13 @@ namespace dolmen
       }
     }
 
-
+    std::string toCsv() override
+    {
+      std::string dataTxt;
+      dataTxt += "name";
+      dataTxt += ",";
+      return dataTxt;
+    }
 
 
     private :

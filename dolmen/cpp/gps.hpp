@@ -14,6 +14,8 @@ namespace dolmen
     Gps (int id, std::string name):
     Sensor{id, name}{}
 
+    ~Gps(){}
+
     std::vector<double> getLatitude()
     {
       std::vector<double> vec;
@@ -168,6 +170,14 @@ namespace dolmen
       {
         std::cout << "\nerror: bad data format";
       }
+    }
+
+    std::string toCsv() override
+    {
+      std::string dataTxt;
+      dataTxt += "name";
+      dataTxt += ",";
+      return dataTxt;
     }
 
     private :

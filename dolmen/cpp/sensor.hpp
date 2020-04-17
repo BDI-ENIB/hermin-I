@@ -9,8 +9,7 @@ namespace dolmen
   class Sensor
   {
     public :
-      Sensor (int id, std::string name):id_{id},name_{name}
-      {}
+      Sensor (int id, std::string name):id_{id},name_{name}{}
 
       virtual ~Sensor()
       {
@@ -18,6 +17,8 @@ namespace dolmen
       }
 
       virtual void decoding(const std::string data) = 0;
+
+      virtual std::string toCsv();
 
       int getID()
       {

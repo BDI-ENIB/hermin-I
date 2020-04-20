@@ -1,35 +1,47 @@
-#ifndef DOLMEN_Configuration_HPP
-#define DOLMEN_Configuration_HPP 1
+#ifndef DOLMEN_CONFIGURATION_HPP
+#define DOLMEN_CONFIGURATION_HPP 1
+
 #include <string>
+#include <vector>
+#include <memory>
+#include <iostream>
 
-namespace dolmen {
+#include "sensor.hpp"
+#include "temperature.hpp"
+#include "pressure.hpp"
+#include "acceleration.hpp"
+#include "gps.hpp"
+#include "gyroscope.hpp"
+#include "altitude.hpp"
 
-class Configuration {
-public :
+namespace dolmen
+{
 
-bool getWindows_config(){
-    return communication_
+  class Configuration
+  {
+    public :
+
+    Configuration();
+
+    ~Configuration(){}
+
+    std::vector<std::unique_ptr<dolmen::Sensor>> getSensors_config()
+    {
+      return std::move(sensors_config);
+    }
+
+    void setSensors_config(std::vector<std::unique_ptr<dolmen::Sensor>> config)
+    {
+      sensors_config = std::move(config);
+    }
+
+    std::vector<std::unique_ptr<dolmen::Sensor>> import_config();
+
+    void export_config(std::vector<std::unique_ptr<dolmen::Sensor>> sensors_config);
+
+    private :
+    std::vector<std::unique_ptr<dolmen::Sensor>> sensors_config;
+  };
 }
 
-void setWindows_config(bool state){
-    communication_= state
-}
-
-bool getSensors_config(){
-    return communication_
-}
-
-void setSensors_config(bool state){
-    communication_= state
-}
-
-
-void import_config();
-void export_config();
-
-private :
-std::string windows_config;
-std::string sensors_config;
-}
-
-}
+#endif

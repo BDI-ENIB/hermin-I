@@ -12,6 +12,7 @@
 #include "gps.hpp"
 #include "gyroscope.hpp"
 #include "altitude.hpp"
+#include "configuration.hpp"
 
 
 namespace dolmen

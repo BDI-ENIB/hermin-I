@@ -27,35 +27,10 @@ namespace dolmen
 
     void decoding(const std::string data) override
     {
-      double sensorGeneric = 1.0;
-      std::string tempstr;
       int id = getID();
-      if (data.length() == 8 && data[7] == ';')
+      if (data.length() == /*to complete*/ && data[/*to complete*/] == ';')
       {
-        //we check the sign
-        (data[2] == '-')? sensorGeneric = -sensorGeneric : sensorGeneric = sensorGeneric;
-        //we decode each character
-        if (isdigit(data[3])) {
-          tempstr += data[3];
-        }
-        if (isdigit(data[4])) {
-          tempstr += data[4];
-        }
-
-        tempstr += ".";
-
-        if (isdigit(data[5])) {
-          tempstr += data[5];
-        }
-        if (isdigit(data[6])) {
-          tempstr += data[6];
-        }
-
-        sensorGeneric = sensorGeneric * std::stod(tempstr);
-
-        setSensorGeneric(sensorGeneric);
-
-        std::cout << "\nsensorGeneric = " << sensorGeneric;
+        //
       }
       else
       {

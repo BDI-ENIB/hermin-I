@@ -6,14 +6,7 @@
 #include <string>
 #include <fstream>
 
-#include "temperature.hpp"
-#include "pressure.hpp"
-#include "acceleration.hpp"
-#include "gps.hpp"
-#include "gyroscope.hpp"
-#include "altitude.hpp"
 #include "configuration.hpp"
-
 
 namespace dolmen
 {

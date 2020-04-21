@@ -29,15 +29,15 @@ int main(int argc, char const *argv[]) {
       for (auto& letter : line)
       {
         //sensor list
-        std::vector<std::unique_ptr<dolmen::Sensor>> sensorList = std::move(Config.import_config());
-        //std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
+        //std::vector<std::unique_ptr<dolmen::Sensor>> sensorList = std::move(Config.import_config());
+        std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
 
-        //sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
-        //sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
-        //sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
-        //sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
-        //sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
-        //sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
+        sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
+        sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
+        sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
+        sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
+        sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
+        sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
         //
         data += letter;
         if (letter == ';')

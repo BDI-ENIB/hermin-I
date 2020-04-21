@@ -56,7 +56,7 @@ namespace dolmen
               }
               ministring = "";
             }
-            sensors_config.push_back(std::make_unique<dolmen::Temperature> (01, "test"));
+            sensors_config.push_back(std::make_unique<dolmen::Temperature> (01, "bob"));
           }
         }
       }

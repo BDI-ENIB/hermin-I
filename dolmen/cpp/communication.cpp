@@ -1,6 +1,6 @@
-#include "communication.hpp"
+/*#include "communication.hpp"
 
 namespace dolmen
 {
-
-} /* dolmen */
+  //
+} *//* dolmen */

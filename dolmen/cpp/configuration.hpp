@@ -1,4 +1,4 @@
-#ifndef DOLMEN_CONFIGURATION_HPP
+/*#ifndef DOLMEN_CONFIGURATION_HPP
 #define DOLMEN_CONFIGURATION_HPP 1
 
 #include <string>
@@ -44,4 +44,4 @@ namespace dolmen
   };
 }
 
-#endif
+#endif*/

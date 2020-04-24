@@ -1,5 +1,7 @@
 #include "dolmen.hpp"
 
+#include <cmath>
+
 namespace dolmen
 {
   Dolmen::Dolmen(){}
@@ -11,93 +13,99 @@ namespace dolmen
 
     //reading the sensor id
     std::string idstr;
-    if (isdigit(data[0])) {
+    if (isdigit(data[0]))
+    {
       idstr += data[0];
     }
-    if (isdigit(data[1])) {
+    if (isdigit(data[1]))
+    {
       idstr += data[1];
     }
 
     //converting the sensor id into an int
     int id = std::stoi(idstr);
 
-    //std::cout << "\n id chaine = " << idstr << "\n";
-    //std::cout << "\n id int = " << id << "\n";
-
     std::string dataTxt;
-    /*
+
+    //premiere partie on decode et on recupere le nombre de lignes max
+    int max = 0;
+    for (const auto& elem : sensors_list)
+    {
+      std::cout << "\nentree premiere partie\n";
+      std::cout << elem->getID() << "=" << id << "?\n";
+      if (elem->getID() == id)
+      {
+        elem->decoding(data);
+
+        if(abs(int(elem->getValue().size())/elem->getNbAttr()) > max)
+        {
+          max = int(elem->getValue().size());
+        }
+        break;
+      }
+      else
+      {
+        std::cout << "\nsensor not found\n";
+      }
+    }
+    //seconde partie on recupere les valeurs et on les formatte en csv
+    std::string columnValueTxt;
+    std::string columnsTxt;
     bool found = false;
     for (const auto& elem : sensors_list)
     {
-    //std::cout << elem->getID() << "=" << id << "?\n";
-    if (elem->getID() == id)
-    {
-    elem->decoding(data);
-    std::map<std::string, double> processed_data = elem->getValue();
-    dataTxt += elem->getName();
-    dataTxt += ",";
-    dataTxt += " ";
-    dataTxt += ",";
-    found = true;
-    std::cout << "\nsensor found: " << id;
-    break;
-  }
-}*/
-//premiere partie on decode et on recupere le nombre de lignes max
-*--premiere partie on decode et on recupere le nombre de lignes max*
-int max = 0;
-for (const auto& elem : sensors_list)
-{
-  //std::cout << elem->getID() << "=" << id << "?\n";
-  if (elem->getID() == id)
-  {
-    elem->decoding(data);
-
-    if(elm=>getValue().size()/getNbAttr() > max){
-      max=elm=>getValue().size();
-    }
-  }
-}
-*-- seconde partie on recupere les valeurs et on les formatte en csv*
-std::string columnValueTxt;
-bool found = false;
-for (const auto& elem : sensors_list)
-{
-  //std::cout << elem->getID() << "=" << id << "?\n";
-  if (elem->getID() == id)
-  {
-    columnsTxt += elem->getcolumnIden....
-    columnsTxt += ";";
-    std::map<std::string, double> processed_data = elem->getValue...
-    int i =0;
-    for (const auto &dat : data) {
-      columnValueTxt+= std::to_string(element.second);
-      if(i < elem->getNbAttr()){
-        columnValueTxt+= ";";
-      }else {
-        columnValueTxt+= "\n";
+      std::cout << "\nentree seconde partie\n";
+      std::cout << elem->getID() << "=" << id << "?\n";
+      if (elem->getID() == id)
+      {
+        columnsTxt += elem->getColumnIdentifiers();
+        columnsTxt += ";";
+        std::map<std::string, double> processed_data = elem->getValue();
+        int i = 0;
+        for (const auto &elem2 : processed_data)
+        {
+          std::cout << "\ndat = " << std::get<1>(elem2);
+          columnValueTxt+= std::to_string(std::get<1>(elem2));
+          if(i < elem->getNbAttr())
+          {
+            columnValueTxt+= ";";
+          }
+          else
+          {
+            columnValueTxt+= "\n";
+          }
+          i++;
+          found = true;
+          std::cout << "\nsensor found: " << id;
+          break;
+        }
+        //completer les lignes avec le max
+        i=0;
+        for (int j=0; j<max;j++)
+        {
+          if(i < elem->getNbAttr())
+          {
+            columnValueTxt+= ";";
+          }
+          else
+          {
+            columnValueTxt+= "\n";
+          }
+          i++;
+        }
+        dataTxt+=columnValueTxt;
+        if (found == false)
+        {
+          //error to add
+          std::cout<<"\n ---error: unknown sensor--- \n";
+        }
+        break;
       }
-      i++;
-      found = true;
-      std::cout << "\nsensor found: " << id;
-    }
-    //completer les lignes avec le max
-    i=0;
-    for (int j=0; j<max;j++) {
-      if(i < elem->getNbAttr()){
-        columnValueTxt+= ";";
-      }else {
-        columnValueTxt+= "\n";
+      else
+      {
+        dataTxt = "error: Dolmen::decoding() failed";
       }
-      i++;
     }
-    dataTxt+=columnValueTxt;
-    if (found == false)
-    {
-      //error to add
-      std::cout<<"\n ---error: unknown sensor--- \n";
-    }
-
     return dataTxt;
   }
 } /* dolmen */

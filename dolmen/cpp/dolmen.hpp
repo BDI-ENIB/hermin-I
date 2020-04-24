@@ -6,8 +6,9 @@
 #include <string>
 #include <fstream>
 #include <map>
+#include <memory>
 
-#include "configuration.hpp"
+#include "temperature.hpp"
 
 namespace dolmen
 {
@@ -19,7 +20,7 @@ namespace dolmen
 
   public:
 
-    Dolmen (){}
+    Dolmen();
 
     ~Dolmen(){}
 

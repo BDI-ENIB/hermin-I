@@ -2,6 +2,8 @@
 #ifndef DOLMEN_DATE_HPP
 #define DOLMEN_DATE_HPP 1
 
+#include <string>
+
 namespace dolmen {
 
 class Date {
@@ -12,17 +14,18 @@ public:
   int hour;
   int minute;
   int second;
-  int µsecond;
+  int msecond;
   int day;
   int month;
   int year;
 
-  string setTime()
+  std::string setTime()
   {
+    std::string truc;
     return truc;
   }
 
-  Date (arguments);
+  Date ();
   virtual ~Date ();
 };
 

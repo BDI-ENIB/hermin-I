@@ -4,9 +4,8 @@ namespace dolmen
 {
   Temperature::Temperature (int id, std::string name):Sensor{id,name}{}
 
-  std::map<std::string, double> Temperature::decoding(const std::string data) override
+  void Temperature::decoding(const std::string data)
   {
-    std::map<std::string name, double value> map;
     double temperature = 1.0;
     std::string tempstr;
     int id = getID();
@@ -34,12 +33,13 @@ namespace dolmen
       temperature = temperature * std::stod(tempstr);
 
       std::cout << "\ntemperature = " << temperature;
-      map.insert(std::pair<std::string, double>("temperature",temperature));
-      return map
+
+      Temperature::temperature_ = temperature;
     }
     else
     {
       std::cout << "\nerror: bad data format";
+      Temperature::temperature_ = 0.0;
     }
   }
 } /* dolmen */

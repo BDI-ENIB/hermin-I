@@ -9,15 +9,12 @@
 int main(int argc, char const *argv[]) {
 
   dolmen::Dolmen DolMen;
-  dolmen::Configuration Config;
 
   //reading the datas
   std::ifstream trame("trame.txt");
   std::ofstream ofs{"report.csv"};
   std::string dataTxt;
-  //Config.blabla();
-  std::vector<std::unique_ptr<dolmen::Sensor>> sensorList = Config.import_config();
-/*
+
   if(trame)
   {
     //each line is a measurement of the rocket, with datas of each sensor
@@ -29,15 +26,14 @@ int main(int argc, char const *argv[]) {
       for (auto& letter : line)
       {
         //sensor list
-        //std::vector<std::unique_ptr<dolmen::Sensor>> sensorList = std::move(Config.import_config());
         std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
 
         sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
-        sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
-        sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
-        sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
-        sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
-        sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
+        //sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
+        //sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
+        //sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
+        //sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
+        //sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
         //
         data += letter;
         if (letter == ';')
@@ -59,6 +55,6 @@ int main(int argc, char const *argv[]) {
   {
     std::cout << "unable to open the file";
   }
-  */
+
   return 0;
 }

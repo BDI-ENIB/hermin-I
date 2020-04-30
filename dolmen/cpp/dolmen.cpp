@@ -8,9 +8,6 @@ namespace dolmen
 
   std::string Dolmen::decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> sensors_list)
   {
-    //reading data to determine the sensor
-    std::cout << "\n j'entre dans dolmen::decoding \n";
-
     //reading the sensor id
     std::string idstr;
     if (isdigit(data[0]))
@@ -31,8 +28,6 @@ namespace dolmen
     int max = 0;
     for (const auto& elem : sensors_list)
     {
-      std::cout << "\nentree premiere partie\n";
-      std::cout << elem->getID() << "=" << id << "?\n";
       if (elem->getID() == id)
       {
         elem->decoding(data);
@@ -54,17 +49,14 @@ namespace dolmen
     bool found = false;
     for (const auto& elem : sensors_list)
     {
-      std::cout << "\nentree seconde partie\n";
-      std::cout << elem->getID() << "=" << id << "?\n";
       if (elem->getID() == id)
       {
-        columnsTxt += elem->getColumnIdentifiers();
-        columnsTxt += ";";
+        columnValueTxt += elem->getColumnIdentifiers();
+        columnValueTxt += ";";
         std::map<std::string, double> processed_data = elem->getValue();
         int i = 0;
         for (const auto &elem2 : processed_data)
         {
-          std::cout << "\ndat = " << std::get<1>(elem2);
           columnValueTxt+= std::to_string(std::get<1>(elem2));
           if(i < elem->getNbAttr())
           {
@@ -76,7 +68,6 @@ namespace dolmen
           }
           i++;
           found = true;
-          std::cout << "\nsensor found: " << id;
           break;
         }
         //completer les lignes avec le max

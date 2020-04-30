@@ -9,6 +9,7 @@
 int main(int argc, char const *argv[]) {
 
   dolmen::Dolmen DolMen;
+  dolmen::FactorySensor fac;
 
   //reading the datas
   std::ifstream trame("trame.txt");
@@ -26,9 +27,17 @@ int main(int argc, char const *argv[]) {
       for (auto& letter : line)
       {
         //sensor list
-        std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
 
-        sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
+        //saving types
+        dolmen::FactorySensor::Register("Temperature Sensor", new dolmen::Temperature(01, "temp"));
+
+        //creating objects
+        dolmen::Sensor* temperature = fac.Create("Temperature Sensor");
+
+        //std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
+
+        //sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
+
         //sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
         //sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
         //sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
@@ -40,11 +49,14 @@ int main(int argc, char const *argv[]) {
         {
           std::cout << data << "\n";
           std::cout << "\n";
-          std::string dataTxt1 = DolMen.decoding(data, std::move(sensorList));
+          //std::string dataTxt1 = DolMen.decoding(data, std::move(sensorList));
+          //std::string dataTxt1 = DolMen.decoding(data, m_map);
+          std::string dataTxt1 = "test";
           std::cout << "\n\n";
           dataTxt += dataTxt1;
           data = "";
         }
+        delete temperature;
       }
       dataTxt += '\n';
     }

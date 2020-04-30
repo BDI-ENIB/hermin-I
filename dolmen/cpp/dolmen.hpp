@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 
+#include "factorySensor.hpp"
 #include "temperature.hpp"
 
 namespace dolmen

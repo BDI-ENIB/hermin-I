@@ -10,7 +10,7 @@ namespace dolmen
   {
   public:
     virtual ~Prototype(){}
-    //virtual T* Clone() const = 0;
+    virtual T* Clone() const = 0;
   };
 
   class Sensor : public Prototype<Sensor>

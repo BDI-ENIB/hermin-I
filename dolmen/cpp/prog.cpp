@@ -5,16 +5,31 @@
 
 #include "dolmen.hpp"
 
-
 int main(int argc, char const *argv[]) {
 
   dolmen::Dolmen DolMen;
-  dolmen::FactorySensor fac;
+  //dolmen::FactorySensor fac;
 
   //reading the datas
   std::ifstream trame("trame.txt");
   std::ofstream ofs{"report.csv"};
   std::string dataTxt;
+
+  //saving types
+
+  using AFactory = dolmen::FactorySensor<std::string, std::unique_ptr<dolmen::Sensor>, int, std::string>;
+
+  AFactory factory;
+  factory.registe("temp_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Temperature>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> temperature = factory.create("temp_sensor", 01, "temp");
+  std::cout << "id et nom " << temperature->getID() << " " << temperature->getName() << "\n";
+  std::cout << "columnid " << temperature->getColumnIdentifiers() << "\n";
+  dolmen::Sensor* sensor = nullptr;
+  sensor = temperature.get();
+
+
+  std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
 
   if(trame)
   {
@@ -26,37 +41,19 @@ int main(int argc, char const *argv[]) {
       std::string data;
       for (auto& letter : line)
       {
-        //sensor list
-
-        //saving types
-        dolmen::FactorySensor::Register("Temperature Sensor", new dolmen::Temperature(01, "temp"));
-
-        //creating objects
-        dolmen::Sensor* temperature = fac.Create("Temperature Sensor");
-
-        //std::vector<std::unique_ptr<dolmen::Sensor>> sensorList;
-
-        //sensorList.push_back(std::make_unique<dolmen::Temperature> (01, "temp"));
-
-        //sensorList.push_back(std::make_unique<dolmen::Pressure> (02, "pres"));
-        //sensorList.push_back(std::make_unique<dolmen::Acceleration> (03, "acc"));
-        //sensorList.push_back(std::make_unique<dolmen::Gps> (04, "gps"));
-        //sensorList.push_back(std::make_unique<dolmen::Altitude> (05, "alt"));
-        //sensorList.push_back(std::make_unique<dolmen::Gyroscope> (06, "gyr"));
-        //
         data += letter;
         if (letter == ';')
         {
           std::cout << data << "\n";
           std::cout << "\n";
-          //std::string dataTxt1 = DolMen.decoding(data, std::move(sensorList));
-          //std::string dataTxt1 = DolMen.decoding(data, m_map);
-          std::string dataTxt1 = "test";
+          std::string dataTxt1 = DolMen.decoding(data, sensorList);
+          //std::string dataTxt1 = "jesuisunedonnee";
           std::cout << "\n\n";
           dataTxt += dataTxt1;
           data = "";
         }
-        delete temperature;
+        //deleting all the sensors instances
+        //temperature->free();
       }
       dataTxt += '\n';
     }
@@ -67,6 +64,5 @@ int main(int argc, char const *argv[]) {
   {
     std::cout << "unable to open the file";
   }
-
   return 0;
 }

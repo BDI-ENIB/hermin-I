@@ -12,11 +12,6 @@ namespace dolmen
     public :
     Temperature (int id, std::string name);
 
-    Sensor* Clone() const
-    {
-      return new Temperature(*this);
-    }
-
     void decoding(const std::string data) override;
 
     std::map<std::string, double> getValue() override
@@ -28,8 +23,7 @@ namespace dolmen
 
     std::string getColumnIdentifiers() override
     {
-      std::string identifier = "Temperature";
-      return identifier;
+      return "Temperature";
     }
 
     int getNbAttr() override

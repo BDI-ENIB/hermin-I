@@ -25,7 +25,9 @@ namespace dolmen
 
     ~Dolmen(){}
 
-    std::string decoding(std::string data, std::vector<std::unique_ptr<dolmen::Sensor>> sensors_list);
+    //std::string decoding(std::string data, std::map<int, std::unique_ptr<dolmen::Sensor>> sensors_list);
+    std::string decoding(std::string data, std::map<int, dolmen::Sensor*> sensorList);
+
   };
 } /* dolmen */
 

@@ -10,7 +10,6 @@ namespace dolmen
   {
   public:
     virtual ~Prototype(){}
-    virtual T* Clone() const = 0;
   };
 
   class Sensor : public Prototype<Sensor>
@@ -25,6 +24,11 @@ namespace dolmen
       virtual std::string getColumnIdentifiers() = 0;
 
       virtual int getNbAttr() = 0;
+
+      void free()
+      {
+        delete (this);
+      }
 
       int getID()
       {

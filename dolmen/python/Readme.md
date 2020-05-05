@@ -18,7 +18,8 @@ Requirements :
 
      - https://matplotlib.org/users/installing.html
                 
-                
+All Python dependency is included in the software repository of your linux distribution
+
 - A computer with a Linux distribution (Debian/Ubuntu or Archlinux/Manjaro ...)
 
 Tested on Manjaro KDE.  

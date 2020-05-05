@@ -19,16 +19,20 @@ namespace dolmen
 
       virtual void decoding(const std::string data) = 0;
 
-      virtual std::map<std::string, double> getValue() = 0;
+      std::map<std::string, double> getValue()
+      {
+        std::cout << "\n---\n";
+        return sensorData;
+      }
+
+      void insert(std::string dataName, double dataValue)
+      {
+        sensorData[dataName] = dataValue;
+      }
 
       virtual std::string getColumnIdentifiers() = 0;
 
       virtual int getNbAttr() = 0;
-
-      void free()
-      {
-        delete (this);
-      }
 
       int getID()
       {
@@ -43,6 +47,7 @@ namespace dolmen
     private:
       int id;
       std::string name;
+      std::map<std::string, double> sensorData;
   };
 }
 

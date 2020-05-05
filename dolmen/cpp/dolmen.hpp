@@ -9,7 +9,14 @@
 #include <memory>
 
 #include "factorySensor.hpp"
+//insert here your sensors hpp files
 #include "temperature.hpp"
+#include "gyroscope.hpp"
+#include "acceleration.hpp"
+#include "altitude.hpp"
+#include "gps.hpp"
+#include "pressure.hpp"
+
 
 namespace dolmen
 {

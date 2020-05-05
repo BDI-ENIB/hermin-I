@@ -1,4 +1,2 @@
-Temperature;-30.150000;;error: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failed
-Temperature;-30.160000;;error: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failed
-Temperature;-30.170000;;error: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failed
-Temperature;-30.180000;;error: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failederror: Dolmen::decoding() failed
+Temperature;-30.150000;;Pressure;-42.580000;;Gps;48.000000;36.000000;32.250000;-7.000000;40.000000;56.230000;;;;;;;Accelerometer;10.230000;-2.130000;1.250000;;;;Gyroscope;10.230000;-2.130000;1.250000;;;;
+

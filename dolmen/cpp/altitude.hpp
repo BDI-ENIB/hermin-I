@@ -11,52 +11,20 @@ namespace dolmen
   class Altitude : public Sensor
   {
     public :
-    Altitude (int id, std::string name):
-    Sensor{id,name}{}
 
-    ~Altitude(){}
+    Altitude (int id, std::string name);
 
-    double getAltitude(){
-      return altitude_;
-    }
+    void decoding(const std::string data) override;
 
-    void setAltitude(double newAltitude){
-      altitude_=newAltitude;
-    }
-
-    void decoding(const std::string data) override
+    std::string getColumnIdentifiers() override
     {
-      //altitude have to be calculated from other sensors's datas
-      double altitude = 0;
-
-      //with the pressure
-
-      //double pressure = dolmen::Pressure::getPressure(); //must be in hPa
-      double pressure = 0.0;
-
-      double p0 = 1013.25;
-      double g = 9.81;
-      double Cp = 1006.0;
-      double T0 = 20.0;
-
-      altitude = log(pressure/p0)*((2*Cp*T0)/(-7*g));
-
-      setAltitude(altitude);
-
-      std::cout << "\naltitude = " << altitude;
+      return "Altitude";
     }
 
-    std::string toCsv() override
+    int getNbAttr() override
     {
-      std::string dataTxt;
-      dataTxt += std::to_string(altitude_);
-      dataTxt += ",";
-      return dataTxt;
+      return 1;
     }
-
-    private :
-    double altitude_;
   };
-
 }
 #endif

@@ -10,72 +10,21 @@ namespace dolmen
   class Pressure : public Sensor
   {
     public :
-    Pressure (int id, std::string name):
-    Sensor{id, name}{}
+    Pressure (int id, std::string name);
 
-    ~Pressure(){}
+    void decoding(const std::string data) override;
 
-    double getPressure()
+    std::string getColumnIdentifiers() override
     {
-      return pressure_;
+      return "Pressure";
     }
 
-    void setPressure(double newPressure)
+    int getNbAttr() override
     {
-      pressure_=newPressure;
-    }
-
-    void decoding(const std::string data) override
-    {
-      double pressure = 1.0;
-      std::string presstr;
-      int id = getID();
-      std::cout << "test" << data[7];
-      if (data.length() == 8 && data[7] == ';')
-      {
-        //we check the sign
-        (data[2] == '-')? pressure = -pressure : pressure = pressure;
-        //we decode each character
-        if (isdigit(data[3])) {
-          presstr += data[3];
-        }
-        if (isdigit(data[4])) {
-          presstr += data[4];
-        }
-
-        presstr += ".";
-
-        if (isdigit(data[5])) {
-          presstr += data[5];
-        }
-        if (isdigit(data[6])) {
-          presstr += data[6];
-        }
-
-        pressure = pressure * std::stod(presstr);
-
-        setPressure(pressure);
-
-        std::cout << "\npressure = " << pressure;
-      }
-      else
-      {
-        std::cout << "\nerror: bad data format";
-      }
-    }
-
-    std::string toCsv() override
-    {
-      std::string dataTxt;
-      dataTxt += std::to_string(pressure_);
-      dataTxt += ",";
-      return dataTxt;
+      return 1;
     }
 
 
-    private :
-    double pressure_;
-    //int id;
   };
 }
 #endif

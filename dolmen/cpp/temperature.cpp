@@ -34,12 +34,14 @@ namespace dolmen
 
       std::cout << "\ntemperature = " << temperature;
 
-      Temperature::temperature_ = temperature;
+      //Temperature::temperature_ = temperature;
+      insert("temperature", temperature);
     }
     else
     {
       std::cout << "\nerror: bad data format";
-      Temperature::temperature_ = 0.0;
+      //Temperature::temperature_ = 0.0;
+      insert("temperature_error", 0.0);
     }
   }
 } /* dolmen */

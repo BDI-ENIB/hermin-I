@@ -6,7 +6,11 @@ Requirements :
 
 - Python Tkinter : https://docs.python.org/3.6/library/tkinter.html
 
--Python matplot : https://matplotlib.org/
-                : https://matplotlib.org/users/installing.html
+- Python matplot : https://matplotlib.org/
+                 : https://matplotlib.org/users/installing.html
                 
+                
+- A computer with a Linux distribution (Debian/Ubuntu or Archlinux/Manjaro ...)
+
+Tested on Manjaro KDE.
                 

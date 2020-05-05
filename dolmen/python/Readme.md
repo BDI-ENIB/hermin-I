@@ -14,3 +14,8 @@ Requirements :
 
 Tested on Manjaro KDE.
                 
+                
+                
+Run the Dolmen Interface : 
+
+open a terminal and write :  python Main.py

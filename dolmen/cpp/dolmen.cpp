@@ -77,7 +77,7 @@ namespace dolmen
         }
         else
         {
-          //columnValueTxt+= "\n";
+          columnValueTxt+= "\n";
         }
         i+=1;
         found = true;

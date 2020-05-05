@@ -1,16 +1,22 @@
 Requirements :
 
-- Python 3 : https://www.python.org/
+- Python 3 :
 
-           : https://www.python.org/downloads/
-           
-           : https://www.python.org/doc/
+     - https://www.python.org/
 
-- Python Tkinter : https://docs.python.org/3.6/library/tkinter.html
+     - https://www.python.org/downloads/
+         
+     - https://www.python.org/doc/
 
-- Python matplot : https://matplotlib.org/
+- Python Tkinter : 
 
-                 : https://matplotlib.org/users/installing.html
+     - https://docs.python.org/3.6/library/tkinter.html
+
+- Python matplot : 
+  
+     - https://matplotlib.org/
+
+     - https://matplotlib.org/users/installing.html
                 
                 
 - A computer with a Linux distribution (Debian/Ubuntu or Archlinux/Manjaro ...)

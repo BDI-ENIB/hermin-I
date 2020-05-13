@@ -60,7 +60,10 @@ namespace dolmen
     if (elem->getID() == id)
     {
       //writing the data identifier
-      columnValueTxt += elem->getColumnIdentifiers();
+      //columnValueTxt += elem->getColumnIdentifiers();
+      columnValueTxt += elem->getName();
+      columnValueTxt += ";";
+      columnValueTxt += std::to_string(elem->getID());
       columnValueTxt += ";";
       //recovering the processed data from the sensor
       std::map<std::string, double> processed_data = elem->getValue();
@@ -70,20 +73,24 @@ namespace dolmen
       for (std::pair<std::string, double> elem2 : processed_data)
       {
         columnValueTxt+= std::to_string(std::get<1>(elem2));
-        std::cout << "\ni: " << i;
-        if(i < elem->getNbAttr())
+        columnValueTxt+= ";";
+        if(i >= elem->getNbAttr()-1)
+        {
+          break;
+        }
+        /*if(i < elem->getNbAttr())
         {
           columnValueTxt+= ";";
         }
         else
         {
           columnValueTxt+= "\n";
-        }
+        }*/
         i+=1;
         found = true;
       }
       //if there is a problem and data can't be decoded, the lines are completed with blank cases, to avoid a shift in the csv datas
-      i=0;
+      /*i=0;
       for (int j=0; j<max;j++)
       {
         if(i < elem->getNbAttr())
@@ -95,21 +102,21 @@ namespace dolmen
           columnValueTxt+= "\n";
         }
         i++;
-      }
+      }*/
+      columnValueTxt+= ";";
       dataTxt+=columnValueTxt;
       if (found == false)
       {
         //error to add
         std::cout<<"\n ---error: unknown sensor--- \n";
       }
-      //elem->clearData();
     }
     else
     {
       dataTxt = "error: Dolmen::decoding() failed ,";
     }
     //we return the string matching our data frame we will write in our csv file
-    std::cout << "\n\n dataTxt: " << dataTxt << "\n\n";
+    //std::cout << "\n\n dataTxt: " << dataTxt << "\n\n";
     return dataTxt;
   }
 } /* dolmen */

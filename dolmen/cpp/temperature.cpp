@@ -32,8 +32,6 @@ namespace dolmen
 
       temperature = temperature * std::stod(tempstr);
 
-      std::cout << "\ntemperature = " << temperature;
-
       //Temperature::temperature_ = temperature;
       insert("temperature", temperature);
     }

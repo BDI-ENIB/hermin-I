@@ -10,8 +10,7 @@
 
 #include "factorySensor.hpp"
 
-//#include "sensorInit.hpp"
-#include "test.hpp"
+#include "sensorInit.hpp"
 
 namespace dolmen
 {

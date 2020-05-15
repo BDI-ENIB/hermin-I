@@ -15,11 +15,24 @@ int main(int argc, char const *argv[]) {
   std::string dataTxt;
 
   //std::map<int, dolmen::Sensor*> sensorList = dolmen::initialise();
+  //std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
+
+
+  //creating a factory element
+  /*using AFactory = dolmen::FactorySensor<std::string, std::unique_ptr<dolmen::Sensor>, int, std::string>;
+  AFactory factory;*/
+
+  //creating a map to store all the sensors
   std::map<int, dolmen::Sensor*> sensorList;
+  //std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
+  //dolmen::initialise(sensorList);
+
+  //---
 
   for (const auto &elem: sensorList)
   {
     std::cout << "je suis une id de sensor " << elem.first << "\n";
+    std::cout << "je suis une id de sensor " << elem.second->getID() << "\n";
   }
 
   //reading the data trame

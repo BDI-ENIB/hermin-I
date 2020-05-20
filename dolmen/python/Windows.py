@@ -1,10 +1,11 @@
 #from tkinter import *
 import tkinter as tk
+from tkinter import filedialog
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import sys
 class Windows(tk.Frame):
-    def __init__(self,title, colorFont,x,y,function):
+    def __init__(self,title, colorFont,x,y,function,ligne,colonne):
         #tk.Tk.__init__(self, windows, width=x, height=y, bg=colorFont, **kwargs)
         #self.pack_propagate(0)
         self.windows=tk.Tk()
@@ -18,7 +19,9 @@ class Windows(tk.Frame):
         self.hs = self.windows.winfo_screenheight()
         self.widthCenter = (self.ws/2) - (self.width/2)
         self.heightCenter = (self.hs/2) - (self.height/2)
-        
+        self.windows.rowconfigure(ligne, weight=1)
+        self.windows.columnconfigure(colonne, weight=1)
+
 
         if (self.width==0 and self.height==0):
             self.windows.geometry(str(self.ws) + "x" + str(self.hs) )
@@ -84,4 +87,18 @@ def messageShowwarning(title,text):
 
 def messageShowerror(title,text):
     messagebox.showerror(title, text)
+
+def askopenfilename(figure,path):
+    filename=filedialog.askopenfilename(initialdir = path,title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
+    
+    try:
+        with open(filename,'r') as UseFile:
+            #print(UseFile.read())
+            figure.file = filename
+            print(figure.file)
+            return True
+    except:
+        print("No file exists")
+        messageShowwarning("Open Filename", "Warning, you must choose a file ")
+        return False
     

@@ -8,82 +8,69 @@ import matplotlib.pyplot as plt
 import sys
 import time
 
-"""
-def addFrame(windows,position):
-
-    MyFrame = tk.Frame(windows, borderwidth=2, relief=GROOVE)
-    MyFrame.pack(side=position, padx=500, pady=500)
-    windows.mainloop()
-    return MyFrame
-"""
-
-def addImage(windows,myphoto,position,colorFont):
+def addImage(windows,myphoto,colorFont,row,column):
 
     photo = tk.PhotoImage(file=myphoto,master=windows)
     canvas = tk.Canvas(windows,width=photo.width(), height=photo.height(),bg = 'white')
     canvas.create_image(0, 0, anchor="nw", image=photo)
-    canvas.pack(side=position)
+    canvas.grid(row=row, column=column)
     canvas.image=photo
     windows.mainloop()
 
 
 class Widgets():
 
-    def __init__(self,windows, title,position,colorFont,colorText):
+    def __init__(self,windows, title,colorFont,colorText,row,column):
         
         self.windows=windows
         self.title=title
-        self.position=position
         self.colorFont=colorFont
         self.colorText=colorText
+        self.row=row
+        self.column=column
 
 
 class ButtonDisplay(Widgets):
 
-    def __init__(self,windows, title,position,colorFont,colorText,colorSelect,function,x,y):
+    def __init__(self,windows, title,colorFont,colorText,colorSelect,function,x,y,row,column):
 
-        Widgets.__init__(self,windows,title,position,colorFont,colorText)              
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)              
         self.x=x
         self.y=y
         self.windows = windows
         self.function=function 
         self.colorSelect=colorSelect      
-        self.button= tk.Button(self.windows,anchor="center",text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,command=self.function)   
+        self.button= tk.Button(self.windows,anchor="center",text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,command=self.function)
+        self.button.grid(row=self.row, column=self.column)   
         self.button.config( width = self.x, height = self.y )
-
-        if(position!=None):            
-            self.button.pack(side=self.position)
 
 
     def enable(self):
-        self.button.config(state=tk.NORMAL)   
+        self.button.config(state=tk.NORMAL)
 
 
     def disable(self):
-        self.button.config(state=tk.DISABLED)     
-    
+        self.button.config(state=tk.DISABLED)
     
     def getState(self):
-        print(self.button['state'])
+        return self.button['state']
 
 
 class TextInput(Widgets):
 
-    def __init__(self,windows, title, position,colorFont,colorText):
+    def __init__(self,windows, title,colorFont,colorText,rowText,columnText,rowInput,columnInput):
 
-        Widgets.__init__(self,windows,title,position,colorFont,colorText)
+        Widgets.__init__(self,windows,title,colorFont,colorText,rowInput,columnInput)
         self.entry=tk.StringVar()
         self.default = "texte par défaut"
+        self.rowText=rowText
+        self.columnText=columnText
         if(self.title!=None):
             self.windows.message = tk.Label(self.windows, bg=self.colorFont,fg=self.colorText,text=self.title)
-            if(self.position == None):
-                self.windows.message.pack()
-            else :
-                self.windows.message.pack(side = self.position)
+            self.windows.message.grid(row=self.rowText, column=self.columnText)   
         self.StringText = tk.Entry(self.windows,bg=self.colorFont,fg=self.colorText,textvariable=self.entry)
         self.entry.set(self.default)
-        self.StringText.pack(side=self.position)
-
+        self.StringText.grid(row=self.row, column=self.column)   
 
     def getEntry(self):
 
@@ -94,16 +81,17 @@ class TextInput(Widgets):
 
 class Case(Widgets):
 
-    def __init__(self,windows, title, position, function,colorFont,colorText,colorSelect):
+    def __init__(self,windows, title,colorFont,colorText,colorSelect,function,row,column,default):
 
-        Widgets.__init__(self,windows,title,position,colorFont,colorText)
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
         self.state=tk.StringVar()
         self.function=function
         self.colorSelect=colorSelect
-        self.default=0
-        case = tk.Checkbutton(self.windows, text=self.title, bg=self.colorFont,fg=colorText,activebackground=colorSelect,variable=self.state,command=self.function)
+        #self.default=0
+        self.default=default
+        self.case = tk.Checkbutton(self.windows, text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,variable=self.state,command=self.function)
         self.state.set(self.default)
-        case.pack(side=self.position)    
+        self.case.grid(row=self.row, column=self.column) 
 
 
     def getState(self):
@@ -121,9 +109,9 @@ class Case(Widgets):
 
 class DropdownList(Widgets):
 
-    def __init__(self,windows, title, position, dropdownList,colorFont,colorText):
+    def __init__(self,windows, title, dropdownList,colorFont,colorText,row,column):
 
-        Widgets.__init__(self,windows,title,position,colorFont,colorText)
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
         self.dropdownList=dropdownList
         self.default=1
         self.listbox = tk.Listbox(self.windows, bg=self.colorFont,fg=colorText)
@@ -133,39 +121,37 @@ class DropdownList(Widgets):
 
         self.listbox.activate(self.default)
         self.listbox.selection_set( first = self.default )
-        self.listbox.pack(side=self.position)
+        self.listbox.grid(row=self.row, column=self.column)
 
 
     def getChoose(self):
 
         print(self.listbox.get(tk.ACTIVE))
-        #print(self.listbox.curselection())
         return self.listbox.get(tk.ACTIVE)
 
 
 class TextToPrint(Widgets):
 
-    def __init__(self,windows, title, position,colorFont,colorText):
+    def __init__(self,windows, title,colorFont,colorText,row,column):
 
-        Widgets.__init__(self,windows,title,position,colorFont,colorText)
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
         self.windows.message = tk.Label(self.windows, bg=self.colorFont, fg=self.colorText,text=self.title)
-        self.windows.message.pack(side=self.position) 
+        self.windows.message.grid(row=self.row, column=self.column) 
 
 
 class timeDisplay(Widgets):
 
-    def __init__(self,windows, title, position,colorFont,colorText):
+    def __init__(self,windows, title,colorFont,colorText,row,column):
 
-        Widgets.__init__(self,windows,title,position,colorFont,colorText)
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
         self.windows.message = tk.Label(self.windows, bg=self.colorFont, fg=self.colorText,text="")        
-        self.windows.message.pack(side=self.position)
+        self.windows.message.grid(row=self.row, column=self.column)
         self.now = time.strftime("%H:%M:%S")
 
 
     def update_clock(self):
         self.now = time.strftime("%H:%M:%S")
-        self.windows.message.configure(text=self.now)        
-        #self.windows.message.after(200, self.update_clock)
+        self.windows.message.configure(text=self.now)       
 
 
 

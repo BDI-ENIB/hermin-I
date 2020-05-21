@@ -23,17 +23,17 @@ int main(int argc, char const *argv[]) {
   AFactory factory;*/
 
   //creating a map to store all the sensors
-  std::map<int, dolmen::Sensor*> sensorList;
+  std::map<int, std::unique_ptr<dolmen::Sensor>> sensorList;
   //std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
-  //dolmen::initialise(sensorList);
+  dolmen::initialise(sensorList);
 
   //---
 
-  for (const auto &elem: sensorList)
-  {
-    std::cout << "je suis une id de sensor " << elem.first << "\n";
-    std::cout << "je suis une id de sensor " << elem.second->getID() << "\n";
-  }
+    for (const auto &elem: sensorList)
+    {
+      std::cout << "depuis prog------je suis une id de sensor " << elem.second->getID() << "\n";
+      std::cout << "depuis prog------je suis un nom de sensor " << elem.second->getName() << "\n";
+    }
 
   //reading the data trame
   if(trame)

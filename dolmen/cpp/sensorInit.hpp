@@ -18,7 +18,7 @@ namespace dolmen
   //using AFactory = FactorySensor<std::string, std::unique_ptr<Sensor>, int, std::string>;
 
   //this file is used to create all the new sensors, the user will only need to modify this one
-  inline void initialise(std::map<int, dolmen::Sensor*> &sensorList)
+  inline void initialise(std::map<int, std::unique_ptr<dolmen::Sensor>>& sensorList)
   {
     //creating a factory element
     using AFactory = FactorySensor<std::string, std::unique_ptr<Sensor>, int, std::string>;
@@ -37,15 +37,16 @@ namespace dolmen
     factory.registe("temp_sensor", [](int arg1, std::string arg2) { return std::make_unique<Temperature>(arg1,arg2); });
     std::unique_ptr<Sensor> temperature = factory.create("temp_sensor", 01, "temp");
     sensor = temperature.get();
-    sensorList.insert(std::make_pair(sensor->getID(), sensor));
+    //sensorList.insert(std::make_pair(sensor->getID(), sensor));
+    sensorList.insert(std::make_pair(sensor->getID(), std::move(temperature)));
     //creating a gyroscope sensor
     factory.registe("gyro_sensor", [](int arg1, std::string arg2) { return std::make_unique<Gyroscope>(arg1,arg2); });
     std::unique_ptr<Sensor> gyroscope = factory.create("gyro_sensor", 06, "gyro");
     sensor = nullptr;
     sensor = gyroscope.get();
-    sensorList.insert(std::make_pair(sensor->getID(), sensor));
+    sensorList.insert(std::make_pair(sensor->getID(), std::move(gyroscope)));
     //creating an acceleration sensor
-    factory.registe("acc_sensor", [](int arg1, std::string arg2) { return std::make_unique<Acceleration>(arg1,arg2); });
+    /*factory.registe("acc_sensor", [](int arg1, std::string arg2) { return std::make_unique<Acceleration>(arg1,arg2); });
     std::unique_ptr<Sensor> acceleration = factory.create("acc_sensor", 03, "acc");
     sensor = nullptr;
     sensor = acceleration.get();
@@ -67,17 +68,15 @@ namespace dolmen
     std::unique_ptr<Sensor> altitude = factory.create("altitude_sensor", 05, "altitude");
     sensor = nullptr;
     sensor = altitude.get();
-    sensorList.insert(std::make_pair(sensor->getID(), sensor));
+    sensorList.insert(std::make_pair(sensor->getID(), sensor));*/
 
 
     for (const auto &elem: sensorList)
     {
-      std::cout << "------je suis une id de sensor " << elem.second->getID() << "\n";
-      std::cout << "------je suis une id de sensor " << elem.second->getName() << "\n";
+      std::cout << "depuis sensorinit------je suis une id de sensor " << elem.second->getID() << "\n";
+      std::cout << "depuis sensorinit------je suis un nom de sensor " << elem.second->getName() << "\n";
     }
   }
-
-
 
 } /* dolmen */
 

@@ -1,4 +1,7 @@
 #from tkinter import *
+import Config
+import logging
+import time
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -46,6 +49,7 @@ class Windows(tk.Frame):
 def exit():
 
     if(messageAskyesno("Quit", "Do you want to quit?")):
+            logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' Exit Dolmen')
             sys.exit()  
     else:
         return
@@ -98,7 +102,9 @@ def askopenfilename(figure,path):
             print(figure.file)
             return True
     except:
-        print("No file exists")
+        
+        
+        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' No file chosen')
         messageShowwarning("Open Filename", "Warning, you must choose a file ")
         return False
     

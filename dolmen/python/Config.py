@@ -4,12 +4,14 @@ import Widgets
 import Graph
 import Dolmen
 import csv
+import logging
+import time
 from matplotlib.animation import FuncAnimation
 
 PATH = "/home/axeln/hermin-I/dolmen/python"
 NAME = "report.csv"
 UPDATE_DELAY = 1000
-
+LOG_FILE = 'dolmen.log'
 #Windows color
 colorFont = "white"
 colorText = "black"
@@ -188,7 +190,7 @@ def choose_fire_mode(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
-    
+        
     #Creating fire_mode_interface windows
     fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,350,100,lambda:home_Function(fire_mode_interface),2,3)
 
@@ -207,6 +209,7 @@ def fire_Function_offline(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
 
+    logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' Entering in offline mode')
     #import data
     if Windows.askopenfilename(Dolmen.figure,PATH):
     
@@ -248,7 +251,7 @@ def fire_Function_online(last_windows):
         last_windows.windows.destroy()
 
     
-    
+    logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' Entering in online mode')
     #Creating fire_interface windows
     fire__online_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__online_interface),4,9) 
         

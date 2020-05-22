@@ -5,6 +5,7 @@ import os.path
 import Config
 import csv
 import time
+import logging
 
 #My figure creation
 figure=Graph.Graph(20,8,3,3,[4,4,4],[4,2,2])
@@ -57,6 +58,7 @@ def decodingCSV():
                 f1.y[0].append(float(line_split[j+2])) # adding sensors's data in graph
 
             else : # if there are not sensors's data
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors temp1')
                 f1.y[0].append(0) # adding 0 in graph           
             
                     
@@ -67,6 +69,7 @@ def decodingCSV():
                 f1.y[1].append(float(line_split[j+2])) # adding sensors's data in graph
 
             else : # if there are not sensors's data
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors temp2')
                 f1.y[1].append(0) # adding 0 in graph    
                  
         
@@ -77,6 +80,7 @@ def decodingCSV():
                 f2.y[0].append(float(line_split[j+2])) # adding sensors's data in graph
 
             else : # if there are not sensors's data
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors presure1')
                 f2.y[0].append(0) # adding 0 in graph    
             
                 
@@ -87,6 +91,7 @@ def decodingCSV():
                 f2.y[1].append(float(line_split[j+2])) # adding sensors's data in graph
 
             else : # if there are not sensors's data
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors presure2')
                 f2.y[1].append(0) # adding 0 in graph    
             
                    
@@ -100,7 +105,8 @@ def decodingCSV():
                 f3.z.append(float(line_split[j+4]))
 
             else: # if x or y or z sensors's data are empty
-                # adding 0 in graph   
+                # adding 0 in graph  
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors acc')
                 f3.x.append(0)
                 f3.y.append(0)
                 f3.z.append(0)
@@ -116,6 +122,7 @@ def decodingCSV():
 
             else: # if x or y or z sensors's data are empty
                 # adding 0 in graph   
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in gyro sensors temp1')
                 f4.x.append(0)
                 f4.y.append(0)
                 f4.z.append(0)
@@ -129,30 +136,36 @@ def decodingCSV():
             if sensors[i][0]=='temp1':
                 f1.y[0].append(0)
                 print("no sensors temp1")
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors temp1')
 
             if sensors[i][0]=='temp2':
                 f1.y[1].append(0)
                 print("no sensors temp2")
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors temp2')
 
             if sensors[i][0]=='pressure1':
                 f2.y[0].append(0)
                 print("no sensors pressure1")
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors pressure1')
 
             if sensors[i][0]=='pressure2':
                 f2.y[1].append(0)
                 print("no sensors pressure2") 
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors pressure2')
 
             if sensors[i][0]=='acc':
                 f3.x.append(0)
                 f3.y.append(0)
                 f3.z.append(0)
                 print("no sensors acc")  
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors acc')
                 
             if sensors[i][0]=='gyro':
                 f4.x.append(0)
                 f4.y.append(0)
                 f4.z.append(0)
-                print("no sensors gyro")      
+                print("no sensors gyro")  
+                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors gyro')
         
         else: # Reseting if sensors was processed
             sensors[i].pop() 
@@ -171,6 +184,7 @@ def fileExist(start_button,stop_button,figure):
     except:     
         condition =  False
         Windows.messageShowwarning("Open Filename", "Warning, Problem detected with CSV file ")
+        logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' problem with CSV file')
 
         return False
 
@@ -212,8 +226,9 @@ def state_set_communication(start_button,stop_button,state):
     global state_communication
     #if the user click on the start button
     if(state==True):
+        logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' start decoding')
         state_communication=True
-
+        
         #disable start button
         start_button.disable()
 
@@ -223,6 +238,7 @@ def state_set_communication(start_button,stop_button,state):
 
     elif(state==False):
         if (Windows.messageAskyesno("End of data receive", "Do you want to stop the data receive ?")):
+            logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' stop decoding')
             state_communication=False
 
             #enable start button
@@ -234,17 +250,20 @@ def state_set_communication(start_button,stop_button,state):
 
 
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_arg1,sensor_add_arg1_type,sensor_add_arg2,sensor_add_arg2_type,sensor_add_arg3,sensor_add_arg3_type,sensor_add_arg4,sensor_add_arg4_type):
-    
+    logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' entering in add sensor mode')
     save_condition = True
 
     if(sensor_add_name.getEntry()==""):
+        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' sensor name error')
         Windows.messageShowerror("Name error","Please enter the sensor's name")
         save_condition=False
 
     #check that the sensor does not already exist
     if(os.path.isfile(sensor_add_name.getEntry() + ".hpp")):
+        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' sensor name already exit')
         Windows.messageShowerror("Name error",sensor_add_name.getEntry() + " sensor already exist. Please change the sensor's name")
         save_condition=False
+        
 
     #check that for the given arguments their type is given
     if(len(sensor_add_arg1.getEntry())!=0 and len(sensor_add_arg1_type.getEntry())==0 or
@@ -252,6 +271,7 @@ def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_ar
        len(sensor_add_arg3.getEntry())!=0 and len(sensor_add_arg3_type.getEntry())==0 or
        len(sensor_add_arg4.getEntry())!=0 and len(sensor_add_arg4_type.getEntry())==0):
         save_condition=False
+        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensor argument type given')
         Windows.messageShowerror("Argument error","Please enter the type of argument given ")
 
     #check that for the given arguments their name is given
@@ -260,6 +280,7 @@ def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_ar
        len(sensor_add_arg3.getEntry())==0 and len(sensor_add_arg3_type.getEntry())!=0 or
        len(sensor_add_arg4.getEntry())==0 and len(sensor_add_arg4_type.getEntry())!=0):
         save_condition=False
+        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensor argument name given')
         Windows.messageShowerror("Argument error","Please enter the name of argument given ")
 
     #if no error, create the hpp
@@ -341,6 +362,8 @@ def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_ar
 #endif
 """)
             hpp.close()
+            
+            logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' sensor ' + str(sensor_add_name.getEntry()) +" generated")
             Windows.messageShowinfo("Sensor generation",sensor_add_name.getEntry() + " sensor generation successfully created. Do not forget to complete the decoding function of this class")
             Config.sensors_management_Function(add_sensor_interface)
 

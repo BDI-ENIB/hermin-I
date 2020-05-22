@@ -3,31 +3,20 @@ import Widgets
 import Graph
 import os.path
 import Config
+import Sensors
 import csv
 import time
 import logging
 
-#My figure creation
-figure=Graph.Graph(20,8,3,3,[4,4,4],[4,2,2])
-myFigure = figure.figure
-f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator",["blue","red"],["Sensor 1","Sensor 2"],[-45, 45],2)
-f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression",["red","green"],["Sensor 1","Sensor 2"],[-50, 50],2)
-f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x acceleration","y acceleration","z acceleration",'o','red',(-10,10),(-10,10),(-10,10),[],[],[],False)
-f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x gyroscope","y gyroscope","z gyroscope",'o','black',(-10,10),(-10,10),(-10,10),[],[],[],False)
-#f5= Graph.Graph3dGPS(figure,figure.grid[0, 2],"GPS","x","y","z",'o','black',(-1000,1000),(-1000,1000),(-1000,1000),[],[],[])
-f5= Graph.Graph3d(figure,figure.grid[0, 2],"GPS","x","y","z",'o','black',(-1000,1000),(-1000,1000),(-1000,1000),[],[],[],True)
-myGraph=[f1,f2,f3,f4,f5]
-
-sensors = [["temp1",False],["temp2",False],["pressure1",False],["pressure2",False],["acc",False],["gyro",False]]
 
 count=0 # current line in CSV
 state_communication=False
 
 def decodingCSV():
 
-    global count, state_communication,sensors
+    global count, state_communication
    
-    filename = open(figure.file, 'r', encoding='latin1')
+    filename = open(Config.figure.file, 'r', encoding='latin1')
           
     reader = csv.reader(filename, delimiter=';')
     # Data Processing
@@ -41,135 +30,19 @@ def decodingCSV():
 
     for i in lines[count]:
         line_split=i.split(",")
-
-    # line split processing
+        
     for j in range(0,len(line_split)):
     
         if line_split[j]=='time': #time decoding and processing
-
             x=float(line_split[j+2])
-            f1.x.append(x)
-            f2.x.append(x) 
-             
-        if line_split[j]=='temp1': #if sensor is detected
-
-            sensors[0][1] = True # sensors data is processed
-            if str(line_split[j+2]) !="": # if there are sensors's data
-                f1.y[0].append(float(line_split[j+2])) # adding sensors's data in graph
-
-            else : # if there are not sensors's data
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors temp1')
-                f1.y[0].append(0) # adding 0 in graph           
+            Config.f1.x.append(x)
+            Config.f2.x.append(x) 
             
-                    
-        if line_split[j]=='temp2': #if sensor is detected
-
-            sensors[1][1] = True # sensors data is processed
-            if str(line_split[j+2])!="": # if there are sensors's data
-                f1.y[1].append(float(line_split[j+2])) # adding sensors's data in graph
-
-            else : # if there are not sensors's data
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors temp2')
-                f1.y[1].append(0) # adding 0 in graph    
-                 
-        
-        if line_split[j]=='pressure1': #if sensor is detected
-
-            sensors[2][1] = True # sensors data is processed
-            if str(line_split[j+2])!="": # if there are sensors's data
-                f2.y[0].append(float(line_split[j+2])) # adding sensors's data in graph
-
-            else : # if there are not sensors's data
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors presure1')
-                f2.y[0].append(0) # adding 0 in graph    
+    for sensor in Config.sensors:
+            sensor.decoding(line_split)
+    for sensor in Config.sensors:
+            sensor.verifing()   
             
-                
-        if line_split[j]=='pressure2': #if sensor is detected
-
-            sensors[3][1] = True # sensors data is processed
-            if str(line_split[j+2])!="": # if there are sensors's data
-                f2.y[1].append(float(line_split[j+2])) # adding sensors's data in graph
-
-            else : # if there are not sensors's data
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors presure2')
-                f2.y[1].append(0) # adding 0 in graph    
-            
-                   
-        if line_split[j]=='acc': #if sensor is detected
-
-            sensors[4][1] = True # sensors data is processed
-            if str(line_split[j+2])!="" and str(line_split[j+3])!="" and str(line_split[j+4])!="": # if x, y, z sensors's data are not empty
-                # adding sensors's data in graph
-                f3.x.append(float(line_split[j+2]))
-                f3.y.append(float(line_split[j+3]))
-                f3.z.append(float(line_split[j+4]))
-
-            else: # if x or y or z sensors's data are empty
-                # adding 0 in graph  
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors acc')
-                f3.x.append(0)
-                f3.y.append(0)
-                f3.z.append(0)
-
-        if line_split[j]=='gyro': #if sensor is detected
-
-            sensors[5][1] = True # sensors data is processed
-            if str(line_split[j+2])!="" and str(line_split[j+3])!="" and str(line_split[j+4])!="": # if x, y, z sensors's data are not empty
-                # adding sensors's data in graph
-                f4.x.append(float(line_split[j+2]))
-                f4.y.append(float(line_split[j+3]))
-                f4.z.append(float(line_split[j+4]))
-
-            else: # if x or y or z sensors's data are empty
-                # adding 0 in graph   
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in gyro sensors temp1')
-                f4.x.append(0)
-                f4.y.append(0)
-                f4.z.append(0)
-
-    # Verifing if sensors was processed
-    for i in range(0,len(sensors)):
-
-        # If sensors was not processed
-        if sensors[i][1]==False :
-
-            if sensors[i][0]=='temp1':
-                f1.y[0].append(0)
-                print("no sensors temp1")
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors temp1')
-
-            if sensors[i][0]=='temp2':
-                f1.y[1].append(0)
-                print("no sensors temp2")
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors temp2')
-
-            if sensors[i][0]=='pressure1':
-                f2.y[0].append(0)
-                print("no sensors pressure1")
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors pressure1')
-
-            if sensors[i][0]=='pressure2':
-                f2.y[1].append(0)
-                print("no sensors pressure2") 
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors pressure2')
-
-            if sensors[i][0]=='acc':
-                f3.x.append(0)
-                f3.y.append(0)
-                f3.z.append(0)
-                print("no sensors acc")  
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors acc')
-                
-            if sensors[i][0]=='gyro':
-                f4.x.append(0)
-                f4.y.append(0)
-                f4.z.append(0)
-                print("no sensors gyro")  
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors gyro')
-        
-        else: # Reseting if sensors was processed
-            sensors[i].pop() 
-            sensors[i].append(False)
     #update line        
     count+=1
 
@@ -178,7 +51,7 @@ def decodingCSV():
 def fileExist(start_button,stop_button,figure):
 
     try:
-        with open(figure.file,'r',encoding='latin1') as filename:
+        with open(Config.figure.file,'r',encoding='latin1') as filename:
             return  True
 
     except:     
@@ -191,27 +64,33 @@ def fileExist(start_button,stop_button,figure):
 
 def updateOffline(i):
 
-    global myGraph,state_communication,figure
+    global state_communication
 
-    if(state_communication==True and fileExist(start_button,stop_button,figure)==True): #if you click on the start button of fire_interface windows and csv name exist
+    if(state_communication==True and fileExist(start_button,stop_button,Config.figure)==True): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
         if(state_communication==True): 
-            for graph in myGraph:               
-                graph.animate() # update graph
+            for sensor in Config.sensors:
+                sensor.graph.animate()# update graph
 
 
 def updateOnline(i,start_button,stop_button):
-    global myGraph,state_communication,figure
+    global state_communication
 
-    if(state_communication==True and fileExist(start_button,stop_button,figure)==True): #if you click on the start button of fire_interface windows and csv name exist
+    if(state_communication==True and fileExist(start_button,stop_button,Config.figure)==True): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
-        if(state_communication==True): 
-            for graph in myGraph:               
-                graph.animate() # update graph
-            
+        if(state_communication==True):
+            for sensor in Config.sensors:
+                sensor.graph.animate()# update graph
+                
+def clearFigure():
+    global count
+    count=0
+    for sensor in Config.sensors:
+        sensor.graph.reset()
+                
 def report_Function():
 
-    global myfigure,state_communication
+    global state_communication
 
     if (state_communication == False):
         myFigure.savefig('reportTest.png')

@@ -3,6 +3,7 @@ import Windows
 import Widgets
 import Graph
 import Dolmen
+import Sensors
 import csv
 import logging
 import time
@@ -17,7 +18,26 @@ colorFont = "white"
 colorText = "black"
 colorSelect = "grey"
 
+#My figure creation
+figure=Graph.Graph(20,8,3,3,[4,4,4],[4,2,2])
+myFigure = figure.figure
+f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator",["blue","red"],["Sensor 1","Sensor 2"],[-45, 45],2)
+f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression",["red","green"],["Sensor 1","Sensor 2"],[-50, 50],2)
+f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x acceleration","y acceleration","z acceleration",'o','red',(-10,10),(-10,10),(-10,10),False)
+f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x gyroscope","y gyroscope","z gyroscope",'o','black',(-10,10),(-10,10),(-10,10),False)
+#f5= Graph.Graph3dGPS(figure,figure.grid[0, 2],"GPS","x","y","z",'o','black',(-1000,1000),(-1000,1000),(-1000,1000),[],[],[])
+f5= Graph.Graph3d(figure,figure.grid[0, 2],"GPS","x","y","z",'o','black',(-1000,1000),(-1000,1000),(-1000,1000),True)
 
+#sensors Creation
+temp1=Sensors.Sensors("temp1",False,0,False,f1)
+temp2=Sensors.Sensors("temp2",False,1,False,f1)
+pressure1=Sensors.Sensors("pressure1",False,0,False,f2)
+pressure2=Sensors.Sensors("pressure2",False,1,False,f2)
+acc = Sensors.Sensors("acc",False,0,True,f3)
+gyro = Sensors.Sensors("gyro",False,0,True,f4)
+
+#create sensors list
+sensors = [temp1,temp2,pressure1,pressure2,acc,gyro]
 
 
 def home_Function(last_windows):
@@ -190,7 +210,7 @@ def choose_fire_mode(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
-        
+    Dolmen.clearFigure();    
     #Creating fire_mode_interface windows
     fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,350,100,lambda:home_Function(fire_mode_interface),2,3)
 
@@ -211,13 +231,13 @@ def fire_Function_offline(last_windows):
 
     logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' Entering in offline mode')
     #import data
-    if Windows.askopenfilename(Dolmen.figure,PATH):
+    if Windows.askopenfilename(figure,PATH):
     
         #Creating fire_interface windows
         fire__offline_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__offline_interface),3,9) 
         
         #Adding graph  
-        Dolmen.figure.addToWindows(fire__offline_interface,1,1,8,2,9)  
+        figure.addToWindows(fire__offline_interface,1,1,8,2,9)  
 
         start_button=None
         stop_button=None
@@ -235,7 +255,7 @@ def fire_Function_offline(last_windows):
         stop_button.disable()
 
         #updating graph 
-        ani = FuncAnimation(Dolmen.myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=100, interval=UPDATE_DELAY, repeat=False) #or ani = FuncAnimation(plt.gcf(), update, 200)
+        ani = FuncAnimation(myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=100, interval=UPDATE_DELAY, repeat=False) #or ani = FuncAnimation(plt.gcf(), update, 200)
         fire__offline_interface.windows.mainloop()
         #fire__offline_interface.destroy()
 
@@ -256,7 +276,7 @@ def fire_Function_online(last_windows):
     fire__online_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__online_interface),4,9) 
         
     #Adding graph  
-    Dolmen.figure.addToWindows(fire__online_interface,1,1,8,4,7)  
+    figure.addToWindows(fire__online_interface,1,1,8,4,7)  
 
 
     start_button=None
@@ -273,10 +293,10 @@ def fire_Function_online(last_windows):
 
     #disable stop button
     stop_button.disable()
-    Dolmen.figure.file = NAME
+    figure.file = NAME
 
     #updating graph     
-    ani = FuncAnimation(Dolmen.myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=100, interval=UPDATE_DELAY, repeat=False) #or ani = FuncAnimation(plt.gcf(), update, 200) 
+    ani = FuncAnimation(myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=100, interval=UPDATE_DELAY, repeat=False) #or ani = FuncAnimation(plt.gcf(), update, 200) 
     
 
     fire__online_interface.windows.mainloop()

@@ -44,7 +44,9 @@ class Graph():
         self.toolbarFrame.grid(row=self.rowToolbar,column=self.columnToolbar)
         toolbar = NavigationToolbar2Tk( self.canvas, self.toolbarFrame)
         toolbar.update()
-
+        
+    
+        
 
 class GraphPlot():
 
@@ -59,7 +61,7 @@ class GraphPlot():
         self.x=[]
         self.y=[]
         self.numberGraph=numberGraph
-        for i in range(0,numberGraph):
+        for i in range(0,self.numberGraph):
             self.y.append([])
         self.label=label
         self.index = count()
@@ -86,15 +88,22 @@ class GraphPlot():
                 self.figure.legend(loc="lower left")
             else :
                 self.figure.plot(self.x, self.y[i],color = self.color[i])
-
+                
+    def reset(self):
+        self.figure.cla()
+        self.x=[]
+        self.y=[]
+        for i in range(0,self.numberGraph):
+            self.y.append([])
+            
 class Graph3d():
 
-    def __init__(self,fig,position,title,titleX,titleY,titleZ,marker,color,xlim,ylim,zlim,x,y,z,typeGraph):
+    def __init__(self,fig,position,title,titleX,titleY,titleZ,marker,color,xlim,ylim,zlim,typeGraph):
 
         self.figure = fig.figure.add_subplot(position,projection='3d')
-        self.x=x
-        self.y=y
-        self.z=z         
+        self.x=[]
+        self.y=[]
+        self.z=[]        
         self.title=title
         self.titleX=titleX
         self.titleY=titleY
@@ -162,7 +171,12 @@ class Graph3d():
     str(self.titleZ) + " = " + str(self.z[-1]) + """  
     """,linestyle='--', marker=self.marker)
 
-            self.figure.legend(loc="best") 
+            self.figure.legend(loc="best")
+    def reset(self):
+        self.figure.cla()
+        self.x=[]
+        self.y=[]
+        self.z=[]
             
 """        
 class Graph3dGPS():

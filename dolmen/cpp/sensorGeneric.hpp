@@ -10,45 +10,26 @@ namespace dolmen
   class SensorGeneric : public Sensor
   {
     public :
-    SensorGeneric (int id, std::string name):
-    Sensor{id,name}{}
+    SensorGeneric (int id, std::string name);
 
-    ~SensorGeneric(){}
+    void decoding(const std::string data) override;
 
-    double getSensorGeneric()
+    std::string getColumnIdentifiers() override
     {
-      return sensorGeneric_;
+      //change this name by the name which will appear in the .csv column
+      return "SensorGeneric";
     }
 
-    void setSensorGeneric(double newSensorGeneric)
+    int getNbAttr() override
     {
-      sensorGeneric_=newSensorGeneric;
+      //change this number by the number of returned values of your sensor
+      return 1;
     }
-
-    void decoding(const std::string data) override
-    {
-      int id = getID();
-      if (data.length() == /*to complete*/ && data[/*to complete*/] == ';')
-      {
-        //
-      }
-      else
-      {
-        std::cout << "\nerror: bad data format";
-      }
-    }
-
-    std::string toCsv() override
-    {
-      std::string dataTxt;
-      dataTxt += std::to_string(sensorGeneric_);
-      dataTxt += ",";
-      return dataTxt;
-    }
-
-    private :
-    double sensorGeneric_;
   };
 }
 
 #endif
+
+
+
+

@@ -73,44 +73,22 @@ namespace dolmen
       int i = 0;
       for (std::pair<std::string, double> elem2 : processed_data)
       {
+        //writing the data
+        //columnValueTxt+= std::get<0>(elem2);
+        //columnValueTxt+= ";";
         columnValueTxt+= std::to_string(std::get<1>(elem2));
         columnValueTxt+= ";";
+        //this prevents to write a longer line than the number of datas
         if(i >= elem->getNbAttr()-1)
         {
           break;
         }
-        /*if(i < elem->getNbAttr())
-        {
-          columnValueTxt+= ";";
-        }
-        else
-        {
-          columnValueTxt+= "\n";
-        }*/
         i+=1;
-        found = true;
       }
-      //if there is a problem and data can't be decoded, the lines are completed with blank cases, to avoid a shift in the csv datas
-      /*i=0;
-      for (int j=0; j<max;j++)
-      {
-        if(i < elem->getNbAttr())
-        {
-          columnValueTxt+= ";";
-        }
-        else
-        {
-          columnValueTxt+= "\n";
-        }
-        i++;
-      }*/
+      //adding a blank case between each sensor
       columnValueTxt+= ";";
+      //adding the sensors datas to the .csv
       dataTxt+=columnValueTxt;
-      if (found == false)
-      {
-        //error to add
-        std::cout<<"\n ---error: unknown sensor--- \n";
-      }
     }
     else
     {

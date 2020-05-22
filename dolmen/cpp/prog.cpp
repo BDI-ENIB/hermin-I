@@ -89,6 +89,20 @@ int main(int argc, char const *argv[]) {
     std::string line;
     while(std::getline(trame,line))
     {
+      usleep(1000000);
+      //---
+      time_t secondes;
+      struct tm instant;
+
+      time(&secondes);
+      instant=*localtime(&secondes);
+
+      printf("%d/%d ; %d:%d:%d\n", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
+
+      //---
+
+
+      std::cout << "\ntime: " << time(0) << " data: "<< line;
       //extracting data from each line
       //dataTxtLine is used to detect the empty lines
       std::string dataTxtLine;
@@ -102,7 +116,6 @@ int main(int argc, char const *argv[]) {
         {
           //adding the processed datas
           dataTxtLine += DolMen.decoding(data, sensorList);
-          usleep(1000000);
           data = "";
         }
       }
@@ -123,5 +136,6 @@ int main(int argc, char const *argv[]) {
     //error to add later
     std::cout << "unable to open the file";
   }
+  std::cout << "\n";
   return 0;
 }

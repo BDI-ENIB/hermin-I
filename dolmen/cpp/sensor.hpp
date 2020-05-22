@@ -41,7 +41,6 @@ namespace dolmen
       //each sensor does have name for each column
       virtual std::string getColumnIdentifiers() = 0;
 
-      //[UNUSED]
       //each sensor does have a known number of columns
       virtual int getNbAttr() = 0;
 

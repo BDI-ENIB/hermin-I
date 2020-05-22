@@ -7,6 +7,7 @@
 #include <fstream>
 #include <map>
 #include <memory>
+#include <time.h>
 
 #include "factorySensor.hpp"
 

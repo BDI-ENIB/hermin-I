@@ -12,6 +12,7 @@
 #include "altitude.hpp"
 #include "gps.hpp"
 #include "pressure.hpp"
+#include "time.hpp"
 
 namespace dolmen
 

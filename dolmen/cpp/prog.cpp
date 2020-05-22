@@ -2,12 +2,14 @@
 #include <iostream>
 #include <memory>
 #include <fstream>
+#include <time.h>
 
 #include "dolmen.hpp"
 
 //---USEFUL THINGS
 
-
+#include <cstdlib>
+#include <unistd.h>
 
 //---MAIN FUNCTION
 
@@ -19,7 +21,6 @@ int main(int argc, char const *argv[]) {
   std::ifstream trame("trame.txt");
   std::ofstream ofs{"report.csv"};
   std::string dataTxt;
-
 
 //---
 
@@ -35,6 +36,13 @@ int main(int argc, char const *argv[]) {
   dolmen::Sensor* sensor = nullptr;
 
   //the ksp project uses: 00 time / 01 temperature / 02 pressure / 03 acceleration/ 04 gps/ 05 altitude/ 06 gyroscope
+
+  //creating the clock
+  factory.registe("clk", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Time>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> clock = factory.create("clk", 00, "clk");
+  sensor = clock.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+
 
   //creating a temperature sensor
   factory.registe("temp_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Temperature>(arg1,arg2); });
@@ -94,6 +102,7 @@ int main(int argc, char const *argv[]) {
         {
           //adding the processed datas
           dataTxtLine += DolMen.decoding(data, sensorList);
+          usleep(1000000);
           data = "";
         }
       }

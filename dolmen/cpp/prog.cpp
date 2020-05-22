@@ -5,6 +5,12 @@
 
 #include "dolmen.hpp"
 
+//---USEFUL THINGS
+
+
+
+//---MAIN FUNCTION
+
 int main(int argc, char const *argv[]) {
   //creating a dolmen element
   dolmen::Dolmen DolMen;
@@ -14,26 +20,59 @@ int main(int argc, char const *argv[]) {
   std::ofstream ofs{"report.csv"};
   std::string dataTxt;
 
-  //std::map<int, dolmen::Sensor*> sensorList = dolmen::initialise();
-  //std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
 
+//---
 
   //creating a factory element
-  /*using AFactory = dolmen::FactorySensor<std::string, std::unique_ptr<dolmen::Sensor>, int, std::string>;
-  AFactory factory;*/
+  using AFactory = dolmen::FactorySensor<std::string, std::unique_ptr<dolmen::Sensor>, int, std::string>;
+  AFactory factory;
 
   //creating a map to store all the sensors
-  std::map<int, std::unique_ptr<dolmen::Sensor>> sensorList;
-  //std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
-  dolmen::initialise(sensorList);
+  std::map<int, dolmen::Sensor*> sensorList = std::map<int, dolmen::Sensor*>();
 
-  //---
+  //---to change to a for---
+  //this is a pointer to a sensor element, used to move the sensors from the factory to our map
+  dolmen::Sensor* sensor = nullptr;
 
-    for (const auto &elem: sensorList)
-    {
-      std::cout << "depuis prog------je suis une id de sensor " << elem.second->getID() << "\n";
-      std::cout << "depuis prog------je suis un nom de sensor " << elem.second->getName() << "\n";
-    }
+  //the ksp project uses: 00 time / 01 temperature / 02 pressure / 03 acceleration/ 04 gps/ 05 altitude/ 06 gyroscope
+
+  //creating a temperature sensor
+  factory.registe("temp_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Temperature>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> temperature = factory.create("temp_sensor", 01, "temp");
+  sensor = temperature.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+  //creating a gyroscope sensor
+  factory.registe("gyro_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Gyroscope>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> gyroscope = factory.create("gyro_sensor", 06, "gyro");
+  sensor = nullptr;
+  sensor = gyroscope.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+  //creating an acceleration sensor
+  factory.registe("acc_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Acceleration>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> acceleration = factory.create("acc_sensor", 03, "acc");
+  sensor = nullptr;
+  sensor = acceleration.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+  //creating a gps sensor
+  factory.registe("gps_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Gps>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> gps = factory.create("gps_sensor", 04, "gps");
+  sensor = nullptr;
+  sensor = gps.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+  //creating a pressure sensor
+  factory.registe("pressure_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Pressure>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> pressure = factory.create("pressure_sensor", 02, "pressure");
+  sensor = nullptr;
+  sensor = pressure.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+  //creating an altitude sensor
+  factory.registe("altitude_sensor", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Altitude>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> altitude = factory.create("altitude_sensor", 05, "altitude");
+  sensor = nullptr;
+  sensor = altitude.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+
+//---
 
   //reading the data trame
   if(trame)

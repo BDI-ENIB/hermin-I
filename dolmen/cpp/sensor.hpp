@@ -11,7 +11,7 @@ namespace dolmen
   template <class T> class Prototype
   {
   public:
-    virtual ~Prototype(){}
+    virtual ~Prototype() = default;                        //destructeur
   };
 
   //creating an abstract class (+- interface) for our sensors
@@ -19,6 +19,10 @@ namespace dolmen
   {
   public:
       Sensor (int id, std::string name):id{id},name{name}{}
+      Sensor(const Sensor &) = default;            //constructeur par recopie
+      Sensor(Sensor &&) = default;                 //constructeur par déplacement
+      Sensor& operator=(const Sensor &) = default; //affectation par recopie
+      Sensor& operator=(Sensor &&) = default;      //affectation par déplacement
 
       virtual void decoding(const std::string data) = 0;
 

@@ -14,37 +14,38 @@
 #include "pressure.hpp"
 
 namespace dolmen
+
 {
   //using AFactory = FactorySensor<std::string, std::unique_ptr<Sensor>, int, std::string>;
 
   //this file is used to create all the new sensors, the user will only need to modify this one
-  inline void initialise(std::map<int, std::unique_ptr<dolmen::Sensor>>& sensorList)
-  {
+//  inline void initialise(std::map<int, std::unique_ptr<dolmen::Sensor>>& sensorList)
+//  {
     //creating a factory element
-    using AFactory = FactorySensor<std::string, std::unique_ptr<Sensor>, int, std::string>;
-    AFactory factory;
+//    using AFactory = FactorySensor<std::string, std::unique_ptr<Sensor>, int, std::string>;
+//    AFactory factory;
 
     /*//creating a map to store all the sensors
     std::map<int, Sensor*> sensorList = std::map<int, Sensor*>();*/
 
     //---to change to a for---
     //this is a pointer to a sensor element, used to move the sensors from the factory to our map
-    Sensor* sensor = nullptr;
+//    Sensor* sensor = nullptr;
 
     //the ksp project uses: 00 time / 01 temperature / 02 pressure / 03 acceleration/ 04 gps/ 05 altitude/ 06 gyroscope
 
     //creating a temperature sensor
-    factory.registe("temp_sensor", [](int arg1, std::string arg2) { return std::make_unique<Temperature>(arg1,arg2); });
-    std::unique_ptr<Sensor> temperature = factory.create("temp_sensor", 01, "temp");
-    sensor = temperature.get();
+//    factory.registe("temp_sensor", [](int arg1, std::string arg2) { return std::make_unique<Temperature>(arg1,arg2); });
+//    std::unique_ptr<Sensor> temperature = factory.create("temp_sensor", 01, "temp");
+//    sensor = temperature.get();
     //sensorList.insert(std::make_pair(sensor->getID(), sensor));
-    sensorList.insert(std::make_pair(sensor->getID(), std::move(temperature)));
+//    sensorList.insert(std::make_pair(sensor->getID(), std::move(temperature)));
     //creating a gyroscope sensor
-    factory.registe("gyro_sensor", [](int arg1, std::string arg2) { return std::make_unique<Gyroscope>(arg1,arg2); });
+    /*factory.registe("gyro_sensor", [](int arg1, std::string arg2) { return std::make_unique<Gyroscope>(arg1,arg2); });
     std::unique_ptr<Sensor> gyroscope = factory.create("gyro_sensor", 06, "gyro");
     sensor = nullptr;
     sensor = gyroscope.get();
-    sensorList.insert(std::make_pair(sensor->getID(), std::move(gyroscope)));
+    sensorList.insert(std::make_pair(sensor->getID(), std::move(gyroscope)));*/
     //creating an acceleration sensor
     /*factory.registe("acc_sensor", [](int arg1, std::string arg2) { return std::make_unique<Acceleration>(arg1,arg2); });
     std::unique_ptr<Sensor> acceleration = factory.create("acc_sensor", 03, "acc");
@@ -70,13 +71,14 @@ namespace dolmen
     sensor = altitude.get();
     sensorList.insert(std::make_pair(sensor->getID(), sensor));*/
 
-
+/*
     for (const auto &elem: sensorList)
     {
       std::cout << "depuis sensorinit------je suis une id de sensor " << elem.second->getID() << "\n";
       std::cout << "depuis sensorinit------je suis un nom de sensor " << elem.second->getName() << "\n";
     }
-  }
+*/
+//  }
 
 } /* dolmen */
 

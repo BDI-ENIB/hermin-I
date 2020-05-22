@@ -7,7 +7,7 @@ namespace dolmen
   Dolmen::Dolmen(){}
 
   //std::string Dolmen::decoding(std::string data, std::map<int, std::unique_ptr<dolmen::Sensor>> sensors_list);
-  std::string Dolmen::decoding(std::string data, std::map<int, std::unique_ptr<dolmen::Sensor>> sensorList)
+  std::string Dolmen::decoding(std::string data, std::map<int, dolmen::Sensor*> sensorList)
   {
     //reading the sensor id from the data frame
     std::string idstr;
@@ -25,7 +25,7 @@ namespace dolmen
 
     //finding the correct sensor in the sensor list by matching the id with the data frame id
     //dolmen::Sensor* elem;
-    std::unique_ptr<dolmen::Sensor> elem;
+    dolmen::Sensor* elem;
     if (auto it = sensorList.find(id); it != sensorList.end())
     {
       elem = it->second;

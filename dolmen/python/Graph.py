@@ -46,6 +46,8 @@ class Graph():
         toolbar.update()
         
     
+    def saveFig(self,SAVE_REPORT_FOLDER,NAME_SAVE_FOLDER,NAME_SAVE_FIGURE):
+        self.figure.savefig(SAVE_REPORT_FOLDER + '/' + NAME_SAVE_FOLDER + '/' + NAME_SAVE_FIGURE)
         
 
 class GraphPlot():

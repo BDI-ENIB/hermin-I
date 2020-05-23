@@ -1,0 +1,65 @@
+INFO:root:11.46.07 Start Dolmen
+INFO:root:11.46.09 Entering in online mode
+INFO:root:11.46.11 start decoding
+WARNING:root:11.46.12 no data in sensors temp1
+WARNING:root:11.46.13 no data in sensors temp1
+WARNING:root:11.46.14 no sensors temp1
+WARNING:root:11.46.15 no sensors temp1
+WARNING:root:11.46.17 no sensors acc
+WARNING:root:11.46.18 no sensors acc
+WARNING:root:11.46.19 no sensors gyro
+WARNING:root:11.46.21 no sensors gyro
+WARNING:root:11.46.22 no sensors acc
+WARNING:root:11.46.23 no sensors acc
+WARNING:root:11.46.24 no sensors gyro
+WARNING:root:11.46.25 no sensors gyro
+WARNING:root:11.46.29 stop decoding
+INFO:root:11.46.33 Exit Dolmen
+INFO:root:11.48.23 Start Dolmen
+INFO:root:11.48.26 Entering in online mode
+INFO:root:11.48.28 start decoding
+WARNING:root:11.48.29 no data in sensors temp1
+WARNING:root:11.48.30 stop decoding
+INFO:root:11.48.37 Exit Dolmen
+INFO:root:11.49.46 Start Dolmen
+INFO:root:11.49.52 Exit Dolmen
+INFO:root:11.50.13 Start Dolmen
+INFO:root:11.50.17 Exit Dolmen
+INFO:root:11.51.57 Start Dolmen
+INFO:root:11.52.32 Exit Dolmen
+WARNING:root:11.52.34 logging level error adding default INFO
+WARNING:root:11.53.15 logging level error adding default INFO
+INFO:root:11.54.38 Start Dolmen
+INFO:root:11.54.41 Entering in online mode
+INFO:root:11.54.43 start decoding
+WARNING:root:11.54.43 no data in sensors temp1
+WARNING:root:11.54.45 no data in sensors temp1
+WARNING:root:11.54.46 no sensors temp1
+WARNING:root:11.54.47 no sensors temp1
+WARNING:root:11.54.48 stop decoding
+INFO:root:11.54.54 Exit Dolmen
+INFO:root:11.59.01 Start Dolmen
+INFO:root:11.59.04 Entering in online mode
+INFO:root:11.59.24 Exit Dolmen
+INFO:root:12.00.00 Start Dolmen
+INFO:root:12.00.02 Entering in online mode
+INFO:root:12.01.28 Exit Dolmen
+INFO:root:12.02.07 Start Dolmen
+INFO:root:12.02.09 Entering in online mode
+INFO:root:12.02.32 Exit Dolmen
+INFO:root:12.04.25 Start Dolmen
+INFO:root:12.04.27 Entering in online mode
+INFO:root:12.06.41 Exit Dolmen
+INFO:root:12.06.43 Start Dolmen
+INFO:root:12.06.45 Exit Dolmen
+INFO:root:12.06.47 Start Dolmen
+INFO:root:12.06.49 Entering in online mode
+INFO:root:12.07.59 Exit Dolmen
+INFO:root:12.08.01 Start Dolmen
+INFO:root:12.08.03 Entering in online mode
+INFO:root:12.08.17 Entering in online mode
+INFO:root:12.09.01 Entering in online mode
+INFO:root:12.09.11 Exit Dolmen
+INFO:root:12.09.40 Start Dolmen
+INFO:root:12.09.47 Entering in online mode
+INFO:root:12.09.54 Exit Dolmen

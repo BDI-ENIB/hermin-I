@@ -7,10 +7,13 @@ import Sensors
 import csv
 import time
 import logging
-
+import shutil
 
 count=0 # current line in CSV
 state_communication=False
+
+def currentTime():
+    return str(time.strftime('%H.' '%M.' '%S'))
 
 def decodingCSV():
 
@@ -48,42 +51,48 @@ def decodingCSV():
 
     filename.close()
 
-def fileExist(start_button,stop_button,figure):
-
+def fileExist(fileToTest):
     try:
-        with open(Config.figure.file,'r',encoding='latin1') as filename:
+        with open(fileToTest,'r',encoding='latin1') as filename:
+            
             return  True
 
-    except:     
-        condition =  False
-        Windows.messageShowwarning("Open Filename", "Warning, Problem detected with CSV file ")
-        logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' problem with CSV file')
-
-        return False
+    except:        
+        return False # return error file no found
 
 
-def updateOffline(i):
+def updateOffline(i): # decoding csv and updating graph in offline mode
 
     global state_communication
 
-    if(state_communication==True and fileExist(start_button,stop_button,Config.figure)==True): #if you click on the start button of fire_interface windows and csv name exist
+    if(state_communication==True and fileExist(Config.figure.file)==True): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
-        if(state_communication==True): 
+        if(state_communication==True and fileExist(Config.figure.file)==True): 
             for sensor in Config.sensors:
                 sensor.graph.animate()# update graph
+    
 
 
-def updateOnline(i,start_button,stop_button):
+def updateOnline(i,start_button,stop_button): # decoding csv and updating graph in Online mode
     global state_communication
 
-    if(state_communication==True and fileExist(start_button,stop_button,Config.figure)==True): #if you click on the start button of fire_interface windows and csv name exist
+    if(state_communication==True ): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
         if(state_communication==True):
             for sensor in Config.sensors:
                 sensor.graph.animate()# update graph
                 
+    else :
+        if fileExist(Config.figure.file)==False :
+            Windows.messageShowwarning("Open Filename", "Corrupted CSV file or not found")
+            logging.info(currentTime() + ' Corrupted CSV file or not found')
+            
+        
+        
+                
 def clearFigure():
-    global count
+    global count,state_communication
+    state_communication=False
     count=0
     for sensor in Config.sensors:
         sensor.graph.reset()
@@ -92,8 +101,15 @@ def report_Function():
 
     global state_communication
 
-    if (state_communication == False):
-        myFigure.savefig('reportTest.png')
+    if (state_communication == False):       
+        if not os.path.exists(Config.SAVE_REPORT_FOLDER):            
+            os.makedirs(Config.SAVE_REPORT_FOLDER)
+        if not os.path.exists(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER)):
+            os.makedirs(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER))
+        
+        shutil.copy(Config.figure.file,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' +  Config.figure.file)
+        #Config.myFigure.savefig('reportTest.png')
+        Config.figure.saveFig(Config.SAVE_REPORT_FOLDER,Config.NAME_SAVE_FOLDER,Config.NAME_SAVE_FIGURE)
         Windows.messageShowinfo("Report generation","Report generation successfully created.")
 
     else :
@@ -105,8 +121,9 @@ def state_set_communication(start_button,stop_button,state):
     global state_communication
     #if the user click on the start button
     if(state==True):
-        logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' start decoding')
+        logging.info(currentTime() + ' start decoding')
         state_communication=True
+        #Config.TIME_FOLDER = str(time.strftime('%Y_' '%m_' '%d_''%H_' '%M_' '%S'))
         
         #disable start button
         start_button.disable()
@@ -117,7 +134,7 @@ def state_set_communication(start_button,stop_button,state):
 
     elif(state==False):
         if (Windows.messageAskyesno("End of data receive", "Do you want to stop the data receive ?")):
-            logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' stop decoding')
+            logging.warning(currentTime() + ' stop decoding')
             state_communication=False
 
             #enable start button
@@ -129,17 +146,17 @@ def state_set_communication(start_button,stop_button,state):
 
 
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_arg1,sensor_add_arg1_type,sensor_add_arg2,sensor_add_arg2_type,sensor_add_arg3,sensor_add_arg3_type,sensor_add_arg4,sensor_add_arg4_type):
-    logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' entering in add sensor mode')
+    logging.info(currentTime() + ' entering in add sensor mode')
     save_condition = True
 
     if(sensor_add_name.getEntry()==""):
-        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' sensor name error')
+        logging.warning(currentTime()+ ' sensor name error')
         Windows.messageShowerror("Name error","Please enter the sensor's name")
         save_condition=False
 
     #check that the sensor does not already exist
     if(os.path.isfile(sensor_add_name.getEntry() + ".hpp")):
-        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' sensor name already exit')
+        logging.warning(currentTime() + ' sensor name already exit')
         Windows.messageShowerror("Name error",sensor_add_name.getEntry() + " sensor already exist. Please change the sensor's name")
         save_condition=False
         
@@ -150,7 +167,7 @@ def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_ar
        len(sensor_add_arg3.getEntry())!=0 and len(sensor_add_arg3_type.getEntry())==0 or
        len(sensor_add_arg4.getEntry())!=0 and len(sensor_add_arg4_type.getEntry())==0):
         save_condition=False
-        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensor argument type given')
+        logging.warning(currentTime() + ' no sensor argument type given')
         Windows.messageShowerror("Argument error","Please enter the type of argument given ")
 
     #check that for the given arguments their name is given
@@ -159,7 +176,7 @@ def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_ar
        len(sensor_add_arg3.getEntry())==0 and len(sensor_add_arg3_type.getEntry())!=0 or
        len(sensor_add_arg4.getEntry())==0 and len(sensor_add_arg4_type.getEntry())!=0):
         save_condition=False
-        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensor argument name given')
+        logging.warning(currentTime() + ' no sensor argument name given')
         Windows.messageShowerror("Argument error","Please enter the name of argument given ")
 
     #if no error, create the hpp
@@ -242,7 +259,7 @@ def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_ar
 """)
             hpp.close()
             
-            logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' sensor ' + str(sensor_add_name.getEntry()) +" generated")
+            logging.info(currentTime() + ' sensor ' + str(sensor_add_name.getEntry()) +" generated")
             Windows.messageShowinfo("Sensor generation",sensor_add_name.getEntry() + " sensor generation successfully created. Do not forget to complete the decoding function of this class")
             Config.sensors_management_Function(add_sensor_interface)
 

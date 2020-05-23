@@ -1,7 +1,10 @@
 #from tkinter import *
 import Config
+import Dolmen
 import logging
 import time
+import os.path
+import shutil
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -49,7 +52,15 @@ class Windows(tk.Frame):
 def exit():
 
     if(messageAskyesno("Quit", "Do you want to quit?")):
-            logging.info(str(time.strftime('%Hh' '%M' ' %S')) + ' Exit Dolmen')
+            logging.info(Dolmen.currentTime() + ' Exit Dolmen')
+            
+            if not os.path.exists(Config.SAVE_REPORT_FOLDER):            
+                os.makedirs(Config.SAVE_REPORT_FOLDER)
+                
+            if not os.path.exists(Config.SAVE_REPORT_FOLDER + '/' + Config.NAME_SAVE_FOLDER):            
+                os.makedirs(Config.SAVE_REPORT_FOLDER + '/' + Config.NAME_SAVE_FOLDER)
+            #save log file    
+            shutil.copy(Config.LOG_FILE,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' +  Config.LOG_FILE)
             sys.exit()  
     else:
         return
@@ -102,9 +113,5 @@ def askopenfilename(figure,path):
             print(figure.file)
             return True
     except:
-        
-        
-        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' No file chosen')
-        messageShowwarning("Open Filename", "Warning, you must choose a file ")
-        return False
+        return False # return error no file chosen
     

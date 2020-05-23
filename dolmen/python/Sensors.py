@@ -4,10 +4,10 @@ import time
 import logging
 class Sensors():
 
-    def __init__(self,name,processed,idGraph,typeGraph,graph):
+    def __init__(self,name,idGraph,typeGraph,graph):
         self.name=name
         self.idGraph=idGraph
-        self.processed=processed
+        self.processed=False
         self.typeGraph=typeGraph
         self.graph=graph
         
@@ -22,7 +22,7 @@ class Sensors():
                         self.graph.y[self.idGraph].append(float(line_split[j+2])) # adding sensors's data in graph
 
                     else : # if there are not sensors's data
-                        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors ' + str(self.name))
+                        logging.warning(Dolmen.currentTime() + ' no data in sensors ' + str(self.name))
                         self.graph.y[self.idGraph].append(0) # adding 0 in graph
                         print(' no data in sensors ' + str(self.name))
                         
@@ -38,7 +38,7 @@ class Sensors():
 
                     else: # if x or y or z sensors's data are empty
                         # adding 0 in graph  
-                        logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no data in sensors ' + str(self.name))
+                        logging.warning(Dolmen.currentTime() + ' no data in sensors ' + str(self.name))
                         self.graph.x.append(0)
                         self.graph.y.append(0)
                         self.graph.z.append(0)
@@ -48,10 +48,10 @@ class Sensors():
             if self.typeGraph ==False : # if graph 2D:
                 self.graph.y[self.idGraph].append(0)
                 print("no sensors " + str(self.name))
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors ' + str(self.name))
+                logging.warning(Dolmen.currentTime() + ' no sensors ' + str(self.name))
                 
             elif self.typeGraph ==True : # if graph 3D
-                logging.warning(str(time.strftime('%Hh' '%M' ' %S')) + ' no sensors ' +str(self.name))
+                logging.warning(Dolmen.currentTime() + ' no sensors ' +str(self.name))
                 print("no sensors " + str(self.name))
                 self.graph.x.append(0)
                 self.graph.y.append(0)

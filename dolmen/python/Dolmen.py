@@ -107,8 +107,11 @@ def report_Function():
         if not os.path.exists(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER)):
             os.makedirs(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER))
         
-        shutil.copy(Config.figure.file,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' +  Config.figure.file)
-        #Config.myFigure.savefig('reportTest.png')
+        print("file     " + Config.figure.file)
+        print("SAVE_REPORT_FOLDER   " + Config.SAVE_REPORT_FOLDER)
+        print("NAME_SAVE_FOLDER     " + Config.NAME_SAVE_FOLDER)
+        shutil.copy(Config.figure.file,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' )
+        
         Config.figure.saveFig(Config.SAVE_REPORT_FOLDER,Config.NAME_SAVE_FOLDER,Config.NAME_SAVE_FIGURE)
         Windows.messageShowinfo("Report generation","Report generation successfully created.")
 
@@ -145,122 +148,80 @@ def state_set_communication(start_button,stop_button,state):
 
 
 
-def add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_arg1,sensor_add_arg1_type,sensor_add_arg2,sensor_add_arg2_type,sensor_add_arg3,sensor_add_arg3_type,sensor_add_arg4,sensor_add_arg4_type):
+def add_sensor_save_Function(add_sensor_interface,sensor_add_name):
     logging.info(currentTime() + ' entering in add sensor mode')
     save_condition = True
 
     if(sensor_add_name.getEntry()==""):
-        logging.warning(currentTime()+ ' sensor name error')
+        logging.warning(currentTime()+ ' add new sensor : no name given')
         Windows.messageShowerror("Name error","Please enter the sensor's name")
         save_condition=False
 
     #check that the sensor does not already exist
-    if(os.path.isfile(sensor_add_name.getEntry() + ".hpp")):
-        logging.warning(currentTime() + ' sensor name already exit')
-        Windows.messageShowerror("Name error",sensor_add_name.getEntry() + " sensor already exist. Please change the sensor's name")
+    if(os.path.isfile(sensor_add_name.getEntry().lower() + ".hpp") or os.path.isfile(sensor_add_name.getEntry().lower() + ".cpp")):
+        logging.warning(currentTime() + ' sensor name ' + sensor_add_name.getEntry().lower() +' already exit')
+        Windows.messageShowerror("Name error",sensor_add_name.getEntry().lower() + " sensor already exist. Please change the sensor's name")
         save_condition=False
-        
-
-    #check that for the given arguments their type is given
-    if(len(sensor_add_arg1.getEntry())!=0 and len(sensor_add_arg1_type.getEntry())==0 or
-       len(sensor_add_arg2.getEntry())!=0 and len(sensor_add_arg2_type.getEntry())==0 or
-       len(sensor_add_arg3.getEntry())!=0 and len(sensor_add_arg3_type.getEntry())==0 or
-       len(sensor_add_arg4.getEntry())!=0 and len(sensor_add_arg4_type.getEntry())==0):
-        save_condition=False
-        logging.warning(currentTime() + ' no sensor argument type given')
-        Windows.messageShowerror("Argument error","Please enter the type of argument given ")
-
-    #check that for the given arguments their name is given
-    if(len(sensor_add_arg1.getEntry())==0 and len(sensor_add_arg1_type.getEntry())!=0 or
-       len(sensor_add_arg2.getEntry())==0 and len(sensor_add_arg2_type.getEntry())!=0 or
-       len(sensor_add_arg3.getEntry())==0 and len(sensor_add_arg3_type.getEntry())!=0 or
-       len(sensor_add_arg4.getEntry())==0 and len(sensor_add_arg4_type.getEntry())!=0):
-        save_condition=False
-        logging.warning(currentTime() + ' no sensor argument name given')
-        Windows.messageShowerror("Argument error","Please enter the name of argument given ")
-
-    #if no error, create the hpp
-    else : 
-        if(save_condition==True):
-            hpp = open(sensor_add_name.getEntry() + ".hpp", "x")
-            #upper
-            hpp.write("#ifndef DOLMEN_"+ sensor_add_name.getEntry().upper() +"_HPP")
-            hpp.write("\n#define DOLMEN_" + sensor_add_name.getEntry().upper() +"_HPP 1")
-            hpp.write("\n#include <string>")
-            hpp.write("""\nnamespace dolmen
+    
+    
+    #if no error, create the hpp and the cpp
+    
+    if(save_condition==True):
+        # Creation of sensor.hpp
+        hpp = open(sensor_add_name.getEntry().lower() + ".hpp", "x")
+            
+        hpp.write("#ifndef DOLMEN_"+ sensor_add_name.getEntry().upper() +"_HPP")
+        hpp.write("\n#define DOLMEN_" + sensor_add_name.getEntry().upper() +"_HPP 1")
+        hpp.write("\n#include <string>")
+        hpp.write("""\nnamespace dolmen
 {
 """)
-            hpp.write("\n   class " + sensor_add_name.getEntry().capitalize())
-            hpp.write("""\n  {
-    public :""")
-            hpp.write("\n      " + sensor_add_name.getEntry().capitalize() + """ (int id, std::string name)
-      {
-        int id_=id;
-        std::string name_=name;""")
-            hpp.write("\n        " + sensor_add_arg1_type.getEntry() + " "  + sensor_add_arg1.getEntry() + "_=" + sensor_add_arg1.getEntry() + ";")
-            if (len(sensor_add_arg2.getEntry())!=0 and len(sensor_add_arg2_type.getEntry())!=0 ):
-                hpp.write("\n        " + sensor_add_arg2_type.getEntry() + " " + sensor_add_arg2.getEntry() + "_=" + sensor_add_arg2.getEntry() + ";")
-            if (len(sensor_add_arg3.getEntry())!=0 and len(sensor_add_arg3_type.getEntry())!=0):
-                hpp.write("\n        " + sensor_add_arg3_type.getEntry() + " " + sensor_add_arg3.getEntry() + "_=" + sensor_add_arg3.getEntry() + ";")
-            if (len(sensor_add_arg4.getEntry())!=0 and len(sensor_add_arg4_type.getEntry())!=0):
-                hpp.write("\n        " + sensor_add_arg4_type.getEntry() + " " + sensor_add_arg4.getEntry() + "_=" + sensor_add_arg3.getEntry() + ";")
-            hpp.write("""\n      }
-
-""")
-            hpp.write("\n      virtual ~" + sensor_add_name.getEntry().capitalize() + "() ")
-            hpp.write("""\n      {
-        //
-      }
-
-      virtual void decoding(const std::string data) = 0;
-
-      int getID()
-      {
-        return id_;
-      }
-""")
-            hpp.write("\n      " + sensor_add_arg1_type.getEntry() + " get" + sensor_add_arg1.getEntry().capitalize() +"""()
-      {
-        return """ + sensor_add_arg1.getEntry() +"""_;
-      }""")
+        hpp.write("\n   class " + sensor_add_name.getEntry().capitalize())
+        hpp.write(""": public Sensor \n  {
+    public : """)                   
+        hpp.write(sensor_add_name.getEntry().capitalize() + " (int id, std::string name);")
+        hpp.write("""
             
-                       
-            if (len(sensor_add_arg2.getEntry())!=0 and len(sensor_add_arg2_type.getEntry())!=0):
-                hpp.write("\n      " + sensor_add_arg2_type.getEntry() + " get" + sensor_add_arg2.getEntry().capitalize() +"""()
-      {
-        return """ + sensor_add_arg2.getEntry() +"""_;
-      }""")
-            
-            if (len(sensor_add_arg3.getEntry())!=0 and len(sensor_add_arg3_type.getEntry())!=0):
-                hpp.write("\n      " + sensor_add_arg3_type.getEntry() + " get" + sensor_add_arg3.getEntry().capitalize() +"""()
-      {
-        return """ + sensor_add_arg3.getEntry() +"""_;
-      }""")
+    void decoding(const std::string data) override;
 
-            if (len(sensor_add_arg4.getEntry())!=0 and len(sensor_add_arg4_type.getEntry())!=0):
-                hpp.write("\n      " + sensor_add_arg4_type.getEntry() + " get" +sensor_add_arg4.getEntry().capitalize() +"""()
-      {
-        return """ + sensor_add_arg4.getEntry() +"""_;
-      }""")
-            hpp.write("""\n    private :
-      int id_;
-      std::string name_""")  
-            hpp.write("\n      " + sensor_add_arg1_type.getEntry() + " " + sensor_add_arg1.getEntry() + "_;")
-            if (len(sensor_add_arg2.getEntry())!=0 and len(sensor_add_arg2_type.getEntry())!=0):
-                hpp.write("\n      " + sensor_add_arg2_type.getEntry() + " " + sensor_add_arg2.getEntry() + "_;")
-            if (len(sensor_add_arg3.getEntry())!=0 and len(sensor_add_arg3_type.getEntry())!=0):
-                hpp.write("\n      " + sensor_add_arg3_type.getEntry() + " " + sensor_add_arg3.getEntry() + "_;")
-            if (len(sensor_add_arg4.getEntry())!=0 and len(sensor_add_arg4_type.getEntry())!=0):
-                hpp.write("\n      " + sensor_add_arg4_type.getEntry() + " " + sensor_add_arg4.getEntry() + "_;")
-            hpp.write("""\n  };
+    std::string getColumnIdentifiers() override
+    {
+    """)
+        hpp.write("      return "  + '"' + sensor_add_name.getEntry().capitalize() + '";')
+        hpp.write("""
+    }""")
+        hpp.write("""
+                
+    int getNbAttr() override
+    {
+      return 1;
+    }
+  };
 }
 
-#endif
-""")
-            hpp.close()
+#endif""")
             
-            logging.info(currentTime() + ' sensor ' + str(sensor_add_name.getEntry()) +" generated")
-            Windows.messageShowinfo("Sensor generation",sensor_add_name.getEntry() + " sensor generation successfully created. Do not forget to complete the decoding function of this class")
-            Config.sensors_management_Function(add_sensor_interface)
+        hpp.close()
+        
+        # Creation of sensor.cpp
+        cpp = open(sensor_add_name.getEntry().lower() + ".cpp", "x")
+        cpp.write('#include "' + sensor_add_name.getEntry().lower() + '.hpp"')
+        cpp.write("""
+            
+namespace dolmen
+{
+""")
+        cpp.write("  " + sensor_add_name.getEntry().capitalize() + "::" + sensor_add_name.getEntry().capitalize() + " (int id, std::string name):Sensor{id,name}{}")
+        cpp.write("""
+            
+  void """ + sensor_add_name.getEntry().capitalize() +"""::decoding(const std::string data)
+  {
+    //insert here the decoding method of your sensor
+  }
+} /* dolmen */""")
+        cpp.close()
+        logging.info(currentTime() + ' sensor ' + str(sensor_add_name.getEntry()).lower() +" generated")
+        Windows.messageShowinfo("Sensor generation",sensor_add_name.getEntry().lower() + " sensor generation successfully created. Do not forget to complete the decoding function of this class")
+        Config.sensors_management_Function(add_sensor_interface)
 
 

@@ -11,18 +11,26 @@ from matplotlib.animation import FuncAnimation
 
 #LOG_TYPE => level of log (default INFO)
 #exemple: LOG_TYPE="DEBUG" or LOG_TYPE=logging.DEBUG
+"""
 LOG_TYPE="INFO"
 PATH = "/home/axeln/hermin-I/dolmen/python"
 NAME = "report.csv"
 UPDATE_DELAY = 1000
 LOG_FILE = 'dolmen.log'
 SAVE_REPORT_FOLDER = "report generation"
+"""
+LOG_TYPE=None
+PATH = None
+NAME = None
+UPDATE_DELAY = None
+LOG_FILE = None
+SAVE_REPORT_FOLDER = None
 TIME_FOLDER=Dolmen.currentTime()
 NAME_SAVE_FOLDER = str(time.strftime('%Y_' '%m_' '%d_'))+str(TIME_FOLDER)
 
 #figure name file whe, rapport generation
 NAME_SAVE_FIGURE = 'report.png'
-
+# name logo in About windows
 NAME_ABOUT_IMAGE = "logos.png"
 #Windows color
 colorFont = "white"
@@ -107,39 +115,17 @@ def add_sensor(last_windows):
         last_windows.windows.destroy()
     
     #Create the add_sensor_interface windows
-    add_sensor_interface = Windows.Windows("Add Sensors",colorFont,500,200,lambda:sensors_management_Function(add_sensor_interface),7,5)
+    add_sensor_interface = Windows.Windows("Add Sensors",colorFont,220,100,lambda:sensors_management_Function(add_sensor_interface),3,3)
     
     #Enter class Name
-    sensor_add_name = Widgets.TextInput(add_sensor_interface,"Sensor name : ",colorFont,colorText,1,1,2,1)
+    sensor_add_name = Widgets.TextInput(add_sensor_interface,"Sensor name : ",colorFont,colorText,1,2,2,2)
     #Widgets.TextToPrint(add_sensor_interface,"",None,colorFont,colorText)
     
-    #Enter Argument 1
-    sensor_add_arg1 = Widgets.TextInput(add_sensor_interface,"Sensor Argument 1 : ",colorFont,colorText,3,1,4,1)
-    sensor_add_arg1_type = Widgets.TextInput(add_sensor_interface,"Type : ",colorFont,colorText,3,2,4,2)
-    #Widgets.TextToPrint(add_sensor_interface,"",None,colorFont,colorText)
-
-    #Enter optional Argument 2
-    sensor_add_arg2 = Widgets.TextInput(add_sensor_interface,"Sensor Argument 2 : ",colorFont,colorText,3,4,4,4)
-    sensor_add_arg2_type = Widgets.TextInput(add_sensor_interface,"Type : ",colorFont,colorText,3,5,4,5)
-    #Widgets.TextToPrint(add_sensor_interface,"",None,colorFont,colorText)
-
-    #Enter optional Argument 3
-    sensor_add_arg3 = Widgets.TextInput(add_sensor_interface,"Sensor Argument 3 : ",colorFont,colorText,5,1,6,1)
-    sensor_add_arg3_type = Widgets.TextInput(add_sensor_interface,"Type : ",colorFont,colorText,5,2,6,2)
-    #Widgets.TextToPrint(add_sensor_interface,"",None,colorFont,colorText)
-
-    #Enter optional Argument 4
-    sensor_add_arg4 = Widgets.TextInput(add_sensor_interface,"Sensor Argument 4 : ",colorFont,colorText,5,4,6,4)
-    sensor_add_arg4_type = Widgets.TextInput(add_sensor_interface,"Type : ",colorFont,colorText,5,5,6,5)
-    #Widgets.TextToPrint(add_sensor_interface,"",None,colorFont,colorText)
-
     #Saving Button
-    add_sensor_save_button = Widgets.ButtonDisplay(add_sensor_interface,"Save",colorFont,colorText,colorSelect,lambda :Dolmen.add_sensor_save_Function(add_sensor_interface,sensor_add_name, sensor_add_arg1,sensor_add_arg1_type,sensor_add_arg2,sensor_add_arg2_type,sensor_add_arg3,sensor_add_arg3_type,sensor_add_arg4,sensor_add_arg4_type),10,5,7,5)
+    add_sensor_save_button = Widgets.ButtonDisplay(add_sensor_interface,"Save",colorFont,colorText,colorSelect,lambda :Dolmen.add_sensor_save_Function(add_sensor_interface,sensor_add_name),20,3,3,2)
     
-    Widgets.TextToPrint(add_sensor_interface,"  ",colorFont,colorText,3,3)
-    Widgets.TextToPrint(add_sensor_interface,"  ",colorFont,colorText,4,3)
-    Widgets.TextToPrint(add_sensor_interface,"  ",colorFont,colorText,5,3)
-    Widgets.TextToPrint(add_sensor_interface,"  ",colorFont,colorText,6,3)
+    Widgets.TextToPrint(add_sensor_interface,"      ",colorFont,colorText,1,1)
+    Widgets.TextToPrint(add_sensor_interface,"      ",colorFont,colorText,1,3)
     
     #update the add_sensor_interface windows
     add_sensor_interface.windows.update()
@@ -188,7 +174,7 @@ def about_Function(last_windows):
     """,colorFont,colorText,3,1)
     
     if Dolmen.fileExist(NAME_ABOUT_IMAGE):
-        Widgets.addImage(about_interface,"logos.png",colorFont,4,1)
+        Widgets.addImage(about_interface,NAME_ABOUT_IMAGE,colorFont,4,1)
     else :
         logging.warning(Dolmen.currentTime() + ' no found image file for about windows')
         print("no found image file for about windows")
@@ -242,7 +228,7 @@ def fire_Function_offline(last_windows):
     logging.info(Dolmen.currentTime() + ' Entering in offline mode')
     #import data
     if Windows.askopenfilename(figure,PATH):
-    
+        print(figure.file)
         #Creating fire_interface windows
         fire__offline_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__offline_interface),3,9) 
         
@@ -287,7 +273,7 @@ def fire_Function_online(last_windows):
     figure.file = NAME
     
     if Dolmen.fileExist(figure.file)==True: # verif if there is the csv file
-        
+        print(figure.file)
         logging.info(Dolmen.currentTime() + ' Entering in online mode')
         #Creating fire_interface windows
         

@@ -1,2 +1,10 @@
-INFO:root:12.26.53 Start Dolmen
-INFO:root:12.27.01 Exit Dolmen
+INFO:root:17.11.01 Start Dolmen
+INFO:root:17.11.26 entering in add sensor mode
+INFO:root:17.11.26 sensor breton generated
+INFO:root:17.11.54 entering in add sensor mode
+WARNING:root:17.11.54 add new sensor : no name given
+INFO:root:17.12.07 entering in add sensor mode
+WARNING:root:17.12.07 sensor name breton already exit
+INFO:root:17.12.15 entering in add sensor mode
+INFO:root:17.12.15 sensor test generated
+INFO:root:17.12.20 Exit Dolmen

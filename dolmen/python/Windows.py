@@ -11,7 +11,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import sys
 class Windows(tk.Frame):
-    def __init__(self,title, colorFont,x,y,function,ligne,colonne):
+    def __init__(self,title, colorFont,x,y,function,row,column):
         #tk.Tk.__init__(self, windows, width=x, height=y, bg=colorFont, **kwargs)
         #self.pack_propagate(0)
         self.windows=tk.Tk()
@@ -20,13 +20,16 @@ class Windows(tk.Frame):
         self.configure(bg=colorFont)
         self.width=x
         self.height=y   
+        self.row=row
+        self.column = column 
         self.pack(fill='both')
         self.ws = self.windows.winfo_screenwidth()
         self.hs = self.windows.winfo_screenheight()
         self.widthCenter = (self.ws/2) - (self.width/2)
         self.heightCenter = (self.hs/2) - (self.height/2)
-        self.windows.rowconfigure(ligne, weight=1)
-        self.windows.columnconfigure(colonne, weight=1)
+        self.windows.rowconfigure(self.row, weight=1)
+        self.windows.columnconfigure(self.column, weight=1)
+        
 
 
         if (self.width==0 and self.height==0):
@@ -104,7 +107,7 @@ def messageShowerror(title,text):
     messagebox.showerror(title, text)
 
 def askopenfilename(figure,path):
-    filename=filedialog.askopenfilename(initialdir = path,title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
+    filename=filedialog.askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
     
     try:
         with open(filename,'r') as UseFile:

@@ -24,28 +24,29 @@ def decodingCSV():
     reader = csv.reader(filename, delimiter=';')
     # Data Processing
     lines = [line for line in reader]
-    line_split = []
     
     if count+1>len(lines):
         state_communication=False
         print("OH SHIT !!!")
-        return       
-
-    for i in lines[count]:
-        line_split=i.split(",")
+        state_communication=False
+    else :
+        for i in lines[count]:
+            line_split=i.split(",")
+        #line_split = lines[count]
+        #print (line_split) 
+         
+        for j in range(0,len(line_split)):
         
-    for j in range(0,len(line_split)):
-    
-        if line_split[j]=='time': #time decoding and processing
-            x=float(line_split[j+2])
-            Config.f1.x.append(x)
-            Config.f2.x.append(x) 
-            
-    for sensor in Config.sensors:
-            sensor.decoding(line_split)
-    for sensor in Config.sensors:
-            sensor.verifing()   
-            
+            if line_split[j]=='0' and line_split[j+1]=='time': #time decoding and processing
+                x=float(line_split[j+2])
+                Config.f1.x.append(x)
+                Config.f2.x.append(x) 
+                
+        for sensor in Config.sensors:
+                sensor.decoding(line_split)
+        for sensor in Config.sensors:
+                sensor.verifing()   
+                
     #update line        
     count+=1
 
@@ -78,9 +79,11 @@ def updateOnline(i,start_button,stop_button): # decoding csv and updating graph 
 
     if(state_communication==True ): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
+        
         if(state_communication==True):
             for sensor in Config.sensors:
                 sensor.graph.animate()# update graph
+        
                 
     else :
         if fileExist(Config.figure.file)==False :

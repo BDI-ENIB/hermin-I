@@ -2,7 +2,6 @@
 #define DOLMEN_ALTITUDE_HPP 1
 
 #include <string>
-#include <math.h>
 #include "sensor.hpp"
 
 namespace dolmen

@@ -1,11 +1,1 @@
-#SENSORS
-SENSOR;01;gps;dolmen::Gps
-SENSOR;02;accelerometer;dolmen::Acceleration;
-SENSOR;03;gyroscope;dolmen::Gyroscope;
-SENSOR;04;temperature_1;dolmen::Temperature;
-SENSOR;05;temperature_2;dolmen::Temperature;
-SENSOR;06;pressure_1;dolmen::Pressure;
-SENSOR;07;pressure_2;dolmen::Pressure;
-SENSOR;08;altitude;dolmen::Altitude;
 
-#PLOTS

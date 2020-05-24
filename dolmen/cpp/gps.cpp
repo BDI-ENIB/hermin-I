@@ -10,7 +10,8 @@ namespace dolmen
     {
       int id = getID();
 
-      //latitude
+      //latitude    
+      //initialising the values
       //we consider being in the north hemisphere (0-90°N)
       double latDeg = 0.0;
       double latMin = 0.0;
@@ -57,10 +58,8 @@ namespace dolmen
       }
       latSec = std::stod(latSecStr);
 
-
-
-
       //longitude
+      //initialising the values
       double lonDeg = 1.0;
       double lonMin = 0.0;
       double lonSec = 0.0;
@@ -112,6 +111,7 @@ namespace dolmen
       }
       lonSec = std::stod(lonSecStr);
 
+      //inserting datas in the data container
       insert("gps_lonDeg",lonDeg);
       insert("gps_lonMin",lonMin);
       insert("gps_lonSec",lonSec);
@@ -122,7 +122,7 @@ namespace dolmen
     }
     else
     {
-      //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "gyroscope_error"
+      //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "gps_error_'subdata'"
       std::cout << "\nerror: bad data format";
       insert("gps_error_lonDeg",0.0);
       insert("gps_error_lonMin",0.0);

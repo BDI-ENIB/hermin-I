@@ -7,6 +7,7 @@ namespace dolmen
 
   void Pressure::decoding(const std::string data)
   {
+    //initialising the values
     double pressure = 1.0;
     std::string presstr;
     int id = getID();
@@ -31,6 +32,7 @@ namespace dolmen
         presstr += data[6];
       }
 
+      //we adjust the pressure if it's positive or negative
       pressure = pressure * std::stod(presstr);
 
       //inserting the processed datas into the sensor data container

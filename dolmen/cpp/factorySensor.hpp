@@ -12,7 +12,7 @@
 
 namespace dolmen
 {
-  //We use a factory pattern, to be able to upgrade the program later, to automation the sensor creation
+  //We use a factory pattern, to be able to upgrade the program later (automation of the sensor creation)
   template <class Key, class Object, class... Args>
   class FactorySensor
   {

@@ -6,6 +6,7 @@ namespace dolmen
 
   void Acceleration::decoding(const std::string data)
   {
+    //initialising the values
     int id = getID();
     double accX = 1.0;
     double accY = 1.0;
@@ -91,7 +92,7 @@ namespace dolmen
     }
     else
     {
-      //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "gyroscope_error"
+      //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "accelerometer_error_'subdata'"
       std::cout << "\nerror: bad data format";
       insert("accelerometer_error_X", 0.0);
       insert("accelerometer_error_Y", 0.0);

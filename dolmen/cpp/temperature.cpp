@@ -6,9 +6,12 @@ namespace dolmen
 
   void Temperature::decoding(const std::string data)
   {
+    //initialising the values
     double temperature = 1.0;
     std::string tempstr;
     int id = getID();
+
+    //deciding the data
     if (data.length() == 8 && data[7] == ';')
     {
       //we check the sign
@@ -32,13 +35,12 @@ namespace dolmen
 
       temperature = temperature * std::stod(tempstr);
 
-      //Temperature::temperature_ = temperature;
       insert("temperature", temperature);
     }
     else
     {
+      //if an error occurs in the data format, the value is placed at 0
       std::cout << "\nerror: bad data format";
-      //Temperature::temperature_ = 0.0;
       insert("temperature_error", 0.0);
     }
   }

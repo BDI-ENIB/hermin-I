@@ -24,6 +24,20 @@ int main(int argc, char const *argv[]) {
 
 //---
 
+  /*
+  HOW TO ADD YOUR OWN SENSORS TO THE DOLMEN PROJECT?
+
+  add this code in the list below:
+
+  factory.registe("sensor name", [](int arg1, std::string arg2) { return std::make_unique<dolmen::name of your sensor class>(arg1,arg2); });
+  std::unique_ptr<dolmen::Sensor> sensor name in the map = factory.create("sensor name", sensor id, "sensor name");
+  sensor = sensor name in the map.get();
+  sensorList.insert(std::make_pair(sensor->getID(), sensor));
+
+  To remove a sensor, just delete the code corresponding.
+
+  */
+
   //creating a factory element
   using AFactory = dolmen::FactorySensor<std::string, std::unique_ptr<dolmen::Sensor>, int, std::string>;
   AFactory factory;

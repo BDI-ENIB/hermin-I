@@ -62,8 +62,8 @@ namespace dolmen
     {
       //writing the data identifier
       //columnValueTxt += elem->getColumnIdentifiers();
-      columnValueTxt += elem->getName();
-      columnValueTxt += ";";
+      //columnValueTxt += elem->getName();
+      //columnValueTxt += ";";
       columnValueTxt += std::to_string(elem->getID());
       columnValueTxt += ";";
       //recovering the processed data from the sensor
@@ -74,8 +74,8 @@ namespace dolmen
       for (std::pair<std::string, double> elem2 : processed_data)
       {
         //writing the data
-        //columnValueTxt+= std::get<0>(elem2);
-        //columnValueTxt+= ";";
+        columnValueTxt+= std::get<0>(elem2);
+        columnValueTxt+= ";";
         columnValueTxt+= std::to_string(std::get<1>(elem2));
         columnValueTxt+= ";";
         //this prevents to write a longer line than the number of datas

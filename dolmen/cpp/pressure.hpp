@@ -6,7 +6,6 @@
 
 namespace dolmen
 {
-
   class Pressure : public Sensor
   {
     public :
@@ -23,8 +22,6 @@ namespace dolmen
     {
       return 1;
     }
-
-
   };
 }
 #endif

@@ -24,8 +24,5 @@ namespace dolmen
 
     //inserting the processed datas into the sensor data container
     insert("altitude",altitude);
-
   }
-
-
 } /* dolmen */

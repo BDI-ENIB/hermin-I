@@ -33,15 +33,16 @@ def decodingCSV():
         for i in lines[count]:
             line_split=i.split(",")
         #line_split = lines[count]
-        #print (line_split) 
-         
-        for j in range(0,len(line_split)):
-        
-            if line_split[j]=='0' and line_split[j+1]=='time': #time decoding and processing
+        #print(line_split) 
+        for j in range(0,len(line_split)-1):            
+                       
+            if str(line_split[j])=='0' and str(line_split[j+1])=='time': #time decoding and processing
+                
                 x=float(line_split[j+2])
+                print(x)
                 Config.f1.x.append(x)
                 Config.f2.x.append(x) 
-                
+               
         for sensor in Config.sensors:
                 sensor.decoding(line_split)
         for sensor in Config.sensors:

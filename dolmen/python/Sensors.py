@@ -16,7 +16,18 @@ class Sensors():
     def decoding(self,line_split):
         
         for j in range(0,len(line_split)):                 
-            if self.typeGraph ==False : # if graph 2D
+            if self.typeGraph =="2d" : # if graph 2D
+                if line_split[j]==str(self.idSensor) and line_split[j+1]==self.name: #if sensor is detected
+                    self.processed = True # sensors data is processed
+                    if str(line_split[j+2]) !="": # if there are sensors's data
+                        self.graph.y[self.idGraph].append(float(line_split[j+2])) # adding sensors's data in graph
+
+                    else : # if there are not sensors's data
+                        logging.warning(Dolmen.currentTime() + ' no data in sensors ' + str(self.name) + str(self.idSensor))
+                        self.graph.y[self.idGraph].append(0) # adding 0 in graph
+                        print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
+            
+            elif self.typeGraph =="hist" : # if graph hist
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.name: #if sensor is detected
                     self.processed = True # sensors data is processed
                     if str(line_split[j+2]) !="": # if there are sensors's data
@@ -27,7 +38,8 @@ class Sensors():
                         self.graph.y[self.idGraph].append(0) # adding 0 in graph
                         print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
                         
-            elif self.typeGraph ==True : # if graph 3D
+            elif self.typeGraph =="3d" : # if graph 3D
+                
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.name[0] and line_split[j+3]==self.name[1] and line_split[j+5]==self.name[2]: #if sensor is detected
 
                     self.processed = True # sensors data is processed
@@ -46,12 +58,18 @@ class Sensors():
                         print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
     def verifing(self):
         if self.processed==False :
-            if self.typeGraph ==False : # if graph 2D:
+            if self.typeGraph =="2d" : # if graph 2D:
                 self.graph.y[self.idGraph].append(0)
                 print("no sensors " + str(self.name) + " " + str(self.idSensor))
                 logging.warning(Dolmen.currentTime() + ' no sensors ' + str(self.name) + " " + str(self.idSensor))
-                
-            elif self.typeGraph ==True : # if graph 3D
+            
+            elif self.typeGraph =="hist" : # if graph hist:
+
+                self.graph.y[self.idGraph].append(0)
+                print("no sensors " + str(self.name) + " " + str(self.idSensor))
+                logging.warning(Dolmen.currentTime() + ' no sensors ' + str(self.name) + " " + str(self.idSensor))
+
+            elif self.typeGraph =="3d" : # if graph 3D
                 logging.warning(Dolmen.currentTime() + ' no sensors ' + str(self.name) + " " + str(self.idSensor))
                 print("no sensors " + str(self.name) + " " + str(self.idSensor))
                 self.graph.x.append(0)

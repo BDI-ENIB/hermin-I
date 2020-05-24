@@ -38,25 +38,28 @@ colorText = "black"
 colorSelect = "grey"
 
 #My figure creation
-figure=Graph.Graph(20,8,3,3,[4,4,4],[4,2,2])
+# for row and colum in figure 0->value
+figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2])
 myFigure = figure.figure
-f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator",["blue","red"],["Sensor 1","Sensor 2"],[-55, 55],1)
-f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression",["red","green"],["Sensor 1","Sensor 2"],[-55, 55],1)
+f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",["blue","red"],["Sensor 1","Sensor 2"],[-55, 55],2)
+f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",["red","green"],["Sensor 1","Sensor 2"],[-55, 55],2)
 f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x acceleration","y acceleration","z acceleration",'o','red',(-10,10),(-10,10),(-10,10),False)
 f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x gyroscope","y gyroscope","z gyroscope",'o','black',(-10,10),(-10,10),(-10,10),False)
 f5= Graph.Graph3d(figure,figure.grid[0, 2],"GPS","x","y","z",'o','black',(-1000,1000),(-1000,1000),(-1000,1000),True)
+f6= Graph.GraphHist(figure,figure.grid[0:3, 3],"Altitude","Fusex","Altitude",["red"],[],[0, 5000],1)
 
 #sensors Creation
-temp1=Sensors.Sensors("temperature",1,0,False,f1)
-temp2=Sensors.Sensors("temperature",4,1,False,f1)
-pressure1=Sensors.Sensors("pressure",2,0,False,f2)
-pressure2=Sensors.Sensors("pressure",5,1,False,f2)
-acc = Sensors.Sensors(["accelerometer_X","accelerometer_Y","accelerometer_Z"],3,0,True,f3)
-gyro = Sensors.Sensors(["gyroscope_X","gyroscope_Y","gyroscope_Z"],6,0,True,f4)
+temp1=Sensors.Sensors("temperature",4,0,"2d",f1)
+temp2=Sensors.Sensors("temperature",5,1,"2d",f1)
+pressure1=Sensors.Sensors("pressure",6,0,"2d",f2)
+pressure2=Sensors.Sensors("pressure",7,1,"2d",f2)
+altitude=Sensors.Sensors("altitude",8,0,"hist",f6)
+acc = Sensors.Sensors(["accelerometer_X","accelerometer_Y","accelerometer_Z"],2,0,"3d",f3)
+gyro = Sensors.Sensors(["gyroscope_X","gyroscope_Y","gyroscope_Z"],3,0,"3d",f4)
 
 #create sensors list
-sensors = [temp1,pressure1,acc,gyro]
-
+sensors = [temp1,temp2,pressure1,pressure2,acc,gyro]
+#sensor=[]
 def home_Function(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):

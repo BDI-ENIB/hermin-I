@@ -85,7 +85,7 @@ class GraphPlot():
             self.figure.set_ylim(self.ylim)
             self.figure.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
 
-            if len(self.label) == self.numberGraph:           
+            if len(self.label) == self.numberGraph: 
                 self.figure.plot(self.x, self.y[i],color = self.color[i],label =str(self.label[i] + " = " + str(self.y[i][-1])))
                 self.figure.legend(loc="lower left")
             else :
@@ -179,7 +179,56 @@ class Graph3d():
         self.x=[]
         self.y=[]
         self.z=[]
-            
+
+class GraphHist():
+    def __init__(self,fig,position,title,titleX,titleY,color,label,ylim,numberGraph):
+
+        self.figure = fig.figure.add_subplot(position)
+        self.color = color 
+        self.title=title
+        self.titleX=titleX
+        self.titleY=titleY
+        self.ylim=ylim
+        self.x=[]
+        self.y=[]
+        self.numberGraph=numberGraph
+        for i in range(0,self.numberGraph):
+            self.x.append([])
+            self.y.append([])
+        self.label=label
+        
+        self.figure.set_title(self.title,loc='right') 
+        self.figure.set_xlabel(self.titleX)
+        self.figure.set_ylabel(self.titleY)
+        self.figure.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
+        self.figure.set_ylim(self.ylim)
+        self.figure.format_coord = lambda x, y: ''
+        self.width = 0.35 
+
+    def animate(self):        
+                  
+        self.figure.cla() # Clear the current axes
+        
+        for i in range(0,self.numberGraph):
+            self.figure.set_title(self.title,loc='right') 
+            self.figure.set_xlabel(self.titleX)
+            self.figure.set_ylabel(self.titleY)
+            self.figure.set_ylim(self.ylim)
+            self.figure.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
+
+            if len(self.label) == self.numberGraph:           
+                self.figure.bar(self.x[i], self.y[i], self.width, color=self.color[i])
+                #self.figure.legend(loc="lower left")
+            else :
+                self.figure.bar(self.x[i], self.y[i], self.width, color=self.color[i])
+                
+    def reset(self):
+        self.figure.cla()
+        self.x=[]
+        self.y=[]
+        for i in range(0,self.numberGraph):
+            self.y.append([])
+
 """        
 class Graph3dGPS():
 

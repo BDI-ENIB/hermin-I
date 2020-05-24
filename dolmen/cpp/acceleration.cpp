@@ -85,15 +85,15 @@ namespace dolmen
       accZ = accZ * std::stod(strZ);
 
       //inserting the processed datas into the sensor data container
-      insert("accelerometer_X", accX);
-      insert("accelerometer_Y", accY);
-      insert("accelerometer_Z", accZ);
+      insert("accelerometer_X (ms-2)", accX);
+      insert("accelerometer_Y (ms-2)", accY);
+      insert("accelerometer_Z (ms-2)", accZ);
 
     }
     else
     {
       //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "accelerometer_error_'subdata'"
-      std::cout << "\nerror: bad data format";
+      std::cout << "\nerror: bad data format" << id;
       insert("accelerometer_error_X", 0.0);
       insert("accelerometer_error_Y", 0.0);
       insert("accelerometer_error_Z", 0.0);

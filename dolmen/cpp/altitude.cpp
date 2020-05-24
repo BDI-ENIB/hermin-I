@@ -1,4 +1,5 @@
 #include "altitude.hpp"
+#include <tgmath.h>
 
 namespace dolmen
 {
@@ -6,23 +7,66 @@ namespace dolmen
 
   void Altitude::decoding(const std::string data)
   {
-    //altitude have to be calculated from other sensors's datas
-    double altitude = 0;
+    //the altitude sensor use the data from a pressure sensor
+    //initialising the values
+    double altitude = 0.0;
+    double pressure = 1.0;
+    std::string presstr;
+    int id = getID();
+    if (data.length() == 9 && data[8] == ';')
+    {
+      //we decode each character
+      if (isdigit(data[2])) 
+      {
+        presstr += data[2];
+      }
+      if (isdigit(data[3])) 
+      {
+        presstr += data[3];
+      }
+      if (isdigit(data[4])) 
+      {
+        presstr += data[4];
+      }
+      if (isdigit(data[5])) 
+      {
+        presstr += data[5];
+      }
+      if (isdigit(data[6])) 
+      {
+        presstr += data[6];
+      }
+      if (isdigit(data[7])) 
+      {
+        presstr += data[7];
+      }
 
-    //with the pressure
+      pressure = std::stod(presstr);
 
-    //double pressure = dolmen::Pressure::getPressure(); //must be in hPa
-    double pressure = 0.0;
+      if (pressure < 0.0)
+      {
+        std::cout << "error: negative pressure, cannot calculate altitude";
+      }
+    
+      //setting up constants
+      double h0 = 0; //height of the launching site
+      double p0 = 1013.25; //presure of the launching site
+      double g = 9.81; //gravitational constant
+      double T0 = 288.15; //temperature of the launching site
+      double R = 8.3144598; //universal gas constant
+      double M = 0.0289644; //molar mass of Earth's air
 
-    double p0 = 1013.25;
-    double g = 9.81;
-    double Cp = 1006.0;
-    double T0 = 20.0;
+      //using the barometric formula (this formula is accurate for low altitudes, under 15-20km)
+      altitude = h0-((log((pressure/100)/p0)*R*T0)/(g*M));
 
-    //altitude = log(pressure/p0)*((2*Cp*T0)/(-7*g));
-    altitude = 666.666;
-
-    //inserting the processed datas into the sensor data container
-    insert("altitude",altitude);
+      //inserting the processed datas into the sensor data container
+      insert("altitude (m)",altitude);
+    }
+    else
+    {
+      //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "gyroscope_error"
+      std::cout << "\nerror: bad data format" << id;
+      insert("altitude_error",0.0);
+    }
   }
 } /* dolmen */

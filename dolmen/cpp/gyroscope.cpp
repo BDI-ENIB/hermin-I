@@ -84,15 +84,15 @@ namespace dolmen
       gyrZ = gyrZ * std::stod(strZ);
 
       //inserting the processed datas into the sensor data container
-      insert("gyroscope_X", gyrX);
-      insert("gyroscope_Y", gyrY);
-      insert("gyroscope_Z", gyrZ);
+      insert("gyroscope_X (ms-2)", gyrX);
+      insert("gyroscope_Y (ms-2)", gyrY);
+      insert("gyroscope_Z (ms-2)", gyrZ);
 
     }
     else
     {
       //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "gyroscope_error_'subdata'"
-      std::cout << "\nerror: bad data format";
+      std::cout << "\nerror: bad data format" << id;
       insert("gyroscope_error_X", 0.0);
       insert("gyroscope_error_Y", 0.0);
       insert("gyroscope_error_Z", 0.0);

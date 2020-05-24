@@ -6,10 +6,9 @@ namespace dolmen
 
   void Gps::decoding(const std::string data)
   {
+    int id = getID();
     if (data.length() == 21 && data[20] == ';')
     {
-      int id = getID();
-
       //latitude    
       //initialising the values
       //we consider being in the north hemisphere (0-90°N)
@@ -123,7 +122,7 @@ namespace dolmen
     else
     {
       //if there is a problem avoiding to decode the data, we insert the value 0.0, and the name become "gps_error_'subdata'"
-      std::cout << "\nerror: bad data format";
+      std::cout << "\nerror: bad data format" << id;
       insert("gps_error_lonDeg",0.0);
       insert("gps_error_lonMin",0.0);
       insert("gps_error_lonSec",0.0);

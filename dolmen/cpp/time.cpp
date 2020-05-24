@@ -13,12 +13,12 @@ namespace dolmen
     if (data.length() == 9 && data[8] == ';')
     {
       time = std::stoi(data, 0, 16);
-      insert("time", time);
+      insert("time (s)", time);
     }
     else
     {      
       //if an error occurs in the data format, the value is placed at 0
-      std::cout << "\nerror: bad data format";
+      std::cout << "\nerror: bad data format" << id;
       insert("time_error", 0.0);
     }
   }

@@ -35,12 +35,12 @@ namespace dolmen
 
       temperature = temperature * std::stod(tempstr);
 
-      insert("temperature", temperature);
+      insert("temperature (°c)", temperature);
     }
     else
     {
       //if an error occurs in the data format, the value is placed at 0
-      std::cout << "\nerror: bad data format";
+      std::cout << "\nerror: bad data format" << id;
       insert("temperature_error", 0.0);
     }
   }

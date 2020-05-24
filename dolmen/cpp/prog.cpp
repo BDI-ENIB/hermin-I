@@ -110,13 +110,8 @@ int main(int argc, char const *argv[]) {
 
       time(&secondes);
       instant=*localtime(&secondes);
-
-      printf("%d/%d ; %d:%d:%d\n", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
-
       //---
 
-
-      std::cout << "\ntime: " << time(0) << " data: "<< line;
       //extracting data from each line
       //dataTxtLine is used to detect the empty lines
       std::string dataTxtLine;
@@ -140,6 +135,7 @@ int main(int argc, char const *argv[]) {
         dataTxt += '\n';
       }
       dataTxtLine = "";
+      printf("%d/%d ; %d:%d:%d\n", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
     }
     //writing the datas in the .csv file
     ofs << dataTxt;

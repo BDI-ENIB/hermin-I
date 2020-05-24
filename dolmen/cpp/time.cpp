@@ -13,9 +13,6 @@ namespace dolmen
     if (data.length() == 9 && data[8] == ';')
     {
       time = std::stoi(data, 0, 16);
-
-      std::cout << "\ntime: " << time/1000 << "\n";
-
       insert("time", time);
     }
     else

@@ -1,47 +1,51 @@
-/*#ifndef DOLMEN_CONFIGURATION_HPP
+#ifndef DOLMEN_CONFIGURATION_HPP
 #define DOLMEN_CONFIGURATION_HPP 1
 
 #include <string>
 #include <vector>
 #include <memory>
 #include <iostream>
-
-#include "sensor.hpp"
-#include "temperature.hpp"
-#include "pressure.hpp"
-#include "acceleration.hpp"
-#include "gps.hpp"
-#include "gyroscope.hpp"
-#include "altitude.hpp"
+#include <fstream>
 
 namespace dolmen
 {
-
-  class Configuration
+  std::map<std::string, std::string> import_config()
   {
-    public :
+    //opening the configuration folder
+    std::ifstream config("config.txt");
 
-    Configuration();
+    //creating an empty map
+    std::map<std::string, std::string> config_map;
 
-    ~Configuration(){}
-
-    std::vector<std::unique_ptr<dolmen::Sensor>> getSensors_config()
+    if(config)
     {
-      return std::move(sensors_config);
+      //checking the lines and reading their content
+      std::string line;
+      int line_bacon = 0;
+      while(std::getline(config,line))
+      {
+        line_bacon += 1;
+        if (line_bacon == 1)
+        {
+          //first line is to check if we are allowed to decode
+          config_map.insert(std::make_pair("decoding_authorised",line));
+        }
+        if (line_bacon == 2)
+        {
+          //second line is to check if we are in online or offline mode
+          config_map.insert(std::make_pair("mode",line));
+        }
+        if (line_bacon == 3)
+        {
+          //third line is to read the path to the trame.txt file
+          config_map.insert(std::make_pair("data_path",line));
+        }
     }
-
-    void setSensors_config(std::vector<std::unique_ptr<dolmen::Sensor>> config)
-    {
-      sensors_config = std::move(config);
-    }
-
-    std::vector<std::unique_ptr<dolmen::Sensor>> import_config();
-
-    void export_config(std::vector<std::unique_ptr<dolmen::Sensor>> sensors_config);
-
-    private :
-    std::vector<std::unique_ptr<dolmen::Sensor>> sensors_config;
-  };
+  }
+  return config_map;
+  }
 }
 
-#endif*/
+
+
+#endif

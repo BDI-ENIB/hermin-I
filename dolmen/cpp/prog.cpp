@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "dolmen.hpp"
+#include "configuration.hpp"
 
 //---USEFUL THINGS
 
@@ -13,16 +14,20 @@
 
 //---MAIN FUNCTION
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) 
+{
   //creating a dolmen element
   dolmen::Dolmen DolMen;
 
+  //importing the configuration
+  std::map<std::string, std::string> configuration = dolmen::import_config();
+
   //reading the datas
-  std::ifstream trame("trame.txt");
+  std::ifstream trame(configuration["data_path"]);
   std::ofstream ofs{"report.csv"};
   std::string dataTxt;
 
-//---
+  //---
 
   /*
   HOW TO ADD YOUR OWN SENSORS TO THE DOLMEN PROJECT?
@@ -110,58 +115,132 @@ int main(int argc, char const *argv[]) {
   sensor = altitude.get();
   sensorList.insert(std::make_pair(sensor->getID(), sensor));
 
-//---
-
-  //reading the data trame
-  if(trame)
+  //---
+  //checking if we are allowed to decode
+  if (configuration["decoding_authorised"] == "true")
   {
-    //each line is a measurement of the rocket, with datas of each sensor
-    std::string line;
-    while(std::getline(trame,line))
+    //using offline mode
+    if (configuration["mode"] == "offline")
     {
-      usleep(1000000);
-      //---
-      time_t secondes;
-      struct tm instant;
-
-      time(&secondes);
-      instant=*localtime(&secondes);
-      //---
-
-      //extracting data from each line
-      //dataTxtLine is used to detect the empty lines
-      std::string dataTxtLine;
-      //data contain the unprocessed datas from one sensor
-      std::string data;
-      for (auto& letter : line)
+      //reading the data trame
+      if(trame)
       {
-        data += letter;
-        //detecting a sensor, which is separated from other sensors by a ';' tag
-        if (letter == ';')
+        std::cout << "\n---Launching DolMen in online mode---\n";
+        //each line is a measurement of the rocket, with datas of each sensor
+        std::string line;
+        while(std::getline(trame,line))
         {
-          //adding the processed datas
-          dataTxtLine += DolMen.decoding(data, sensorList);
-          data = "";
+          //---
+          time_t seconds;
+          struct tm instant;
+          time(&seconds);
+          instant=*localtime(&seconds);
+          printf("\n\n%d/%d ; %d:%d:%d", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
+          //this is the time in 10-6 seconds to wait until each read
+          usleep(1000000);
+          //---
+
+          //extracting data from each line
+          //dataTxtLine is used to detect the empty lines
+          std::string dataTxtLine;
+          //data contain the unprocessed datas from one sensor
+          std::string data;
+          for (auto& letter : line)
+          {
+            data += letter;
+            //detecting a sensor, which is separated from other sensors by a ';' tag
+            if (letter == ';')
+            {
+              //adding the processed datas
+              dataTxtLine += DolMen.decoding(data, sensorList);
+              data = "";
+            }
+          }
+          //if no data was processed (empty line), we don't add a \n caracter
+          dataTxt += dataTxtLine;
+          if (dataTxtLine != "")
+          {
+            dataTxt += '\n';
+          }
+          dataTxtLine = "";
         }
+        //writing the datas in the .csv file
+        ofs << dataTxt;
       }
-      //if no data was processed (empty line), we don't add a \n caracter
-      dataTxt += dataTxtLine;
-      if (dataTxtLine != "")
+      else
       {
-        dataTxt += '\n';
+        //error to add later
+        std::cout << "\nUnable to open the file";
       }
-      dataTxtLine = "";
-      printf("%d/%d ; %d:%d:%d\n", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
+      std::cout << "\n";
     }
-    //writing the datas in the .csv file
-    ofs << dataTxt;
-    //std::cout << "\n" << dataTxt;
+    if (configuration["mode"] == "online")
+    {
+      //ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE
+      //reading the data trame
+      if(trame)
+      {
+        std::cout << "\n---Launching DolMen in online mode---\n";
+        //each line is a measurement of the rocket, with datas of each sensor
+        std::string line;
+
+        //creating a 10s timer to wait for new lines to be created
+        time_t new_instant = time(NULL);
+        time_t old_instant = time(NULL);
+        double diff = 0.0;
+
+        while(std::getline(trame,line) && (diff < 10))
+        {
+          //---
+          time_t seconds;
+          struct tm instant;
+          time(&seconds);
+          instant=*localtime(&seconds);
+          printf("\n\n%d/%d ; %d:%d:%d", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
+          //this is the time in 10-6 seconds to wait until each read
+          //we set here with the time between 2 emissions from our rocket
+          usleep(1000000);
+          //---
+
+          //calculating the moment the last data was processed
+          diff = difftime(old_instant,new_instant);
+          std::cout << "\ndiff: " << diff;
+          old_instant = new_instant;
+
+          //extracting data from each line
+          //dataTxtLine is used to detect the empty lines
+          std::string dataTxtLine;
+          //data contain the unprocessed datas from one sensor
+          std::string data;
+          for (auto& letter : line)
+          {
+            data += letter;
+            //detecting a sensor, which is separated from other sensors by a ';' tag
+            if (letter == ';')
+            {
+              //adding the processed datas
+              dataTxtLine += DolMen.decoding(data, sensorList);
+              data = "";
+            }
+          }
+          //if no data was processed (empty line), we don't add a \n caracter
+          dataTxt += dataTxtLine;
+          if (dataTxtLine != "")
+          {
+            dataTxt += '\n';
+          }
+          dataTxtLine = "";
+        }
+        //writing the datas in the .csv file
+        ofs << dataTxt;
+      }
+    }
   }
   else
   {
-    //error to add later
-    std::cout << "unable to open the file";
+    //Error to add
+    std::cout << "\nDecoding not allowed";
   }
-  std::cout << "\n";
+  std::cout << "\n\n---Closing---\n";
   return 0;
 }

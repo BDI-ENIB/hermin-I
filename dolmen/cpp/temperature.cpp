@@ -35,7 +35,7 @@ namespace dolmen
 
       temperature = temperature * std::stod(tempstr);
 
-      insert("temperature (°c)", temperature);
+      insert("temperature (degres celcius)", temperature);
     }
     else
     {

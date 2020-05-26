@@ -32,14 +32,13 @@ def decodingCSV():
     else :
         for i in lines[count]:
             line_split=i.split(",")
-        #line_split = lines[count]
         #print(line_split) 
+        
         for j in range(0,len(line_split)-1):            
                        
-            if str(line_split[j])=='0' and str(line_split[j+1])=='time': #time decoding and processing
+            if str(line_split[j])=='0' and str(line_split[j+1])=='time (s)': #time decoding and processing
                 
                 x=float(line_split[j+2])
-                print(x)
                 Config.f1.x.append(x)
                 Config.f2.x.append(x) 
                
@@ -91,15 +90,14 @@ def updateOnline(i,start_button,stop_button): # decoding csv and updating graph 
             Windows.messageShowwarning("Open Filename", "Corrupted CSV file or not found")
             logging.info(currentTime() + ' Corrupted CSV file or not found')
             
-        
-        
+     
                 
 def clearFigure():
     global count,state_communication
     state_communication=False
     count=0
     for sensor in Config.sensors:
-        sensor.graph.reset()
+        sensor.graph.initGraph()
                 
 def report_Function():
 
@@ -153,7 +151,7 @@ def state_set_communication(start_button,stop_button,state):
 
 
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name):
-    logging.info(currentTime() + ' entering in add sensor mode')
+    
     save_condition = True
 
     if(sensor_add_name.getEntry()==""):

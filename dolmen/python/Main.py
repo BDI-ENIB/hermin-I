@@ -3,20 +3,7 @@ import logging
 import Dolmen
 import time
 import sys
-import plotly.graph_objects as go
-#verifing if tkinter and matplotlib are installed
 
-try:
- import tkinter
-except :
-    print("No tkinter found, deal with it.")
-    sys.exit()
-    
-try:
- import matplotlib
-except :
-    print("No matplotlib found, deal with it.")
-    sys.exit()
 
 #verifing if there is argument    
 if len(sys.argv)==1 :

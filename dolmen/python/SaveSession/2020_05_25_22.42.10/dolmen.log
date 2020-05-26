@@ -1,0 +1,11 @@
+INFO:root:22.42.10 Start Dolmen
+INFO:root:22.42.10 Entering in home mode
+INFO:root:22.42.11 Entering in choose fire mode
+INFO:root:22.42.13 Entering in online mode
+INFO:root:22.42.14 start decoding
+WARNING:root:22.42.18 no sensors pressure (Pa) 7
+WARNING:root:22.42.19 no sensors temperature (Â°c) 5
+WARNING:root:22.42.19 no sensors pressure (Pa) 7
+INFO:root:22.42.23 Entering in choose fire mode
+INFO:root:22.42.24 Entering in home mode
+INFO:root:22.42.26 Exit Dolmen

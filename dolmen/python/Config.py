@@ -1,4 +1,5 @@
 #Import modules:
+
 import Windows
 import Widgets
 import Graph
@@ -8,6 +9,7 @@ import csv
 import logging
 import time
 from matplotlib.animation import FuncAnimation
+import sys
 
 #LOG_TYPE => level of log (default INFO)
 #exemple: LOG_TYPE="DEBUG" or LOG_TYPE=logging.DEBUG
@@ -19,6 +21,7 @@ UPDATE_DELAY = 1000
 LOG_FILE = 'dolmen.log'
 SAVE_REPORT_FOLDER = "report generation"
 """
+THEME="normal"
 LOG_TYPE=None
 PATH = None
 NAME = None
@@ -33,38 +36,73 @@ NAME_SAVE_FIGURE = 'report.png'
 # name logo in About windows
 NAME_ABOUT_IMAGE = "logos.png"
 #Windows color
-colorFont = "white"
-colorText = "black"
-colorSelect = "grey"
+colorFont = None
+colorText = None
+colorSelect = None
+xColor = None
+yColor = None
+axeLabelColor = None
+gridColor = None
+facecolor2d = None
+facecolor3d = None
+graphLegend = None
+
+if THEME == "normal":
+    colorFont = "white"
+    colorText = "black"
+    colorSelect = "grey"
+    xColor = "black"
+    yColor = "black"
+    axeLabelColor = "black"
+    gridColor = "black"
+    facecolor2d = "white"
+    facecolor3d = "white"
+    graphLegend = "white"
+
+if THEME == "dark":
+    colorFont = "black"
+    colorText = "white"
+    colorSelect = "grey"
+    xColor = "white"
+    yColor = "white"
+    axeLabelColor = "white"
+    gridColor = "white"
+    facecolor2d = "grey"
+    facecolor3d = "grey"
+    graphLegend = "black"
 
 #My figure creation
 # for row and colum in figure 0->value
-figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2])
+figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
 myFigure = figure.figure
-f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",["blue","red"],["Sensor 1","Sensor 2"],[-55, 55],2)
-f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",["red","green"],["Sensor 1","Sensor 2"],[-55, 55],2)
-f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x acceleration","y acceleration","z acceleration",'o','red',(-10,10),(-10,10),(-10,10),False)
-f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x gyroscope","y gyroscope","z gyroscope",'o','black',(-10,10),(-10,10),(-10,10),False)
-f5= Graph.Graph3d(figure,figure.grid[0, 2],"GPS","x","y","z",'o','black',(-1000,1000),(-1000,1000),(-1000,1000),True)
-f6= Graph.GraphHist(figure,figure.grid[0:3, 3],"Altitude","Fusex","Altitude",["red"],[],[0, 5000],1)
+f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",[-55, 55],facecolor2d,graphLegend,"left")
+f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[-110000, 110000],facecolor2d,graphLegend,"left")
+f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",(-10,10),(-10,10),(-10,10),False,facecolor3d,graphLegend)
+f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",(-10,10),(-10,10),(-10,10),False,facecolor3d,graphLegend)
+f5= Graph.Graph3d(figure,figure.grid[0, 2],"GPS","x","y","z",(-1000,1000),(-1000,1000),(-1000,1000),True,facecolor3d,graphLegend)
+f6= Graph.GraphHist(figure,figure.grid[0:3, 3],"Altitude","","Altitude (m)",[0, 5000],facecolor2d,"right")
 
 #sensors Creation
-temp1=Sensors.Sensors("temperature",4,0,"2d",f1)
-temp2=Sensors.Sensors("temperature",5,1,"2d",f1)
-pressure1=Sensors.Sensors("pressure",6,0,"2d",f2)
-pressure2=Sensors.Sensors("pressure",7,1,"2d",f2)
-altitude=Sensors.Sensors("altitude",8,0,"hist",f6)
-acc = Sensors.Sensors(["accelerometer_X","accelerometer_Y","accelerometer_Z"],2,0,"3d",f3)
-gyro = Sensors.Sensors(["gyroscope_X","gyroscope_Y","gyroscope_Z"],3,0,"3d",f4)
+temp1=Sensors.Sensors("temperature (Â°c)",4,0,"2d",f1,"Sensor 1","blue")
+temp2=Sensors.Sensors("temperature (Â°c)",5,1,"2d",f1,"Sensor 2","red")
+pressure1=Sensors.Sensors("pressure (Pa)",6,0,"2d",f2,"Sensor 1","red")
+pressure2=Sensors.Sensors("pressure (Pa)",7,1,"2d",f2,"Sensor 2","green")
+altitude=Sensors.Sensors("altitude (m)",8,0,"hist",f6,"Sensor 1","red")
+acc = Sensors.Sensors(["accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)"],2,0,"3d",f3,'o','black')
+gyro = Sensors.Sensors(["gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)"],3,0,"3d",f4,'o','black')
+#altitude2=Sensors.Sensors("altitude (m)",10,1,"hist",f6,"2S","green")
+#altitude3=Sensors.Sensors("altitude (m)",11,2,"hist",f6,"3S","black")
+#altitude4=Sensors.Sensors("altitude (m)",12,3,"hist",f6,"4S","grey")
 
 #create sensors list
-sensors = [temp1,temp2,pressure1,pressure2,acc,gyro]
+sensors = [temp1,temp2,pressure1,pressure2,acc,gyro,altitude]
 #sensor=[]
 def home_Function(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
     
+    logging.info(Dolmen.currentTime() + ' Entering in home mode')
     #Creating home_interface windows
     home_interface = Windows.Windows("Welcome",colorFont,300,100,Windows.exit,3,3)
 
@@ -82,6 +120,7 @@ def admin_Function(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
+    logging.info(Dolmen.currentTime() + ' Entering in admin mode')
     #Creating admin_mode_interface windows
     admin_mode_interface = Windows.Windows("Administrator Mode",colorFont,700,250,lambda: home_Function(admin_mode_interface),1,3)
 
@@ -100,6 +139,7 @@ def sensors_management_Function(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
+    logging.info(Dolmen.currentTime() + ' Entering in sensor management')
     #Creating sensors_management_interface windows
     sensors_management_interface = Windows.Windows("Sensors management mode",colorFont,700,250,lambda: admin_Function(sensors_management_interface),1,3)
     
@@ -117,6 +157,7 @@ def add_sensor(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
+    logging.info(Dolmen.currentTime() + ' Entering in add sensor mode')
     #Create the add_sensor_interface windows
     add_sensor_interface = Windows.Windows("Add Sensors",colorFont,220,100,lambda:sensors_management_Function(add_sensor_interface),3,3)
     
@@ -144,6 +185,7 @@ def about_Function(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
+    logging.info(Dolmen.currentTime() + ' Entering in about team')
     #Creating about_interface windows
     about_interface = Windows.Windows("About Dolmen : ",colorFont,1000,600,lambda:home_Function(about_interface),4,1)
 
@@ -209,6 +251,8 @@ def choose_fire_mode(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
+
+    logging.info(Dolmen.currentTime() + ' Entering in choose fire mode')
     Dolmen.clearFigure();    
     #Creating fire_mode_interface windows
     fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,350,100,lambda:home_Function(fire_mode_interface),2,3)

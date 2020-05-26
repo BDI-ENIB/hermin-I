@@ -4,15 +4,29 @@ import time
 import logging
 class Sensors():
 
-    def __init__(self,name,idSensor,idGraph,typeGraph,graph):
+    def __init__(self,name,idSensor,idGraph,typeGraph,graph,label,color):
         self.name=name
         self.idSensor=idSensor
         self.idGraph=idGraph
         self.processed=False
         self.typeGraph=typeGraph
         self.graph=graph
-        
-        
+        if self.typeGraph=="2d":
+            self.graph.label.append(label)
+            self.graph.color.append(color)
+            self.graph.numberGraph+=1
+
+        elif self.typeGraph=="hist":
+            self.graph.x.append(label)
+            self.graph.color.append(color)
+            self.graph.numberGraph+=1
+
+        elif self.typeGraph=="3d":
+            self.graph.marker=label
+            self.graph.color=color
+
+       
+
     def decoding(self,line_split):
         
         for j in range(0,len(line_split)):                 
@@ -28,14 +42,16 @@ class Sensors():
                         print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
             
             elif self.typeGraph =="hist" : # if graph hist
+                
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.name: #if sensor is detected
                     self.processed = True # sensors data is processed
-                    if str(line_split[j+2]) !="": # if there are sensors's data
-                        self.graph.y[self.idGraph].append(float(line_split[j+2])) # adding sensors's data in graph
+                    if str(line_split[j+2]) !="": # if there are sensors's data                        
+                        self.graph.y[self.idGraph]=float(line_split[j+2]) # adding sensors's data in graph
+                        
 
                     else : # if there are not sensors's data
                         logging.warning(Dolmen.currentTime() + ' no data in sensors ' + str(self.name) + str(self.idSensor))
-                        self.graph.y[self.idGraph].append(0) # adding 0 in graph
+                        self.graph.y[self.idGraph]=0 # adding 0 in graph
                         print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
                         
             elif self.typeGraph =="3d" : # if graph 3D
@@ -65,7 +81,7 @@ class Sensors():
             
             elif self.typeGraph =="hist" : # if graph hist:
 
-                self.graph.y[self.idGraph].append(0)
+                self.graph.y[self.idGraph]=0
                 print("no sensors " + str(self.name) + " " + str(self.idSensor))
                 logging.warning(Dolmen.currentTime() + ' no sensors ' + str(self.name) + " " + str(self.idSensor))
 

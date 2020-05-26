@@ -10,6 +10,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import sys
+
 class Windows(tk.Frame):
     def __init__(self,title, colorFont,x,y,function,row,column):
         #tk.Tk.__init__(self, windows, width=x, height=y, bg=colorFont, **kwargs)
@@ -72,9 +73,8 @@ def exit():
 #Information message box :
 
 def messageShowinfo(title,text):
-        messagebox.showinfo(title,text)  
-
-
+        messagebox.showinfo(title,text) 
+         
 #Question message boxes : 
 
 def messageAskquestion(title, text):

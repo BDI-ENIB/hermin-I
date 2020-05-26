@@ -6,3 +6,5 @@
 0,time,5.0000,,4,temperature,30.180000,,6,pressure,-42.610000,,,,,,,,,,,,,,,,2,accelerometer_X,10.260000,accelerometer_Y,-2.160000,accelerometer_Z,1.280000,,3,gyroscope_X,10.260000,gyroscope_Y,-2.130000,gyroscope_Z,1.280000,,8,altitude,3500,,,,,,,,
 0,time,6.0000,,4,temperature,-30.180000,,6,pressure,42.610000,,,,,,,,,,,,,,,,2,accelerometer_X,10.260000,accelerometer_Y,-2.160000,accelerometer_Z,1.280000,,3,gyroscope_X,10.260000,gyroscope_Y,-2.130000,gyroscope_Z,1.280000,,8,altitude,4000,,,,,,,,
 0,time,7.0000,,4,temperature,-30.180000,,6,pressure,-42.610000,,,,,,,,,,,,,,,,2,accelerometer_X,10.260000,accelerometer_Y,-2.160000,accelerometer_Z,1.280000,,3,gyroscope_X,10.260000,gyroscope_Y,-2.130000,gyroscope_Z,1.280000,,8,altitude,4900,,,,,,,,
+0,time,8.0000,,,,,,,,,4,temperature,-30.180000,,6,pressure,-42.610000,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+0,time,9.0000,,,,,,,,,,,,4,temperature,-30.180000,,6,pressure,-42.610000,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

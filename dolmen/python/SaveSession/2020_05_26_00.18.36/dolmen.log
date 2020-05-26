@@ -1,0 +1,13 @@
+INFO:root:00.18.36 Start Dolmen
+INFO:root:00.18.36 Entering in home mode
+INFO:root:00.18.37 Entering in choose fire mode
+INFO:root:00.18.39 Entering in offline mode
+INFO:root:00.18.42 start decoding
+WARNING:root:00.18.48 no sensors pressure (Pa) 7
+WARNING:root:00.18.48 no sensors altitude (m) 8
+WARNING:root:00.18.49 no sensors temperature (Â°c) 5
+WARNING:root:00.18.49 no sensors pressure (Pa) 7
+WARNING:root:00.18.49 no sensors altitude (m) 8
+INFO:root:00.18.56 Entering in choose fire mode
+INFO:root:00.18.57 Entering in home mode
+INFO:root:00.18.58 Exit Dolmen

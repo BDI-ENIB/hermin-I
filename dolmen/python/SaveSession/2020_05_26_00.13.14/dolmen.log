@@ -1,0 +1,23 @@
+INFO:root:00.13.14 Start Dolmen
+INFO:root:00.13.14 Entering in home mode
+INFO:root:00.13.15 Entering in choose fire mode
+INFO:root:00.13.17 Entering in online mode
+INFO:root:00.13.18 start decoding
+WARNING:root:00.13.18 no sensors altitude (m) 12
+WARNING:root:00.13.19 no sensors altitude (m) 12
+WARNING:root:00.13.21 no sensors altitude (m) 12
+WARNING:root:00.13.22 no sensors altitude (m) 12
+WARNING:root:00.13.23 no sensors pressure (Pa) 7
+WARNING:root:00.13.23 no sensors altitude (m) 8
+WARNING:root:00.13.23 no sensors altitude (m) 10
+WARNING:root:00.13.23 no sensors altitude (m) 11
+WARNING:root:00.13.23 no sensors altitude (m) 12
+WARNING:root:00.13.24 no sensors temperature (Â°c) 5
+WARNING:root:00.13.24 no sensors pressure (Pa) 7
+WARNING:root:00.13.24 no sensors altitude (m) 8
+WARNING:root:00.13.24 no sensors altitude (m) 10
+WARNING:root:00.13.24 no sensors altitude (m) 11
+WARNING:root:00.13.24 no sensors altitude (m) 12
+INFO:root:00.13.25 Entering in choose fire mode
+INFO:root:00.13.27 Entering in home mode
+INFO:root:00.13.29 Exit Dolmen

@@ -1,0 +1,20 @@
+INFO:root:17.16.39 Start Dolmen
+INFO:root:17.16.39 Entering in home mode
+INFO:root:17.16.40 Entering in choose fire mode
+INFO:root:17.16.41 Entering in online mode
+INFO:root:17.16.43 start decoding
+WARNING:root:17.16.45 no sensors pressure 6
+WARNING:root:17.16.46 no data in sensors ['accelerometer_X', 'accelerometer_Y', 'accelerometer_Z'] 2
+WARNING:root:17.16.47 no data in sensors pressure6
+WARNING:root:17.16.48 no sensors temperature 5
+WARNING:root:17.16.48 no sensors pressure 7
+WARNING:root:17.16.48 no sensors ['accelerometer_X', 'accelerometer_Y', 'accelerometer_Z'] 2
+WARNING:root:17.16.49 no sensors temperature 5
+WARNING:root:17.16.49 no sensors pressure 7
+WARNING:root:17.16.50 no sensors temperature 5
+WARNING:root:17.16.50 no sensors pressure 7
+WARNING:root:17.16.51 no sensors temperature 5
+WARNING:root:17.16.51 no sensors pressure 7
+INFO:root:17.16.57 Entering in choose fire mode
+INFO:root:17.16.58 Entering in home mode
+INFO:root:17.17.00 Exit Dolmen

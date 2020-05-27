@@ -1,7 +1,6 @@
 import Config
-import logging
+import Error
 import Dolmen
-import time
 import sys
 
 
@@ -19,16 +18,19 @@ else:
     Config.SAVE_REPORT_FOLDER = str(sys.argv[6])
 
 try:
-    logging.basicConfig(filename=Config.LOG_FILE,filemode='w',level=Config.LOG_TYPE)
+    Config.Log=Error.ErrorLog(Config.LOG_FILE,Config.LOG_TYPE)
+    #logging.basicConfig(filename=Config.LOG_FILE,filemode='w',level=Config.LOG_TYPE)
    
 except:
-    logging.basicConfig(filename=Config.LOG_FILE,level=logging.INFO)
-    logging.warning(Dolmen.currentTime() + ' logging level error adding default INFO')
+    Config.Log=Error.ErrorLog(Config.LOG_FILE,"info")
+    #logging.basicConfig(filename=Config.LOG_FILE,level=logging.INFO)
+    Config.Log.InfoSaveLog("warning",'logging level error adding default INFO')
+    #logging.warning(Dolmen.currentTime() + ' logging level error adding default INFO')
     print("logging level error adding default INFO")
     
-logging.basicConfig(filename=Config.LOG_FILE,level=Config.LOG_TYPE)
-    
-logging.info(Dolmen.currentTime() + ' Start Dolmen')
+#logging.basicConfig(filename=Config.LOG_FILE,level=Config.LOG_TYPE)
+Config.Log.InfoSaveLog("info",'Start Dolmen')    
+#logging.info(Dolmen.currentTime() + ' Start Dolmen')
 
 #Config.TIME_FOLDER = Dolmen.currentTime()
 

@@ -6,7 +6,6 @@ import Graph
 import Dolmen
 import Sensors
 import csv
-import logging
 import time
 from matplotlib.animation import FuncAnimation
 import sys
@@ -21,6 +20,7 @@ UPDATE_DELAY = 1000
 LOG_FILE = 'dolmen.log'
 SAVE_REPORT_FOLDER = "report generation"
 """
+CONFIG_TXT="config.txt"
 THEME="normal"
 LOG_TYPE=None
 PATH = None
@@ -30,7 +30,7 @@ LOG_FILE = None
 SAVE_REPORT_FOLDER = None
 TIME_FOLDER=Dolmen.currentTime()
 NAME_SAVE_FOLDER = str(time.strftime('%Y_' '%m_' '%d_'))+str(TIME_FOLDER)
-
+Log=None
 #figure name file whe, rapport generation
 NAME_SAVE_FIGURE = 'report.png'
 # name logo in About windows
@@ -46,7 +46,10 @@ gridColor = None
 facecolor2d = None
 facecolor3d = None
 graphLegend = None
-
+start_button=None
+stop_button=None
+currentMode=None
+frame=None
 if THEME == "normal":
     colorFont = "white"
     colorText = "black"
@@ -71,38 +74,38 @@ if THEME == "dark":
     facecolor3d = "grey"
     graphLegend = "black"
 
+
+
 #My figure creation
 # for row and colum in figure 0->value
 figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
 myFigure = figure.figure
-f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",[-55, 55],facecolor2d,graphLegend,"left")
-f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[-110000, 110000],facecolor2d,graphLegend,"left")
-f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",(-10,10),(-10,10),(-10,10),False,facecolor3d,graphLegend)
-f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",(-10,10),(-10,10),(-10,10),False,facecolor3d,graphLegend)
-f5= Graph.Graph3d(figure,figure.grid[0, 2],"GPS","x","y","z",(-1000,1000),(-1000,1000),(-1000,1000),True,facecolor3d,graphLegend)
-f6= Graph.GraphHist(figure,figure.grid[0:3, 3],"Altitude","","Altitude (m)",[0, 5000],facecolor2d,"right")
+f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
+f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0, 1000000],facecolor2d,graphLegend,"left",False)
+f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
+f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
+f5= Graph.GraphPlot(figure,figure.grid[0, 2],"GPS","x","y",[-100,100],[-100, 100],facecolor2d,graphLegend,"right",True)
+f6=Graph.GraphPlot(figure,figure.grid[0:3, 3],"Altitude","time","Altitude (m)",[],[0, 20000],facecolor2d,graphLegend,"right",False)
 
 #sensors Creation
-temp1=Sensors.Sensors("temperature (Â°c)",4,0,"2d",f1,"Sensor 1","blue")
-temp2=Sensors.Sensors("temperature (Â°c)",5,1,"2d",f1,"Sensor 2","red")
-pressure1=Sensors.Sensors("pressure (Pa)",6,0,"2d",f2,"Sensor 1","red")
-pressure2=Sensors.Sensors("pressure (Pa)",7,1,"2d",f2,"Sensor 2","green")
-altitude=Sensors.Sensors("altitude (m)",8,0,"hist",f6,"Sensor 1","red")
-acc = Sensors.Sensors(["accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)"],2,0,"3d",f3,'o','black')
-gyro = Sensors.Sensors(["gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)"],3,0,"3d",f4,'o','black')
-#altitude2=Sensors.Sensors("altitude (m)",10,1,"hist",f6,"2S","green")
-#altitude3=Sensors.Sensors("altitude (m)",11,2,"hist",f6,"3S","black")
-#altitude4=Sensors.Sensors("altitude (m)",12,3,"hist",f6,"4S","grey")
+temp1=Sensors.Sensors("temperature","","temperature (Â°c)","",4,0,"2d",f1,"Sensor 1","blue")
+temp2=Sensors.Sensors("temperature","","temperature (Â°c)","",5,1,"2d",f1,"Sensor 2","red")
+pressure1=Sensors.Sensors("pressure","","pressure (Pa)","",6,0,"2d",f2,"Sensor 1","red")
+pressure2=Sensors.Sensors("pressure","","pressure (Pa)","",7,1,"2d",f2,"Sensor 2","green")
+altitude=Sensors.Sensors("altitude","","altitude (m)","",8,0,"2d",f6,"","red")
+acc = Sensors.Sensors("accelerometer","accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)",2,0,"3d",f3,'o','black')
+gyro = Sensors.Sensors("gyroscope","gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)",3,0,"3d",f4,'o','black')
+gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"gps",f5,"","blue")
 
 #create sensors list
-sensors = [temp1,temp2,pressure1,pressure2,acc,gyro,altitude]
-#sensor=[]
+sensors_list_set_time=[f1,f2,f6]
+sensors = [temp1,temp2,pressure1,pressure2,altitude,gps,acc,gyro]
+
 def home_Function(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
-    
-    logging.info(Dolmen.currentTime() + ' Entering in home mode')
+    Log.InfoSaveLog("info",'Entering in home mode')
     #Creating home_interface windows
     home_interface = Windows.Windows("Welcome",colorFont,300,100,Windows.exit,3,3)
 
@@ -119,8 +122,7 @@ def admin_Function(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
-    
-    logging.info(Dolmen.currentTime() + ' Entering in admin mode')
+    Log.InfoSaveLog("info",'Entering in admin mode')
     #Creating admin_mode_interface windows
     admin_mode_interface = Windows.Windows("Administrator Mode",colorFont,700,250,lambda: home_Function(admin_mode_interface),1,3)
 
@@ -138,8 +140,8 @@ def sensors_management_Function(last_windows):
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
-    
-    logging.info(Dolmen.currentTime() + ' Entering in sensor management')
+    Log.InfoSaveLog("info",'Entering in sensor management')
+
     #Creating sensors_management_interface windows
     sensors_management_interface = Windows.Windows("Sensors management mode",colorFont,700,250,lambda: admin_Function(sensors_management_interface),1,3)
     
@@ -157,7 +159,8 @@ def add_sensor(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
-    logging.info(Dolmen.currentTime() + ' Entering in add sensor mode')
+    Log.InfoSaveLog("info",'Entering in add sensor mode')
+    
     #Create the add_sensor_interface windows
     add_sensor_interface = Windows.Windows("Add Sensors",colorFont,220,100,lambda:sensors_management_Function(add_sensor_interface),3,3)
     
@@ -185,7 +188,8 @@ def about_Function(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
-    logging.info(Dolmen.currentTime() + ' Entering in about team')
+    Log.InfoSaveLog("info",'Entering in about team')
+    
     #Creating about_interface windows
     about_interface = Windows.Windows("About Dolmen : ",colorFont,1000,600,lambda:home_Function(about_interface),4,1)
 
@@ -221,7 +225,7 @@ def about_Function(last_windows):
     if Dolmen.fileExist(NAME_ABOUT_IMAGE):
         Widgets.addImage(about_interface,NAME_ABOUT_IMAGE,colorFont,4,1)
     else :
-        logging.warning(Dolmen.currentTime() + ' no found image file for about windows')
+        Log.InfoSaveLog("warning",'no found image file for about windows')
         print("no found image file for about windows")
 
     about_interface.windows.mainloop()
@@ -252,8 +256,10 @@ def choose_fire_mode(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
 
-    logging.info(Dolmen.currentTime() + ' Entering in choose fire mode')
-    Dolmen.clearFigure();    
+    Log.InfoSaveLog("info",'Entering in choose fire mode')
+
+     
+    Dolmen.initFigure()
     #Creating fire_mode_interface windows
     fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,350,100,lambda:home_Function(fire_mode_interface),2,3)
 
@@ -267,18 +273,20 @@ def choose_fire_mode(last_windows):
 
 
 def fire_Function_offline(last_windows): 
-    
+    global start_button, stop_button,currentMode,frame
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
+    Log.InfoSaveLog("info",'Entering in offline mode')
 
-    logging.info(Dolmen.currentTime() + ' Entering in offline mode')
+    currentMode="offline"
+    
     #import data
     if Windows.askopenfilename(figure,PATH):
         print(figure.file)
         #Creating fire_interface windows
         fire__offline_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__offline_interface),3,9) 
-        
+        frame=figure.file
         #Adding graph  
         figure.addToWindows(fire__offline_interface,1,1,8,2,9)  
         
@@ -286,8 +294,8 @@ def fire_Function_offline(last_windows):
         stop_button = None
         
         #Adding widgets      
-        start_button = Widgets.ButtonDisplay(fire__offline_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True),10,10,3,1)
-        stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False),10,10,3,5)
+        start_button = Widgets.ButtonDisplay(fire__offline_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True,currentMode,frame,True),10,10,3,1)
+        stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,frame,True),10,10,3,5)
         help_fire_button = Widgets.ButtonDisplay(fire__offline_interface,"Help",colorFont,colorText,colorSelect,help_fire,10,5,3,3)
         rapport_button = Widgets.ButtonDisplay(fire__offline_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,4)
 
@@ -304,11 +312,13 @@ def fire_Function_offline(last_windows):
         #fire__offline_interface.destroy()
 
     else :
-        logging.warning(Dolmen.currentTime() + ' No file chosen')
+        Log.InfoSaveLog("warning",'No file chosen')
         Windows.messageShowwarning("Open Filename", "Warning, you must choose a file ")
         choose_fire_mode(None)
 
 def fire_Function_online(last_windows):
+    global start_button, stop_button,currentMode,frame
+
     Windows.messageShowinfo("Developpment Info", "Online mode is in developpment ") 
     
     
@@ -316,12 +326,15 @@ def fire_Function_online(last_windows):
     if(last_windows!=None):
         last_windows.windows.destroy()
     
+    currentMode="online"
+    frame=None
+
     # add CSV file to figure
     figure.file = NAME
     
     if Dolmen.fileExist(figure.file)==True: # verif if there is the csv file
-        print(figure.file)
-        logging.info(Dolmen.currentTime() + ' Entering in online mode')
+        Log.InfoSaveLog("info",'Entering in online mode')
+        currentMode="online"
         #Creating fire_interface windows
         
         fire__online_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__online_interface),4,9) 
@@ -333,8 +346,8 @@ def fire_Function_online(last_windows):
         stop_button = None
 
         #Adding widgets      
-        start_button = Widgets.ButtonDisplay(fire__online_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True),10,10,3,1)
-        stop_button = Widgets.ButtonDisplay(fire__online_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False),10,10,3,5)
+        start_button = Widgets.ButtonDisplay(fire__online_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True,currentMode,frame,True),10,10,3,1)
+        stop_button = Widgets.ButtonDisplay(fire__online_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,frame,True),10,10,3,5)
         help_fire_button = Widgets.ButtonDisplay(fire__online_interface,"Help",colorFont,colorText,colorSelect,help_fire,10,5,3,3)
         rapport_button = Widgets.ButtonDisplay(fire__online_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,4)
 
@@ -354,7 +367,7 @@ def fire_Function_online(last_windows):
         #fire__offline_interface.destroy()
     else :
         Windows.messageShowwarning("Open Filename", "CSV file no found")
-        logging.info(Dolmen.currentTime() + ' CSV file no found')
+        Log.InfoSaveLog("info",'CSV file no found')
         choose_fire_mode(None)
 
     

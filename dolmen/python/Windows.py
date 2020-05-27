@@ -1,8 +1,7 @@
 #from tkinter import *
 import Config
 import Dolmen
-import logging
-import time
+import Error
 import os.path
 import shutil
 import tkinter as tk
@@ -56,7 +55,8 @@ class Windows(tk.Frame):
 def exit():
 
     if(messageAskyesno("Quit", "Do you want to quit?")):
-            logging.info(Dolmen.currentTime() + ' Exit Dolmen')
+            Config.Log.InfoSaveLog("info",' Exit Dolmen')
+            #logging.info(Dolmen.currentTime() + ' Exit Dolmen')
             
             if not os.path.exists(Config.SAVE_REPORT_FOLDER):            
                 os.makedirs(Config.SAVE_REPORT_FOLDER)

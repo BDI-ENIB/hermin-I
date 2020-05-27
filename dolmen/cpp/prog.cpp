@@ -110,12 +110,12 @@ int main(int argc, char const *argv[])
 
   //---
   //checking if we are allowed to decode
+  std::ofstream ofs{"report.csv"};
   while(1)
   {
     //importing the configuration
     std::map<std::string, std::string> configuration = dolmen::import_config();
     std::ifstream trame(configuration["data_path"]);
-    std::ofstream ofs{"report.csv"};
     usleep(100000);
     if (configuration["decoding_authorised"] == "true")
     {
@@ -165,7 +165,9 @@ int main(int argc, char const *argv[])
             dataTxtLine = "";
           }
           //writing the datas in the .csv file
+          dataTxt += "stop\n";
           ofs << dataTxt;
+          std::cout << "\n\n---Closing---\n";
         }
         else
         {

@@ -22,12 +22,12 @@ SAVE_REPORT_FOLDER = "report generation"
 """
 CONFIG_TXT="config.txt"
 THEME="normal"
-LOG_TYPE=None
-PATH = None
-NAME = None
+LOG_TYPE=""
+PATH = ""
+NAME = ""
 UPDATE_DELAY = None
-LOG_FILE = None
-SAVE_REPORT_FOLDER = None
+LOG_FILE = ""
+SAVE_REPORT_FOLDER = ""
 TIME_FOLDER=Dolmen.currentTime()
 NAME_SAVE_FOLDER = str(time.strftime('%Y_' '%m_' '%d_'))+str(TIME_FOLDER)
 Log=None
@@ -36,72 +36,90 @@ NAME_SAVE_FIGURE = 'report.png'
 # name logo in About windows
 NAME_ABOUT_IMAGE = "logos.png"
 #Windows color
-colorFont = None
-colorText = None
-colorSelect = None
-xColor = None
-yColor = None
-axeLabelColor = None
-gridColor = None
-facecolor2d = None
-facecolor3d = None
-graphLegend = None
+colorFont = ""
+colorText = ""
+colorSelect = ""
+xColor = ""
+yColor = ""
+axeLabelColor = ""
+gridColor = ""
+facecolor2d = ""
+facecolor3d = ""
+graphLegend = ""
 start_button=None
 stop_button=None
 currentMode=None
-frame=None
-if THEME == "normal":
-    colorFont = "white"
-    colorText = "black"
-    colorSelect = "grey"
-    xColor = "black"
-    yColor = "black"
-    axeLabelColor = "black"
-    gridColor = "black"
-    facecolor2d = "white"
-    facecolor3d = "white"
-    graphLegend = "white"
+frame=""
+def theme(Theme):
+    global colorFont, colorText, colorSelect,xColor,yColor,axeLabelColor,gridColor,facecolor2d,facecolor3d,graphLegend
+    if Theme == "normal":
+        colorFont = "white"
+        colorText = "black"
+        colorSelect = "grey"
+        xColor = "black"
+        yColor = "black"
+        axeLabelColor = "black"
+        gridColor = "black"
+        facecolor2d = "white"
+        facecolor3d = "white"
+        graphLegend = "white"
+        return True
 
-if THEME == "dark":
-    colorFont = "black"
-    colorText = "white"
-    colorSelect = "grey"
-    xColor = "white"
-    yColor = "white"
-    axeLabelColor = "white"
-    gridColor = "white"
-    facecolor2d = "grey"
-    facecolor3d = "grey"
-    graphLegend = "black"
+    if Theme == "dark":
+        colorFont = "black"
+        colorText = "white"
+        colorSelect = "grey"
+        xColor = "white"
+        yColor = "white"
+        axeLabelColor = "white"
+        gridColor = "white"
+        facecolor2d = "grey"
+        facecolor3d = "grey"
+        graphLegend = "black"
+        return True
 
+    else :
+        return False
+        
+# Create Graphe 
+figure=None
+myFigure=None
+sensors_list_set_time=[]
+sensors=[]
+def createGraph():# function to create and intit graph
+    global sensors_list_set_time, sensors, figure, myFigure
+    #My figure creation
+    # for row and colum in figure 0->value
+    figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
+    myFigure = figure.figure
+    f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
+    f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0, 1000000],facecolor2d,graphLegend,"left",False)
+    f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
+    f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
+    f5= Graph.GraphPlot(figure,figure.grid[0, 2],"GPS","x","y",[-100,100],[-100, 100],facecolor2d,graphLegend,"right",True)
+    f6=Graph.GraphPlot(figure,figure.grid[0:3, 3],"Altitude","time","Altitude (m)",[],[0, 20000],facecolor2d,graphLegend,"right",False)
 
+    #sensors Creation
+    temp1=Sensors.Sensors("temperature","","temperature (Â°c)","",4,0,"2d",f1,"Sensor 1","blue")
+    temp2=Sensors.Sensors("temperature","","temperature (Â°c)","",5,1,"2d",f1,"Sensor 2","red")
+    pressure1=Sensors.Sensors("pressure","","pressure (Pa)","",6,0,"2d",f2,"Sensor 1","red")
+    pressure2=Sensors.Sensors("pressure","","pressure (Pa)","",7,1,"2d",f2,"Sensor 2","green")
+    altitude=Sensors.Sensors("altitude","","altitude (m)","",8,0,"2d",f6,"","red")
+    acc = Sensors.Sensors("accelerometer","accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)",2,0,"3d",f3,'o','black')
+    gyro = Sensors.Sensors("gyroscope","gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)",3,0,"3d",f4,'o','black')
+    gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"gps",f5,"","blue")
 
-#My figure creation
-# for row and colum in figure 0->value
-figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
-myFigure = figure.figure
-f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
-f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0, 1000000],facecolor2d,graphLegend,"left",False)
-f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
-f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
-f5= Graph.GraphPlot(figure,figure.grid[0, 2],"GPS","x","y",[-100,100],[-100, 100],facecolor2d,graphLegend,"right",True)
-f6=Graph.GraphPlot(figure,figure.grid[0:3, 3],"Altitude","time","Altitude (m)",[],[0, 20000],facecolor2d,graphLegend,"right",False)
-
-#sensors Creation
-temp1=Sensors.Sensors("temperature","","temperature (Â°c)","",4,0,"2d",f1,"Sensor 1","blue")
-temp2=Sensors.Sensors("temperature","","temperature (Â°c)","",5,1,"2d",f1,"Sensor 2","red")
-pressure1=Sensors.Sensors("pressure","","pressure (Pa)","",6,0,"2d",f2,"Sensor 1","red")
-pressure2=Sensors.Sensors("pressure","","pressure (Pa)","",7,1,"2d",f2,"Sensor 2","green")
-altitude=Sensors.Sensors("altitude","","altitude (m)","",8,0,"2d",f6,"","red")
-acc = Sensors.Sensors("accelerometer","accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)",2,0,"3d",f3,'o','black')
-gyro = Sensors.Sensors("gyroscope","gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)",3,0,"3d",f4,'o','black')
-gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"gps",f5,"","blue")
-
-#create sensors list
-sensors_list_set_time=[f1,f2,f6]
-sensors = [temp1,temp2,pressure1,pressure2,altitude,gps,acc,gyro]
+    #create sensors list
+    sensors_list_set_time=[f1,f2,f6]
+    sensors = [temp1,temp2,pressure1,pressure2,altitude,gps,acc,gyro]
+    Dolmen.initFigure()
 
 def home_Function(last_windows):
+    # set theme color
+    if theme(THEME)==False:
+        Log.InfoSaveLog("warning","no theme color given make default theme")
+        print("no theme color given make default theme")
+        theme("normal")
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
@@ -258,8 +276,8 @@ def choose_fire_mode(last_windows):
 
     Log.InfoSaveLog("info",'Entering in choose fire mode')
 
-     
-    Dolmen.initFigure()
+    createGraph()
+    #Dolmen.initFigure()
     #Creating fire_mode_interface windows
     fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,350,100,lambda:home_Function(fire_mode_interface),2,3)
 

@@ -11,13 +11,12 @@ import Error
 
 count=0 # current line in CSV
 state_communication=False #if True => start decoding
-timeSave=0.0 # => init save if time not fount in csv file
 
 def currentTime(): # return the current time
     return str(time.strftime('%H.' '%M.' '%S'))
 
 def decodingCSV(): #open and decoding CSV file
-    global count,timeSave
+    global count
    
     filename = open(Config.figure.file, 'r', encoding='latin1')
           
@@ -34,7 +33,6 @@ def decodingCSV(): #open and decoding CSV file
         for i in lines[count]:
             line_split=i.split(",")        
         
-        timeFound=False
         #find time
         for j in range(0,len(line_split)-1):            
                        
@@ -44,8 +42,7 @@ def decodingCSV(): #open and decoding CSV file
                     
                     for sensor in Config.sensors_list_set_time:
                         sensor.x.append(float(line_split[j+2]))
-                    timeSave=float(line_split[j+2])
-                
+                    timeSave=float(line_split[j+2])      
         
         #decoding current line 
         for sensor in Config.sensors:
@@ -92,10 +89,8 @@ def updateOnline(i,start_button,stop_button): # decoding csv and updating graph 
 
     if(state_communication==True ): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
-        
-        if(state_communication==True):
-            for sensor in Config.sensors:
-                sensor.graph.animate()# update graph      
+        for sensor in Config.sensors:
+            sensor.graph.animate()# update graph      
 
     else :
         if fileExist(Config.figure.file)==False :
@@ -103,10 +98,9 @@ def updateOnline(i,start_button,stop_button): # decoding csv and updating graph 
             Config.Log.InfoSaveLog("info",'Corrupted CSV file or not found')
                            
 def initFigure(): #init and reset figure
-    global count,timeSave,state_communication
+    global count,state_communication
     state_communication = False
     count=0
-    timeSave=0
     for sensor in Config.sensors:
         sensor.graph.initGraph()
                 
@@ -138,14 +132,13 @@ def report_Function(): #report generation
 
 def state_set_communication(start_button,stop_button,state,currentMode,frame,mode): # mode => true :ask to and start stop decoding, False : start and stop with no ask 
     global state_communication
-
+    
     #if the user click on the start button
     if(state==True):
-        initFigure()
-        Config.Log.InfoSaveLog("info",'start decoding')        
-        
+        #initFigure()
         #enable decoding
         state_communication=True
+        Config.Log.InfoSaveLog("info",'start decoding') 
         #communication with cpp
         config=open(Config.CONFIG_TXT, "w")
         config.write("True")
@@ -166,9 +159,16 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
         if mode== True:
             if (Windows.messageAskyesno("End of data receive", "Do you want to stop the data receive ?")):
                 Config.Log.InfoSaveLog("info",'stop decoding')
+                start_button.enable()
+                #disable stop button
+                stop_button.disable()
         else :
                 print("end CSV file")
                 Config.Log.InfoSaveLog("info",'end CSV file')
+                start_button.disable()
+                #disable stop button
+                stop_button.disable()
+                Windows.messageShowinfo("","End CSV file")
 
         #disable decoding
         state_communication=False
@@ -181,12 +181,7 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
             config.write("\n")
             config.write(frame)
         config.close()
-        #set button start ans stop state
-        #enable start button
-        start_button.enable()
-        #disable stop button
-        stop_button.disable()
-
+    print(state_communication)
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name):
     
     save_condition = True

@@ -16,6 +16,7 @@ else:
     Config.UPDATE_DELAY = int(sys.argv[4])
     Config.LOG_FILE = str(sys.argv[5])
     Config.SAVE_REPORT_FOLDER = str(sys.argv[6])
+    Config.THEME=str(sys.argv[7])
 
 try:
     Config.Log=Error.ErrorLog(Config.LOG_FILE,Config.LOG_TYPE)

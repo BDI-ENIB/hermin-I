@@ -5,6 +5,7 @@ NAME="report.csv"
 UPDATE_DELAY="1000"
 LOG_FILE='dolmen.log'
 SAVE_REPORT_FOLDER="SaveSession"
+THEME="normal"
 outputString=$(python Init.py 2>&1) 
 
 testcmd () {
@@ -15,7 +16,7 @@ if testcmd xterm; then
     then    
         #konsole --hold -e python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER
         #gnome-terminal -- python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER
-        xterm -hold -e python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER 
+        xterm -hold -e python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER $THEME
     else
         echo $outputString
         echo "Exit"

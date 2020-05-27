@@ -1,0 +1,24 @@
+INFO:root:10.40.26 Start Dolmen
+INFO:root:10.40.26 Entering in home mode
+INFO:root:10.40.27 Entering in choose fire mode
+INFO:root:10.40.29 Entering in online mode
+INFO:root:10.40.30 start decoding
+WARNING:root:10.40.33 no time found
+WARNING:root:10.40.33 no time found
+WARNING:root:10.40.33 no time found
+WARNING:root:10.40.33 no time found
+WARNING:root:10.40.33 no time found
+WARNING:root:10.40.35 no time found
+WARNING:root:10.40.35 no time found
+WARNING:root:10.40.35 no time found
+WARNING:root:10.40.35 no time found
+WARNING:root:10.40.35 no sensors pressure 7
+WARNING:root:10.40.35 no time found
+WARNING:root:10.40.37 no sensors temperature 5
+WARNING:root:10.40.37 no sensors pressure 7
+WARNING:root:10.40.37 no sensors GPS 1
+WARNING:root:10.40.38 no sensors GPS 1
+INFO:root:10.40.39 end CSV file
+INFO:root:10.40.51 Entering in choose fire mode
+INFO:root:10.40.53 Entering in home mode
+INFO:root:10.40.54  Exit Dolmen

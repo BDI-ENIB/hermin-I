@@ -43,8 +43,8 @@ class Sensors():
                         self.graph.y[self.idGraph].append(float(line_split[j+2])) # adding sensors's data in graph
                         if len(self.graph.y[self.idGraph])==len(self.graph.x)+1:
                             self.graph.y[self.idGraph].pop()
-                            Config.Log.InfoSaveLog("warning",str('no time found'))
-                            print("no time found")
+                            Config.Log.InfoSaveLog("warning",str('no time found ' + str(self.name) + "  " + str(self.idSensor)))
+                            print("no time found " + str(self.name) + "  " + str(self.idSensor))
 
                     else : # if there are not sensors's data
                         Config.Log.InfoSaveLog("warning",str('no data in sensors ' + str(self.name) + str(self.idSensor)))
@@ -52,8 +52,8 @@ class Sensors():
                         print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
                         if len(self.graph.y[self.idGraph])==len(self.graph.x)+1:
                             self.graph.y[self.idGraph].pop()
-                            Config.Log.InfoSaveLog("warning",str('no time found'))
-                            print("no time found")
+                            Config.Log.InfoSaveLog("warning",str('no time found ' + str(self.name) + " " + str(self.idSensor)))
+                            print("no time found " + str(self.name) + "  " + str(self.idSensor))
 
                     self.processed = True # sensors data is processed
 
@@ -103,8 +103,8 @@ class Sensors():
                 self.graph.y[self.idGraph].append(0) # adding data 0 in y axe of sensor graph
                 if len(self.graph.y[self.idGraph])==len(self.graph.x)+1:
                         self.graph.y[self.idGraph].pop()
-                        Config.Log.InfoSaveLog("warning",str('no time found'))
-                        print("no time found")
+                        Config.Log.InfoSaveLog("warning",str('no time found ' + str(self.name) + " " + str(self.idSensor)))
+                        print("no time found " + str(self.name) + " " + str(self.idSensor))
                 
             elif self.typeGraph =="3d" : # if graph 3D
                 Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))

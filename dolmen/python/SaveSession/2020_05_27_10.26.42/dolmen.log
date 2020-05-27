@@ -1,0 +1,61 @@
+INFO:root:10.26.42 Start Dolmen
+INFO:root:10.26.42 Entering in home mode
+INFO:root:10.26.47 Entering in choose fire mode
+INFO:root:10.26.49 Entering in online mode
+INFO:root:10.26.50 start decoding
+WARNING:root:10.26.53 no time found
+WARNING:root:10.26.53 no time found
+WARNING:root:10.26.53 no time found
+WARNING:root:10.26.53 no time found
+WARNING:root:10.26.53 no time found
+WARNING:root:10.26.55 no time found
+WARNING:root:10.26.55 no time found
+WARNING:root:10.26.55 no time found
+WARNING:root:10.26.55 no time found
+WARNING:root:10.26.55 no sensors pressure 7
+WARNING:root:10.26.55 no time found
+WARNING:root:10.26.56 no sensors temperature 5
+WARNING:root:10.26.56 no sensors pressure 7
+WARNING:root:10.26.56 no sensors GPS 1
+INFO:root:10.26.57 Entering in choose fire mode
+INFO:root:10.26.58 Entering in offline mode
+INFO:root:10.27.02 start decoding
+WARNING:root:10.27.05 no time found
+WARNING:root:10.27.05 no time found
+WARNING:root:10.27.05 no time found
+WARNING:root:10.27.05 no time found
+WARNING:root:10.27.05 no time found
+WARNING:root:10.27.07 no time found
+WARNING:root:10.27.07 no time found
+WARNING:root:10.27.07 no time found
+WARNING:root:10.27.07 no time found
+WARNING:root:10.27.07 no sensors pressure 7
+WARNING:root:10.27.07 no time found
+INFO:root:10.27.08 Entering in choose fire mode
+INFO:root:10.27.09 Entering in online mode
+INFO:root:10.27.11 start decoding
+WARNING:root:10.27.13 no time found
+WARNING:root:10.27.13 no time found
+WARNING:root:10.27.13 no time found
+WARNING:root:10.27.13 no time found
+WARNING:root:10.27.13 no time found
+WARNING:root:10.27.16 no time found
+WARNING:root:10.27.16 no time found
+WARNING:root:10.27.16 no time found
+WARNING:root:10.27.16 no time found
+WARNING:root:10.27.16 no sensors pressure 7
+WARNING:root:10.27.16 no time found
+WARNING:root:10.27.17 no sensors temperature 5
+WARNING:root:10.27.17 no sensors pressure 7
+WARNING:root:10.27.17 no sensors GPS 1
+WARNING:root:10.27.18 no sensors GPS 1
+INFO:root:10.27.20 end CSV file
+INFO:root:10.27.25 start decoding
+WARNING:root:10.27.28 no time found
+WARNING:root:10.27.28 no time found
+WARNING:root:10.27.28 no time found
+WARNING:root:10.27.28 no time found
+WARNING:root:10.27.28 no time found
+INFO:root:10.27.29 Entering in choose fire mode
+INFO:root:10.27.30 Entering in home mode
+INFO:root:10.27.32  Exit Dolmen

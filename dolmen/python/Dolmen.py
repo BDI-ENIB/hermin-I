@@ -181,7 +181,7 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
             config.write("\n")
             config.write(frame)
         config.close()
-    print(state_communication)
+        
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name):
     
     save_condition = True

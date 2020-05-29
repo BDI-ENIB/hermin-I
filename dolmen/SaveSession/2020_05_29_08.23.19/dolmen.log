@@ -1,0 +1,97 @@
+INFO:root:08.23.19 Start Dolmen
+INFO:root:08.23.19 Entering in home mode
+INFO:root:08.23.23 Entering in choose fire mode
+INFO:root:08.23.27 Entering in offline mode
+INFO:root:08.23.31 start decoding
+WARNING:root:08.23.34 no time found temperature  4
+WARNING:root:08.23.34 no time found temperature  5
+WARNING:root:08.23.34 no time found pressure  6
+WARNING:root:08.23.34 no time found pressure  7
+WARNING:root:08.23.34 no time found altitude  8
+WARNING:root:08.23.36 no sensors pressure 7
+WARNING:root:08.23.36 no sensors altitude 8
+WARNING:root:08.23.37 no sensors temperature 5
+WARNING:root:08.23.37 no sensors pressure 7
+WARNING:root:08.23.37 no sensors altitude 8
+WARNING:root:08.23.37 no sensors GPS 1
+WARNING:root:08.23.37 no sensors GPS 1
+WARNING:root:08.23.41 no sensors pressure 7
+WARNING:root:08.23.41 no sensors altitude 8
+WARNING:root:08.23.42 no sensors temperature 5
+WARNING:root:08.23.42 no sensors pressure 7
+WARNING:root:08.23.42 no sensors altitude 8
+WARNING:root:08.23.42 no sensors GPS 1
+WARNING:root:08.23.42 no sensors GPS 1
+WARNING:root:08.23.44 no sensors temperature 5
+WARNING:root:08.23.44 no sensors pressure 7
+WARNING:root:08.23.44 no sensors altitude 8
+WARNING:root:08.23.44 no sensors GPS 1
+WARNING:root:08.23.45 no sensors GPS 1
+INFO:root:08.23.45 end CSV file
+INFO:root:08.32.10 Entering in choose fire mode
+INFO:root:08.32.13 Entering in online mode
+INFO:root:08.32.13 Entering in choose fire mode
+INFO:root:08.32.14 Entering in offline mode
+INFO:root:08.32.17 start decoding
+WARNING:root:08.32.24 no sensors pressure 7
+WARNING:root:08.32.24 no sensors altitude 8
+WARNING:root:08.32.25 no sensors temperature 5
+WARNING:root:08.32.25 no sensors pressure 7
+WARNING:root:08.32.25 no sensors altitude 8
+WARNING:root:08.32.25 no sensors GPS 1
+WARNING:root:08.32.25 no sensors GPS 1
+WARNING:root:08.32.27 no sensors GPS 1
+WARNING:root:08.32.28 no sensors pressure 7
+WARNING:root:08.32.28 no sensors altitude 8
+WARNING:root:08.32.28 no sensors GPS 1
+WARNING:root:08.32.28 no sensors temperature 5
+WARNING:root:08.32.28 no sensors pressure 7
+WARNING:root:08.32.28 no sensors altitude 8
+WARNING:root:08.32.28 no sensors GPS 1
+WARNING:root:08.32.29 no sensors GPS 1
+WARNING:root:08.32.29 no sensors GPS 1
+WARNING:root:08.32.30 no sensors GPS 1
+WARNING:root:08.32.30 no sensors GPS 1
+WARNING:root:08.32.31 no sensors GPS 1
+WARNING:root:08.32.32 no sensors pressure 7
+WARNING:root:08.32.32 no sensors altitude 8
+WARNING:root:08.32.32 no sensors GPS 1
+WARNING:root:08.32.32 no sensors temperature 5
+WARNING:root:08.32.32 no sensors pressure 7
+WARNING:root:08.32.32 no sensors altitude 8
+WARNING:root:08.32.32 no sensors GPS 1
+WARNING:root:08.32.33 no sensors GPS 1
+WARNING:root:08.32.33 no sensors temperature 5
+WARNING:root:08.32.33 no sensors GPS 1
+WARNING:root:08.32.34 no sensors GPS 1
+WARNING:root:08.32.34 no sensors GPS 1
+WARNING:root:08.32.35 no sensors pressure 7
+WARNING:root:08.32.35 no sensors altitude 8
+WARNING:root:08.32.35 no sensors GPS 1
+WARNING:root:08.32.35 no sensors temperature 5
+WARNING:root:08.32.35 no sensors pressure 7
+WARNING:root:08.32.35 no sensors altitude 8
+WARNING:root:08.32.35 no sensors GPS 1
+WARNING:root:08.32.36 no sensors GPS 1
+WARNING:root:08.32.36 no sensors GPS 1
+WARNING:root:08.32.37 no sensors GPS 1
+WARNING:root:08.32.37 no sensors GPS 1
+WARNING:root:08.32.38 no sensors pressure 7
+WARNING:root:08.32.38 no sensors altitude 8
+WARNING:root:08.32.38 no sensors GPS 1
+WARNING:root:08.32.38 no sensors temperature 5
+WARNING:root:08.32.38 no sensors pressure 7
+WARNING:root:08.32.38 no sensors altitude 8
+WARNING:root:08.32.38 no sensors GPS 1
+WARNING:root:08.32.39 no sensors GPS 1
+WARNING:root:08.32.39 no sensors GPS 1
+WARNING:root:08.32.40 no sensors GPS 1
+WARNING:root:08.32.40 no sensors GPS 1
+WARNING:root:08.32.40 no sensors gyroscope 3
+INFO:root:08.40.41 trying to generate report before stopping decoding
+INFO:root:08.40.43 stop decoding
+ERROR:root:08.40.44 2020_05_29_08.23.19folder not found => creation
+INFO:root:08.40.45 report generation in SaveSession/2020_05_29_08.23.19
+INFO:root:08.41.54 Entering in choose fire mode
+INFO:root:08.41.56 Entering in home mode
+INFO:root:08.41.58  Exit Dolmen

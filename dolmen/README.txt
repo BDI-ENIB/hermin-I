@@ -13,24 +13,45 @@ The DolMen team.
 
 SPACE !!!!!!!
 
+--- Prerequisites: ---
+
+You need to have on your computer:
+ - tkinter: sudo apt-get install python-tk
+ - matplotlib: sudo python -m pip install -U matplotlib
+ - xterm: sudo apt-get install xterm
+(theses commands might not work everywhere, but you can find some information on the internet on how to get the last version of them)
 
 --- How to use the DolMen software? ---
 
-In the main folder project, you will find a script named AXEL FAUT QUE TU METTES LE NOM DE TON SCRIPT ICI.
-Launch it.
- - If you want to run the software in offline mode, you'll have to specify the name and the path of your data .txt folder. AXEL FAUT QUE TU DISES OU ICI
- - If you want to run the software in online mode, you won't have to do this.
+In the main folder project, open a terminal and execute: ./script.sh, this will run the script launching the program.
+Once the program is opened, you'll access to a graphic interface, with differents menus.
+The admin mode will allow you to manage sensors and graphical interface, and the fire mode willa llow you to follow your rocket in online or in offline mode.
+ - If you want to run the software in offline mode, you'll have to load your .txt file containing the data of your rocket from a popup.
+ - If you want to run the software in online mode, TO BE CONTINUED
 
-LA AXEL C'EST A TOI DE MAQUER COMMENT ON FAIT, JE NE SAIS PAS LES DETAILS DU FONCTIONNEMENT DU PYTHON, CA A PEUT ETRE CHANGE DE CE QU'IL Y A SUR LE CAHIER DES CHARGES
+ In offline mode, hit the start button to enable decoding, a popup will tell you when the decoding will be finished.
 
 --- How to add or remove sensors? ---
 
-First, you'll have to create them in the software interface, by giving them a name and an id.
+1- You'll have to create them in the software interface, by giving them a name and a graphic model:
+ - 2d for a sensor with data + time
+ - 3d for a sensor with 3 data + time
+ - gps for a sensor with 2 data + time
 
-Then, you'll have to go in the prog.cpp file of the cpp folder, and create a new element from the factory.
+1.1 (optionnal)- If you need to create a new modele for this, you'll have to modify the decoding() function from the sensors.py file.
+
+2- You'll have to go in the prog.cpp file of the cpp folder, and create a new element from the factory.
 You'll also have to go in the .cpp and .hpp files of your sensor (the program will create a squeleton automatically) and modify them with how do you want your sensor to work.
 In the dolmen.hpp file, insert your new sensor .hpp at the specified emplacement.
 
-Then, you can compile the c++ by opening a terminal in the c++ folder and typing 'make'.
+3- Compile the c++ by opening a terminal in the c++ folder and typing 'make'.
 
-If you run the launching script again, you'll see your new sensor on the software, and you'll be able to use it.
+4- In the function createGraph() from the file Config.py, line 90, add your new sensors.
+
+5- Run the script again, you'll see your new sensor on the software, and you'll be able to use it.
+
+
+--- How to rescale the graphical interface? ---
+
+In the file Config.py change the line 94: figure=Graph.Graph(13,8,3,4,[4,4,4,2],[4,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
+Here 13 and 8 represents the width and height of the interface. You can adjust theses values and launch DolMen again.

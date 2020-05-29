@@ -9,26 +9,29 @@ import time
 import shutil
 import Error
 import os
+
 count=0 # current line in CSV
 state_communication=False #if True => start decoding
 
 def currentTime(): # return the current time
     return str(time.strftime('%H.' '%M.' '%S'))
 
+def currentDate():
+    return str(time.strftime('%Y_' '%m_' '%d_'))
+
 def decodingCSV(): #open and decoding CSV file
     global count
-    print(Config.CSV)
     filename = open(Config.CSV, 'r', encoding='latin1')          
     reader = csv.reader(filename, delimiter=';') #import csv
     
     lines = [line for line in reader] #import list of CSV lines
     filename.close()
-    #print(lines)
     # add and find the CSV line to decode
-    print(lines)
     if lines==[[]] and count==0:
         return
-    if lines !=[]:
+
+    if lines !=[]:       
+            
         if lines[count]!=['stop']:     
             #find time
             for j in range(0,len(lines[count])-1):            
@@ -57,6 +60,7 @@ def decodingCSV(): #open and decoding CSV file
         return
 
 def fileExist(fileToTest): # detect if file in folder exist
+
     try:
         with open(fileToTest,'r',encoding='latin1') as filename:            
             return  True
@@ -66,44 +70,45 @@ def fileExist(fileToTest): # detect if file in folder exist
         return False # return error file no found
 
 
-def updateOffline(i): # decoding csv and updating graph in Offline mode
+def updateOffline(i,start_button,stop_button): # decoding csv and updating graph in Offline mode
     global state_communication
-
+    print(i)
+    #Widgets.TextToPrint(Config.fire__offline_interface,Dolmen.currentTime(),Config.colorFont,Config.colorText,3,4)
     if(state_communication==True and fileExist(Config.figure.file)==True): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
-
         if(state_communication==True and fileExist(Config.figure.file)==True): 
             for sensor in Config.sensors:
-                sensor.graph.animate()# update graph
-    """
+                sensor.graph.animate()# update graph   
     else :
         if fileExist(Config.figure.file)==False :
             Windows.messageShowwarning("Open Filename", "Corrupted CSV file or not found")
             Config.Log.InfoSaveLog("info",'Corrupted CSV file or not found')
-    """
-
+    
 
 def updateOnline(i,start_button,stop_button): # decoding csv and updating graph in Online mode
     global state_communication
-
     if(state_communication==True ): #if you click on the start button of fire_interface windows and csv name exist
         decodingCSV() # decoding csv
+        
         for sensor in Config.sensors:
-            sensor.graph.animate()# update graph      
-    """
+            sensor.graph.animate()# update graph          
     else :
+
         if fileExist(Config.figure.file)==False :
+
             Windows.messageShowwarning("Open Filename", "Corrupted CSV file or not found")
             Config.Log.InfoSaveLog("info",'Corrupted CSV file or not found')
-    """
+    
                            
 def initFigure(): #init and reset figure
     global count,state_communication
+
     state_communication = False
     count=0
     os.remove(Config.CSV)
     filename = open(Config.CSV, 'w')
     filename.close()
+
     for sensor in Config.sensors:
         sensor.graph.initGraph()
                 
@@ -111,18 +116,21 @@ def report_Function(): #report generation
     global state_communication
 
     if (state_communication == False): # if decoding is stopped
+
         #check if is save folder exist       
         if not os.path.exists(Config.SAVE_REPORT_FOLDER):
             Config.Log.InfoSaveLog("error",str(Config.SAVE_REPORT_FOLDER + "folder not found => creation"))            
             os.makedirs(Config.SAVE_REPORT_FOLDER)
+
         if not os.path.exists(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER)):
             Config.Log.InfoSaveLog("error",str(Config.NAME_SAVE_FOLDER + "folder not found => creation"))
             os.makedirs(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER))
-        
+
         #save report
         shutil.copy(Config.figure.file,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' ) #copy csv file in save report folder        
         Config.figure.saveFig(Config.SAVE_REPORT_FOLDER,Config.NAME_SAVE_FOLDER,Config.NAME_SAVE_FIGURE) #save figure in save report folder
         Windows.messageShowinfo("Report generation","Report generation successfully created.")
+
         #print and save in log
         Config.Log.InfoSaveLog("info",str("report generation in " + Config.SAVE_REPORT_FOLDER + "/" + Config.NAME_SAVE_FOLDER))
         print("report generation in   " + Config.SAVE_REPORT_FOLDER + "/" + Config.NAME_SAVE_FOLDER)
@@ -142,6 +150,7 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
         #enable decoding
         state_communication=True
         Config.Log.InfoSaveLog("info",'start decoding') 
+
         #communication with cpp
         config=open(Config.CONFIG_TXT, "w")
         config.write("true")
@@ -149,7 +158,8 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
         config.write(str(currentMode))
         config.write("\n")
         config.write(frame)
-        config.close()      
+        config.close()  
+
         #set button start ans stop state
         #disable start button
         start_button.disable()
@@ -157,6 +167,7 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
         stop_button.enable()      
 
     elif(state==False):
+
         #check if ask stop decoding
         if mode== True:
             if (Windows.messageAskyesno("End of data receive", "Do you want to stop the data receive ?")):
@@ -164,27 +175,25 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,mod
                 start_button.enable()
                 #disable stop button
                 stop_button.disable()
-        
 
         #disable decoding
         state_communication=False
+
         #communication with cpp
         config=open(Config.CONFIG_TXT, "w")
         config.write("false")
         config.write("\n")
         config.write(str(currentMode))
-        """
-        if str(frame)!="None":
-            config.write("\n")
-            config.write(frame)
-        config.close()
-        """
+
         if mode==False :
             print("end CSV file")
             Config.Log.InfoSaveLog("info",'end CSV file')
+
+            #disable start button
             start_button.disable()
             #disable stop button
             stop_button.disable()
+
             Windows.messageShowinfo("","End CSV file")
         
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name):

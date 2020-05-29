@@ -20,23 +20,17 @@ else:
     Config.NAME_SAVE_FIGURE=str(sys.argv[8])
     Config.CONFIG_TXT=str(sys.argv[9])
     Config.THEME=str(sys.argv[10])
+    Config.ROCKET_NAME=str(sys.argv[11])
 
 try:
     Config.Log=Error.ErrorLog(Config.LOG_FILE,Config.LOG_TYPE)
-    #logging.basicConfig(filename=Config.LOG_FILE,filemode='w',level=Config.LOG_TYPE)
    
 except:
     Config.Log=Error.ErrorLog(Config.LOG_FILE,"info")
-    #logging.basicConfig(filename=Config.LOG_FILE,level=logging.INFO)
     Config.Log.InfoSaveLog("warning",'logging level error adding default INFO')
-    #logging.warning(Dolmen.currentTime() + ' logging level error adding default INFO')
     print("logging level error adding default INFO")
     
-#logging.basicConfig(filename=Config.LOG_FILE,level=Config.LOG_TYPE)
-Config.Log.InfoSaveLog("info",'Start Dolmen')    
-#logging.info(Dolmen.currentTime() + ' Start Dolmen')
-
-#Config.TIME_FOLDER = Dolmen.currentTime()
+Config.Log.InfoSaveLog("info",'Start Dolmen')   
 
 while 1 :
     Config.home_Function(None)

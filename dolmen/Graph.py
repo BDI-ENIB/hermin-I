@@ -1,14 +1,11 @@
 import matplotlib
 matplotlib.use('TkAgg')
-import random
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import tkinter as tk
-from itertools import count
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-from matplotlib import cm
 import matplotlib.markers as marker
 
 
@@ -36,7 +33,7 @@ class Graph():
         matplotlib.rcParams['grid.color'] = self.gridColor
 
         #Create figure grid
-        self.grid= self.figure.add_gridspec(nrows=self.row, ncols=self.column, width_ratios = self.width, height_ratios = self.height,wspace = 0.2,hspace=0.5)
+        self.grid= self.figure.add_gridspec(nrows=self.row, ncols=self.column, width_ratios = self.width, height_ratios = self.height,wspace = 0.5,hspace=0.5)
         self.file = None
         
     def addToWindows(self,windows,rowGraph,columnGraph,columnspan,rowToolbar,columnToolbar):
@@ -58,7 +55,7 @@ class Graph():
         toolbar.update()        
     
     def saveFig(self,SAVE_REPORT_FOLDER,NAME_SAVE_FOLDER,NAME_SAVE_FIGURE):# save figure
-        self.figure.savefig(SAVE_REPORT_FOLDER + '/' + NAME_SAVE_FOLDER + '/' + NAME_SAVE_FIGURE)
+        self.figure.savefig(SAVE_REPORT_FOLDER + '/' + NAME_SAVE_FOLDER + '/' + NAME_SAVE_FIGURE,facecolor=self.colorFont,edgecolor=self.colorText)
         
 
 class GraphPlot(): # 2D Graphe
@@ -80,6 +77,7 @@ class GraphPlot(): # 2D Graphe
         self.numberGraph=0        
         self.label=[]
         self.ySide=ySide
+        # don't show coordonates when pasing mouse on graphe
         self.figure.format_coord = lambda x, y: ''
 
     def animate(self):  
@@ -144,7 +142,7 @@ class GraphPlot(): # 2D Graphe
         if len(self.xlim)==2:
             self.figure.set_xlim(self.xlim)
 
-        # don't show coordonates when pasing mouse on graphe
+        
         
 class Graph3d():
 
@@ -167,8 +165,6 @@ class Graph3d():
         self.ylim3D = ylim
         self.zlim3D = zlim
         self.linestyle=linestyle
-        
-
         # don't show coordonates when pasing mouse on graphe
         self.figure.format_coord = lambda x, y: ''
     
@@ -216,52 +212,3 @@ class Graph3d():
         self.figure.set_ylim3d(self.ylim3D)
         self.figure.set_zlim3d(self.zlim3D)
         self.figure.view_init(azim=-60)
-
-class GraphHist():
-    def __init__(self,fig,position,title,titleX,titleY,ylim,facecolor,ySide):
-        
-        self.facecolor=facecolor
-        self.figure = fig.figure.add_subplot(position,facecolor=self.facecolor)
-        self.color = [] 
-        self.title=title
-        self.titleX=titleX
-        self.titleY=titleY
-        self.ylim=ylim
-        self.x=[]
-        self.y=[]
-        self.numberGraph=10
-        self.position=None
-        if ySide=="right":
-            self.figure.yaxis.set_label_position("right")
-            self.figure.yaxis.tick_right()
-        if ySide=="left":
-            self.figure.yaxis.set_label_position("left")
-            self.figure.yaxis.tick_left()
-        self.figure.set_title(self.title,loc='right') 
-        self.figure.set_xlabel(self.titleX)
-        self.figure.set_ylabel(self.titleY)
-        self.figure.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
-        self.figure.set_ylim(self.ylim)
-        self.figure.format_coord = lambda x, y: ''
-        self.width = 0.35 
-
-    def animate(self):        
-                  
-        self.figure.cla() # Clear the current axes
-        self.figure.set_title(self.title,loc='right') 
-        self.figure.set_xlabel(self.titleX)
-        self.figure.set_ylabel(self.titleY)
-        self.figure.set_ylim(self.ylim)
-        self.position=np.arange(4)
-        y=[0,100,2000,15000]
-        self.figure.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
-        self.figure.bar(self.position, np.array(self.y), color=self.color, edgecolor='black')
-        self.figure.set_xticks(self.position)
-        self.figure.set_xticklabels(self.x) 
-
-    def initGraph(self):
-        self.figure.cla()
-        self.y=[]
-        for i in range(0,self.numberGraph):
-            self.y.append([])
-

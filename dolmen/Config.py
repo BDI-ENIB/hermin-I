@@ -19,17 +19,17 @@ NAME = ""
 UPDATE_DELAY = None
 LOG_FILE = ""
 SAVE_REPORT_FOLDER = ""
+ROCKET_NAME=""
 #init time session
 TIME_FOLDER=Dolmen.currentTime()
 #init saving folder
-NAME_SAVE_FOLDER = str(time.strftime('%Y_' '%m_' '%d_'))+str(TIME_FOLDER)
+NAME_SAVE_FOLDER = Dolmen.currentDate() + TIME_FOLDER
 #Log file
 Log=None
 #figure name file whe, rapport generation
 NAME_SAVE_FIGURE = ""
 # name logo in About windows
 NAME_ABOUT_IMAGE = "logos.png"
-
 #Windows text and fig color
 colorFont = ""
 colorText = ""
@@ -41,7 +41,8 @@ gridColor = ""
 facecolor2d = ""
 facecolor3d = ""
 graphLegend = ""
-
+xFig_size=None
+yFig_size=None
 #button of fire interface
 start_button=None
 stop_button=None
@@ -89,11 +90,12 @@ sensors=[]
 
 def createGraph():# function to create and intit graph
     global sensors_list_set_time, sensors, figure, myFigure
-    #My figure creation
+    
+    #My figure creationm
     # for row and colum in figure 0->value
-    figure=Graph.Graph(20,8,3,4,[4,4,4,2],[4,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
+    figure=Graph.Graph(xFig_size,yFig_size,3,4,[1,1,1,1],[3,2,2],colorText,xColor,yColor,axeLabelColor,gridColor,colorFont)
     myFigure = figure.figure
-    f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperator","time","Temperator (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
+    f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperature","time","Temperature (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
     f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0, 1000000],facecolor2d,graphLegend,"left",False)
     f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
     f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
@@ -117,6 +119,7 @@ def createGraph():# function to create and intit graph
 
 
 def home_Function(last_windows):
+    global xFig_size,yFig_size
     # set theme color
     if theme(THEME)==False:
         Log.InfoSaveLog("warning","no theme color given make default theme")
@@ -128,7 +131,8 @@ def home_Function(last_windows):
     Log.InfoSaveLog("info",'Entering in home mode')
     #Creating home_interface windows
     home_interface = Windows.Windows("Welcome",colorFont,300,100,Windows.exit,3,3)
-
+    xFig_size=home_interface.windows.winfo_screenwidth()/100
+    yFig_size=0.8*home_interface.windows.winfo_screenheight()/100
     #Adding widgets      
     Widgets.TextToPrint(home_interface,"DOLMEN Alpha version",colorFont,colorText,1,2)    
     fire_mode_button = Widgets.ButtonDisplay(home_interface,"Fire Mode",colorFont,colorText,colorSelect,lambda: choose_fire_mode(home_interface),10,2,2,1)
@@ -255,27 +259,17 @@ def help_fire_mode():
 
     help_fire_mode = Windows.messageShowinfo("Witch Fire mode you can use ?",
     """
-    The Online Fire mode must be use with an emitter to view data in real time 
+-   The Online Fire mode must be use with an emitter to view data in real time 
 
-    The Offline Fire mode must be use when you don't have an emitter or if you want to simulate a rocket launch
+-   The Offline Fire mode must be use when you don't have an emitter or if you want to simulate a rocket launch
     """
     )
 
-  
-def help_fire ():
-
-    help_fire = Windows.messageShowinfo("Help Fire mode ?",
-    """
-    A DEVELOPPER
-    """
-    )
 
 def choose_fire_mode(last_windows):
-
     #destroy the last windows (if there is one)
     if(last_windows!=None):
         last_windows.windows.destroy()
-
     Log.InfoSaveLog("info",'Entering in choose fire mode')
     #reset and init graph
     createGraph()
@@ -295,7 +289,6 @@ def choose_fire_mode(last_windows):
  
     fire_mode_interface.windows.mainloop()
 
-
 def fire_Function_offline(last_windows): 
     global start_button, stop_button,currentMode,frame
 
@@ -306,39 +299,40 @@ def fire_Function_offline(last_windows):
     Log.InfoSaveLog("info",'Entering in offline mode')
 
     currentMode="offline" #set current mode
-    
+
     if Windows.askopenfilename(figure,PATH):
 
         #Creating fire__offline_interface windows
-        fire__offline_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__offline_interface),3,9) 
+        fire__offline_interface = Windows.Windows("Fire Offline Mode",colorFont,0,0,lambda:choose_fire_mode(fire__offline_interface),3,6) 
         frame=figure.file
 
         #Adding graph in windows 
-        figure.addToWindows(fire__offline_interface,1,1,8,4,7) 
-        #figure.addToWindows(fire__offline_interface,1,1,8,2,9)  
+        figure.addToWindows(fire__offline_interface,1,1,6,3,6)
         
         start_button = None
         stop_button = None
         
         #Adding widgets      
         start_button = Widgets.ButtonDisplay(fire__offline_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True,currentMode,frame,True),10,10,3,1)
-        stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,frame,True),10,10,3,5)
-        help_fire_button = Widgets.ButtonDisplay(fire__offline_interface,"Help",colorFont,colorText,colorSelect,help_fire,10,5,3,3)
-        rapport_button = Widgets.ButtonDisplay(fire__offline_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,4)
-
+        stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,frame,True),10,10,3,3)
+        rapport_button = Widgets.ButtonDisplay(fire__offline_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,2)
+        #Widgets.DisplayTime(fire__offline_interface,colorFont,colorText,3,4)
+        Widgets.TextToPrint(fire__offline_interface,"Rocket Name :" + "\n" + str(ROCKET_NAME),colorFont,colorText,3,5)
+        
+    
         #initial conditions :
         #enable start button
         start_button.enable()
-
+        
         #disable stop button
         stop_button.disable()
-
         #decoding data andupdating graph 
-        ani = FuncAnimation(myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=100, interval=UPDATE_DELAY, repeat=False) #or ani = FuncAnimation(plt.gcf(), update, 200)
+        ani = FuncAnimation(myFigure, Dolmen.updateOffline,fargs = (start_button,stop_button), frames=200, interval=UPDATE_DELAY, repeat=True) #or ani = FuncAnimation(plt.gcf(), update, 200)
         fire__offline_interface.windows.mainloop()
         #fire__offline_interface.destroy()
 
     else :
+
         Log.InfoSaveLog("warning",'No file chosen')
         Windows.messageShowwarning("Open Filename", "Warning, you must choose a file ")
         choose_fire_mode(None)
@@ -349,7 +343,7 @@ def fire_Function_online(last_windows):
 
     global start_button, stop_button,currentMode,frame
 
-    Windows.messageShowinfo("Developpment Info", "Online mode is in developpment ")
+    Windows.messageShowinfo("Developpment Info", "ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE")
     
     #destroy the last windows (if there is one)
     if(last_windows!=None):
@@ -363,20 +357,22 @@ def fire_Function_online(last_windows):
     Log.InfoSaveLog("info",'Entering in online mode')
 
     #Creating fire__online_interface windows        
-    fire__online_interface = Windows.Windows("Fire Mode",colorFont,0,0,lambda:choose_fire_mode(fire__online_interface),4,9) 
+    fire__online_interface = Windows.Windows("Fire Online Mode",colorFont,0,0,lambda:choose_fire_mode(fire__online_interface),4,9) 
             
     #Adding graph in windows 
-    figure.addToWindows(fire__online_interface,1,1,8,4,7)  
+    figure.addToWindows(fire__online_interface,1,1,6,4,6)  
 
     start_button = None
     stop_button = None
 
     #Adding widgets      
     start_button = Widgets.ButtonDisplay(fire__online_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True,currentMode,figure.file,True),10,10,3,1)
-    stop_button = Widgets.ButtonDisplay(fire__online_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,figure.file,True),10,10,3,5)
-    help_fire_button = Widgets.ButtonDisplay(fire__online_interface,"Help",colorFont,colorText,colorSelect,help_fire,10,5,3,3)
-    rapport_button = Widgets.ButtonDisplay(fire__online_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,4)
-    
+    stop_button = Widgets.ButtonDisplay(fire__online_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,figure.file,True),10,10,3,3)
+    rapport_button = Widgets.ButtonDisplay(fire__online_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,2)
+    Widgets.DisplayTime(fire__online_interface,colorFont,colorText,3,4)
+    Widgets.TextToPrint(fire__online_interface,"Rocket Name :" + "\n" + str(ROCKET_NAME),colorFont,colorText,3,5)
+    Widgets.TextToPrint(fire__online_interface,"Signal :" + "\n",colorFont,colorText,3,6)
+
     #initial conditions :    
     #enable start button
     start_button.enable()
@@ -384,7 +380,7 @@ def fire_Function_online(last_windows):
     stop_button.disable()        
 
     #decoding data andupdating graph      
-    ani = FuncAnimation(myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=100, interval=UPDATE_DELAY, repeat=False) #or ani = FuncAnimation(plt.gcf(), update, 200) 
+    ani = FuncAnimation(myFigure, Dolmen.updateOnline,fargs = (start_button,stop_button), frames=200, interval=UPDATE_DELAY, repeat=True) #or ani = FuncAnimation(plt.gcf(), update, 200) 
         
     fire__online_interface.windows.mainloop()
     #fire__offline_interface.destroy()

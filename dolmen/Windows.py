@@ -1,4 +1,3 @@
-#from tkinter import *
 import Config
 import Dolmen
 import Error
@@ -7,13 +6,10 @@ import shutil
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-from PIL import Image, ImageTk
 import sys
 
 class Windows(tk.Frame):
     def __init__(self,title, colorFont,x,y,function,row,column):
-        #tk.Tk.__init__(self, windows, width=x, height=y, bg=colorFont, **kwargs)
-        #self.pack_propagate(0)
         self.windows=tk.Tk()
         super().__init__(self.windows)        
         self.color = colorFont
@@ -27,21 +23,15 @@ class Windows(tk.Frame):
         self.hs = self.windows.winfo_screenheight()
         self.widthCenter = (self.ws/2) - (self.width/2)
         self.heightCenter = (self.hs/2) - (self.height/2)
-        self.windows.rowconfigure(self.row, weight=1)
-        self.windows.columnconfigure(self.column, weight=1)
-        
-
-
+        self.windows.rowconfigure(self.row, weight=2)
+        self.windows.columnconfigure(self.column, weight=2)
         if (self.width==0 and self.height==0):
             self.windows.geometry(str(self.ws) + "x" + str(self.hs) )
-
         else :
             self.windows.geometry(str(self.width) + "x" + str(self.height) + "+" + str(int(self.widthCenter)) + "+" +str(int(self.heightCenter)))
-
         self.windows.title(title)
         self.function=lambda: function()
         self.windows.protocol("WM_DELETE_WINDOW",self.on_closing )
-
 
     def on_closing(self):
             
@@ -51,27 +41,23 @@ class Windows(tk.Frame):
             else :
                 self.windows.destroy()
 
-
 def exit():
 
     if(messageAskyesno("Quit", "Do you want to quit?")):
             Config.Log.InfoSaveLog("info",' Exit Dolmen')
             config=open(Config.CONFIG_TXT, "w")
             config.write("exit")
-            config.close()     
-            #logging.info(Dolmen.currentTime() + ' Exit Dolmen')
-            
+            config.close()
             if not os.path.exists(Config.SAVE_REPORT_FOLDER):            
                 os.makedirs(Config.SAVE_REPORT_FOLDER)
                 
             if not os.path.exists(Config.SAVE_REPORT_FOLDER + '/' + Config.NAME_SAVE_FOLDER):            
                 os.makedirs(Config.SAVE_REPORT_FOLDER + '/' + Config.NAME_SAVE_FOLDER)
             #save log file    
-            shutil.copy(Config.LOG_FILE,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' +  Config.LOG_FILE)
+            shutil.copy(Config.LOG_FILE,Config.SAVE_REPORT_FOLDER + '/'+ Config.NAME_SAVE_FOLDER + '/' +  Config.LOG_FILE)
             sys.exit()  
     else:
         return
-
 
 #Information message box :
 
@@ -99,7 +85,6 @@ def messageAskyesno(title, text):
 def messageAskyesnocancel(title, text):
     return messagebox.askyesnocancel(title, text)
 
-
 #Warning message boxes :
 
 def messageShowwarning(title,text):
@@ -110,8 +95,7 @@ def messageShowerror(title,text):
     messagebox.showerror(title, text)
 
 def askopenfilename(figure,path):
-    filename=filedialog.askopenfilename(title = "Select file",filetypes = (("txt files","*.txt"),("all files","*.*")))
-    
+    filename=filedialog.askopenfilename(title = "Select file",filetypes = (("txt files","*.txt"),("all files","*.*")))    
     try:
         with open(filename,'r') as UseFile:
             #print(UseFile.read())

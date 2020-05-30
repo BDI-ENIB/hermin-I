@@ -316,7 +316,7 @@ def fire_Function_offline(last_windows):
         start_button = Widgets.ButtonDisplay(fire__offline_interface,"Start",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,True,currentMode,frame,True),10,10,3,1)
         stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,frame,True),10,10,3,3)
         rapport_button = Widgets.ButtonDisplay(fire__offline_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,2)
-        #Widgets.DisplayTime(fire__offline_interface,colorFont,colorText,3,4)
+        Widgets.DisplayTime(fire__offline_interface,colorFont,colorText,3,4)
         Widgets.TextToPrint(fire__offline_interface,"Rocket Name :" + "\n" + str(ROCKET_NAME),colorFont,colorText,3,5)
         
     
@@ -360,7 +360,7 @@ def fire_Function_online(last_windows):
     fire__online_interface = Windows.Windows("Fire Online Mode",colorFont,0,0,lambda:choose_fire_mode(fire__online_interface),4,9) 
             
     #Adding graph in windows 
-    figure.addToWindows(fire__online_interface,1,1,6,4,6)  
+    figure.addToWindows(fire__online_interface,1,1,6,3,6)  
 
     start_button = None
     stop_button = None

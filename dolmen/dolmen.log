@@ -1,3 +1,60 @@
-INFO:root:00.16.45 Start Dolmen
-INFO:root:00.16.45 Entering in home mode
-INFO:root:00.16.48  Exit Dolmen
+INFO:root:10.39.03 Start Dolmen
+INFO:root:10.39.03 Entering in home mode
+INFO:root:10.39.04 Entering in choose fire mode
+INFO:root:10.39.05 Entering in offline mode
+INFO:root:10.39.07 start decoding
+WARNING:root:10.39.11 no time found temperature  4
+WARNING:root:10.39.11 no time found temperature  5
+WARNING:root:10.39.11 no time found pressure  6
+WARNING:root:10.39.11 no time found pressure  7
+WARNING:root:10.39.11 no time found altitude  8
+WARNING:root:10.39.12 no sensors pressure 7
+WARNING:root:10.39.12 no sensors altitude 8
+WARNING:root:10.39.13 no sensors temperature 5
+WARNING:root:10.39.13 no sensors pressure 7
+WARNING:root:10.39.13 no sensors altitude 8
+WARNING:root:10.39.13 no sensors GPS 1
+WARNING:root:10.39.13 no sensors GPS 1
+WARNING:root:10.39.15 no sensors GPS 1
+WARNING:root:10.39.16 no sensors pressure 7
+WARNING:root:10.39.16 no sensors altitude 8
+WARNING:root:10.39.16 no sensors GPS 1
+WARNING:root:10.39.16 no sensors temperature 5
+WARNING:root:10.39.16 no sensors pressure 7
+WARNING:root:10.39.16 no sensors altitude 8
+WARNING:root:10.39.16 no sensors GPS 1
+WARNING:root:10.39.17 no sensors GPS 1
+WARNING:root:10.39.17 no sensors GPS 1
+WARNING:root:10.39.17 no sensors GPS 1
+WARNING:root:10.39.18 no sensors GPS 1
+WARNING:root:10.39.18 no sensors GPS 1
+WARNING:root:10.39.19 no sensors pressure 7
+WARNING:root:10.39.19 no sensors altitude 8
+WARNING:root:10.39.19 no sensors GPS 1
+WARNING:root:10.39.19 no sensors temperature 5
+WARNING:root:10.39.19 no sensors pressure 7
+WARNING:root:10.39.19 no sensors altitude 8
+WARNING:root:10.39.19 no sensors GPS 1
+WARNING:root:10.39.20 no sensors GPS 1
+WARNING:root:10.39.20 no sensors temperature 5
+WARNING:root:10.39.20 no sensors GPS 1
+WARNING:root:10.39.21 no sensors GPS 1
+WARNING:root:10.39.21 no sensors GPS 1
+WARNING:root:10.39.22 no sensors pressure 7
+WARNING:root:10.39.22 no sensors altitude 8
+WARNING:root:10.39.22 no sensors GPS 1
+WARNING:root:10.39.22 no sensors temperature 5
+WARNING:root:10.39.22 no sensors pressure 7
+WARNING:root:10.39.22 no sensors altitude 8
+WARNING:root:10.39.22 no sensors GPS 1
+WARNING:root:10.39.23 no sensors GPS 1
+WARNING:root:10.39.23 no sensors GPS 1
+WARNING:root:10.39.24 no sensors GPS 1
+WARNING:root:10.39.24 no sensors GPS 1
+WARNING:root:10.39.25 no sensors pressure 7
+WARNING:root:10.39.25 no sensors altitude 8
+WARNING:root:10.39.25 no sensors GPS 1
+INFO:root:10.39.25 end CSV file
+INFO:root:10.39.28 Entering in choose fire mode
+INFO:root:10.39.30 Entering in home mode
+INFO:root:10.39.31  Exit Dolmen

@@ -2,7 +2,7 @@
 LOG_TYPE="INFO"
 LOCATION="/home/axeln/hermin-I/dolmen/python"
 NAME="trame.txt"
-UPDATE_DELAY="200"
+UPDATE_DELAY="10"
 LOG_FILE='dolmen.log'
 SAVE_REPORT_FOLDER="SaveSession"
 THEME="normal"

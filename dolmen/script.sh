@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#define Dolmen parameters
 LOG_TYPE="INFO"
 LOCATION="/home/axeln/hermin-I/dolmen/python"
 NAME="trame.txt"
@@ -11,6 +13,7 @@ CONFIG_TXT="config.txt"
 NAME_SAVE_FIGURE='report.png'
 ROCKET_NAME="HerminI"
 
+#execute Init.py
 init=$(python Init.py 2>&1) 
 
 testcmd () {

@@ -1,16 +1,27 @@
+#import Dolmen Module
 import Dolmen
 import Config
 import Graph
 class Sensors():
 
     def __init__(self,name,nameX,nameY,nameZ,idSensor,idGraph,typeGraph,graph,label,color):
+
+        #sensor name
         self.name=name
         self.nameX=nameX
         self.nameY=nameY
         self.nameZ=nameZ
+
+        #ID sensor
         self.idSensor=idSensor
+
+        #position in graphe
         self.idGraph=idGraph
+
+        #processed sensor
         self.processed=False
+
+        #graph type
         self.typeGraph=typeGraph
         self.graph=graph
 
@@ -31,6 +42,7 @@ class Sensors():
             self.graph.marker=label
             self.graph.color=color       
 
+    #function to decode CSV line
     def decoding(self,line_split):
 
         for j in range(0,len(line_split)):  
@@ -40,19 +52,21 @@ class Sensors():
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.nameY: #if sensor is detected
 
                     if str(line_split[j+2]) !="": # if there are sensors's data
-                        self.graph.y[self.idGraph].append(float(line_split[j+2])) # adding sensors's data in graph
-                        if len(self.graph.y[self.idGraph])==len(self.graph.x)+1:
-                            self.graph.y[self.idGraph].pop()
+                        self.graph.y[self.idGraph].append(float(line_split[j+2])) # adding sensors's datas in graph
+
+                        if len(self.graph.y[self.idGraph])==len(self.graph.x)+1: #check if time is not decoded
                             Config.Log.InfoSaveLog("warning",str('no time found ' + str(self.name) + "  " + str(self.idSensor)))
+                            self.graph.y[self.idGraph].pop()
                             print("no time found " + str(self.name) + "  " + str(self.idSensor))
 
                     else : # if there are not sensors's data
                         Config.Log.InfoSaveLog("warning",str('no data in sensors ' + str(self.name) + str(self.idSensor)))
                         self.graph.y[self.idGraph].append(0) # adding 0 in y axe of sensor graph
                         print(' no data in sensors ' + str(self.name) + " " + str(self.idSensor))
-                        if len(self.graph.y[self.idGraph])==len(self.graph.x)+1:
-                            self.graph.y[self.idGraph].pop()
+                        
+                        if len(self.graph.y[self.idGraph])==len(self.graph.x)+1: #check if time is not decoded
                             Config.Log.InfoSaveLog("warning",str('no time found ' + str(self.name) + " " + str(self.idSensor)))
+                            self.graph.y[self.idGraph].pop()
                             print("no time found " + str(self.name) + "  " + str(self.idSensor))
 
                     self.processed = True # sensors data is processed
@@ -97,27 +111,28 @@ class Sensors():
 
         if self.processed==False : # if sensor is not processed
 
-            if self.typeGraph =="2d" : # if graph 2D:
+            if self.typeGraph =="2d" : # if graph 2D
                 Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))
-                print("no sensors " + str(self.name) + " " + str(self.idSensor))
                 self.graph.y[self.idGraph].append(0) # adding data 0 in y axe of sensor graph
-                if len(self.graph.y[self.idGraph])==len(self.graph.x)+1:
-                        self.graph.y[self.idGraph].pop()
+                print("no sensors " + str(self.name) + " " + str(self.idSensor))
+
+                if len(self.graph.y[self.idGraph])==len(self.graph.x)+1: #check if time is not decoded
                         Config.Log.InfoSaveLog("warning",str('no time found ' + str(self.name) + " " + str(self.idSensor)))
+                        self.graph.y[self.idGraph].pop()                        
                         print("no time found " + str(self.name) + " " + str(self.idSensor))
                 
             elif self.typeGraph =="3d" : # if graph 3D
                 Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))
-                print("no sensors " + str(self.name) + " " + str(self.idSensor))
                 self.graph.x.append(0) # adding data 0 in x axe of sensor graph
                 self.graph.y.append(0) # adding data 0 in y axe of sensor graph
                 self.graph.z.append(0) # adding data 0 in z axe of sensor graph
+                print("no sensors " + str(self.name) + " " + str(self.idSensor))
             
             elif self.typeGraph =="gps" : # if graph gps
-                Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))
-                print("no sensors " + str(self.name) + " " + str(self.idSensor))                
+                Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))         
                 self.graph.x[self.idGraph].append(0) # adding data 0 in x axe of sensor graph
                 self.graph.y[self.idGraph].append(0) # adding data 0 in y axe of sensor graph
+                print("no sensors " + str(self.name) + " " + str(self.idSensor))       
                 
         else: # Reseting if sensors was processed
             self.processed =False

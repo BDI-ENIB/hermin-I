@@ -198,6 +198,7 @@ int main(int argc, char const *argv[])
       {
         //ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE
         //reading the data trame
+        
         if(trame)
         {
           std::cout << "\n---Launching DolMen in online mode---\n";

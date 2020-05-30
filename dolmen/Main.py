@@ -1,7 +1,9 @@
+#import python Module
+import sys
+#import Dolmen Module
 import Config
 import Error
 import Dolmen
-import sys
 
 
 #verifing if there is argument    
@@ -9,6 +11,7 @@ if len(sys.argv)==1 :
     print("no argument given")
     sys.exit()
 
+#define Dolmen variables
 else:
     Config.LOG_TYPE=str(sys.argv[1])
     Config.PATH = str(sys.argv[2])
@@ -22,9 +25,11 @@ else:
     Config.THEME=str(sys.argv[10])
     Config.ROCKET_NAME=str(sys.argv[11])
 
+#log config
 try:
     Config.Log=Error.ErrorLog(Config.LOG_FILE,Config.LOG_TYPE)
-   
+
+#define default log file if problem   
 except:
     Config.Log=Error.ErrorLog(Config.LOG_FILE,"info")
     Config.Log.InfoSaveLog("warning",'logging level error adding default INFO')
@@ -32,5 +37,6 @@ except:
     
 Config.Log.InfoSaveLog("info",'Start Dolmen')   
 
+#entering in Dolmen
 while 1 :
     Config.home_Function(None)

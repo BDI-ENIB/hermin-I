@@ -1,15 +1,25 @@
+#import python Module
 import logging
-import Dolmen
 import time
+#import Dolmen Module
+import Dolmen
+
 
 class ErrorLog():
 
     def __init__(self,name,typeLog):
+
+        #name to write in log
         self.name=name
+
+        #log type
         self.typeLog=typeLog
+
+        #create log
         logging.basicConfig(filename=self.name,filemode='w',level=self.typeLog)
 
-    def InfoSaveLog(self,typeError,text): # Save message in log 
+    # function to save message in log
+    def InfoSaveLog(self,typeError,text):  
         # Save in log (depending of error type)
         if typeError =="info":
             logging.info(Dolmen.currentTime() + " " + text)

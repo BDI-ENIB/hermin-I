@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/usr/bin/env python3
 
 #define Dolmen parameters
 LOG_TYPE="INFO"
@@ -12,28 +13,27 @@ CSV="report.csv"
 CONFIG_TXT="config.txt"
 NAME_SAVE_FIGURE='report.png'
 ROCKET_NAME="HerminI"
-
-#execute Init.py
-init=$(python Init.py 2>&1) 
-
 testcmd () {
     command -v "$1" >/dev/null
 }
-            
+#testcmd$(conda deactivate 2>&1 )
+#execute Init.py
+init=$(/usr/bin/python Init.py 2>&1) 
+
+
+        
 if testcmd xterm; then
     if [[ -z $init ]]
     then        
         make &
-        FILE="prog"
-        if test -f "$FILE"; then
-            echo "$FILE exist"
-            xterm -e ./prog  $CONFIG_TXT $CSV   &  
-            python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER $CSV $NAME_SAVE_FIGURE $CONFIG_TXT $THEME $ROCKET_NAME                      
-        fi
-        else             
-            echo "Error when compiling c++ code please check the c++ code"
-        fi
+        
+        xterm -e ./prog  $CONFIG_TXT $CSV   & 
+            
+        /usr/bin/python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER $CSV $NAME_SAVE_FIGURE $CONFIG_TXT $THEME $ROCKET_NAME   
+        #testcmd $(conda activate 2>&1)                 
+        
     else
         echo $init
         echo "Exit"
     fi
+fi

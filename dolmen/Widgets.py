@@ -1,5 +1,6 @@
 #import python Module
 import tkinter as tk
+import tkinter.font as tkFont
 import time
 from PIL import Image, ImageTk
 #import Dolmen Module
@@ -8,23 +9,23 @@ import Dolmen
 import Config
 
 #add image in windows
-def addImage(windows,myphoto,colorFont,row,column):
+def addImage(windows,myphoto,colorFont,row,column,rowspan,columnspan,xSize,ySize):
 
     #if image file exist
     if Dolmen.fileExist(myphoto):       
     
         #import image
-        photo = tk.PhotoImage(file=myphoto,master=windows)
-
+        image = Image.open(myphoto)
+        image=image.resize((xSize,ySize), Image.ANTIALIAS)
+        image = ImageTk.PhotoImage(image,master=windows)
         #create canva to display image
-        canvas = tk.Canvas(windows,width=photo.width(), height=photo.height(),bg = 'white')
-        canvas.create_image(0, 0, anchor="nw", image=photo)
-
+        canvas = tk.Canvas(windows,width=xSize, height=ySize ,bg = 'white')
         #positioning canva in windows 
-        canvas.grid(row=row, column=column)
+        canvas.grid(row=row, column=column,columnspan=columnspan, rowspan=rowspan)
+        canvas.create_image(xSize/2,ySize/2,anchor="center", image=image)        
 
         #add image in canva
-        canvas.image=photo
+        canvas.image=image
 
         windows.mainloop()
 
@@ -36,7 +37,7 @@ def addImage(windows,myphoto,colorFont,row,column):
 #Main Widgets class
 class Widgets():
 
-    def __init__(self,windows,title,colorFont,colorText,row,column):
+    def __init__(self,windows,title,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan):
 
         #define widget variables  
         #define which windows is the widget      
@@ -53,13 +54,19 @@ class Widgets():
         self.row=row
         self.column=column
 
+        self.police=police
+        self.fontSize=fontSize
+        self.fontType=fontType
+        self.rowspan=rowspan
+        self.columnspan=columnspan
+
 
 class ButtonDisplay(Widgets):
 
-    def __init__(self,windows,title,colorFont,colorText,colorSelect,function,x,y,row,column):
+    def __init__(self,windows,title,colorFont,colorText,colorSelect,function,x,y,row,column,fontSize,fontType,police,rowspan,columnspan):
 
         #call Widget constructor
-        Widgets.__init__(self,windows,title,colorFont,colorText,row,column) 
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan) 
 
         #define button variables    
         #button size
@@ -72,13 +79,13 @@ class ButtonDisplay(Widgets):
         self.colorSelect=colorSelect 
 
         #create button     
-        self.button= tk.Button(self.windows,anchor="center",text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,command=self.function)
+        self.button= tk.Button(self.windows,anchor="center",text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,command=self.function,font=(self.police, self.fontSize, self.fontType))
 
         #config button
         self.button.config( width = self.x, height = self.y )
 
         #positioning the button in windows 
-        self.button.grid(row=self.row, column=self.column)   
+        self.button.grid(row=self.row, column=self.column,rowspan=self.rowspan,columnspan=self.columnspan)   
      
     #function to enable the button
     def enable(self):
@@ -95,10 +102,10 @@ class ButtonDisplay(Widgets):
 
 class TextInput(Widgets):
 
-    def __init__(self,windows,title,colorFont,colorText,rowText,columnText,rowInput,columnInput,defaultText):
+    def __init__(self,windows,title,colorFont,colorText,rowText,columnText,rowInput,columnInput,defaultText,fontSize,fontType,police,rowspan,columnspan):
 
         #call Widget constructor
-        Widgets.__init__(self,windows,title,colorFont,colorText,rowInput,columnInput)
+        Widgets.__init__(self,windows,title,colorFont,colorText,rowInput,columnInput,fontSize,fontType,police,rowspan,columnspan)
 
         #define text input variables 
         #text input
@@ -113,10 +120,9 @@ class TextInput(Widgets):
 
         #if there is label to display
         if(self.title!=None):
+            
             #create label
-            self.windows.message = tk.Label(self.windows, bg=self.colorFont,fg=self.colorText,text=self.title)
-            #positioning the label in windows 
-            self.windows.message.grid(row=self.rowText, column=self.columnText)
+            self.windows.message = TextToPrint(self.windows,self.title,self.colorFont,self.colorText,self.rowText,self.columnText,self.fontSize,self.fontType,self.police,rowspan,columnspan)
 
         #create text input
         self.StringText = tk.Entry(self.windows,bg=self.colorFont,fg=self.colorText,textvariable=self.entry)
@@ -125,7 +131,7 @@ class TextInput(Widgets):
         self.entry.set(self.defaultText)
 
         #positioning the text input in windows 
-        self.StringText.grid(row=self.row, column=self.column)   
+        self.StringText.grid(row=self.row, column=self.column,rowspan=self.rowspan,columnspan=self.columnspan)   
 
     #function to get the entry text
     def getEntry(self):
@@ -134,10 +140,10 @@ class TextInput(Widgets):
 
 class Case(Widgets):
 
-    def __init__(self,windows,title,colorFont,colorText,colorSelect,function,row,column,default):
+    def __init__(self,windows,title,colorFont,colorText,colorSelect,function,row,column,default,fontSize,fontType,police,rowspan,columnspan):
 
         #call Widget constructor
-        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan)
 
         #define case variables
         #state case
@@ -153,13 +159,13 @@ class Case(Widgets):
         self.default=default
 
         #create case widget
-        self.case = tk.Checkbutton(self.windows, text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,variable=self.state,command=self.function)
+        self.case = tk.Checkbutton(self.windows, text=self.title, bg=self.colorFont,fg=self.colorText,activebackground=self.colorSelect,variable=self.state,command=self.function,font=(self.police, self.fontSize, self.fontType))
 
         #define default state
         self.state.set(self.default)
         
         #positioning the case in windows 
-        self.case.grid(row=self.row, column=self.column) 
+        self.case.grid(row=self.row, column=self.column,rowspan=self.rowspan,columnspan=self.columnspan) 
 
     #function to get the state of the case
     def getState(self):
@@ -175,10 +181,10 @@ class Case(Widgets):
 
 class DropdownList(Widgets):
 
-    def __init__(self,windows,title, dropdownList,colorFont,colorText,row,column):
+    def __init__(self,windows,title, dropdownList,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan):
 
         #call Widget constructor
-        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan)
 
         #define DropdownList variables
         #DropdownList
@@ -188,7 +194,7 @@ class DropdownList(Widgets):
         self.default=1
 
         #create DropdownList
-        self.listbox = tk.Listbox(self.windows, bg=self.colorFont,fg=colorText)
+        self.listbox = tk.Listbox(self.windows, bg=self.colorFont,fg=colorText,font=(self.police, self.fontSize, self.fontType))
 
         #insert element in DropdownList
         for i in range(0,len(self.dropdownList)):
@@ -199,7 +205,7 @@ class DropdownList(Widgets):
         self.listbox.selection_set( first = self.default )
 
         #positioning the DropdownList in windows 
-        self.listbox.grid(row=self.row, column=self.column)
+        self.listbox.grid(row=self.row, column=self.column,rowspan=self.rowspan,columnspan=self.columnspan)
 
     #function to get the selected element in DropdownList
     def getChoose(self):
@@ -208,29 +214,28 @@ class DropdownList(Widgets):
 
 class TextToPrint(Widgets):
 
-    def __init__(self,windows, title,colorFont,colorText,row,column):
+    def __init__(self,windows, title,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan):
 
         #call Widget constructor
-        Widgets.__init__(self,windows,title,colorFont,colorText,row,column)
-
+        Widgets.__init__(self,windows,title,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan)
         #create label
-        self.windows.message = tk.Label(self.windows, bg=self.colorFont, fg=self.colorText,text=self.title)
+        self.windows.message = tk.Label(self.windows, bg=self.colorFont, fg=self.colorText,text=self.title,font=(self.police, self.fontSize, self.fontType))
             
         #positioning the label in windows 
-        self.windows.message.grid(row=self.row, column=self.column) 
+        self.windows.message.grid(row=self.row, column=self.column,columnspan=self.columnspan, rowspan=self.rowspan) 
 
 class DisplayTime():
 
-    def __init__(self, windows,colorFont,colorText,row,column):
+    def __init__(self, windows,colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan):
 
         #call Widget constructor
-        Widgets.__init__(self,windows,"",colorFont,colorText,row,column)
+        Widgets.__init__(self,windows,"",colorFont,colorText,row,column,fontSize,fontType,police,rowspan,columnspan)
 
         #create label displaying time
-        self.labelTime = tk.Label(self.windows, text=str(time.strftime('%Y ' '%m ' '%d ')) + "\n" + str(time.strftime('%H.' '%M.' '%S')), font="Arial 30", width=10,bg=self.colorFont, fg=self.colorText)
+        self.labelTime = tk.Label(self.windows, text=str(time.strftime('%Y ' '%m ' '%d ')) + "\n" + str(time.strftime('%H.' '%M.' '%S')), font=(self.police, self.fontSize, self.fontType), width=10,bg=self.colorFont, fg=self.colorText)
 
         #positioning the label displaying time in windows 
-        self.labelTime.grid(row=self.row, column=self.column)
+        self.labelTime.grid(row=self.row, column=self.column,rowspan=self.rowspan,columnspan=self.columnspan)
 
         # start the DisplayTime
         self.labelTime.after(1000, self.refresh_label)

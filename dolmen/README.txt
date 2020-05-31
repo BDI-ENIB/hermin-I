@@ -34,7 +34,7 @@ SPACE !!!!!!!
 
 -   Other Requirement:
 
-            -   xterm
+         -   xterm
         
             for Debian/Ubuntu => sudo apt-get install xterm
             for Arch/Manjaro => sudo pacman -S xterm

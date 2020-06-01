@@ -112,22 +112,22 @@ def createGraph():# function to create and intit graph
 
     #you can create another graph if you want here => see Graph.py for more details
     f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperature","time","Temperature (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
-    f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0, 1000000],facecolor2d,graphLegend,"left",False)
-    f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
-    f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[-100,100],[-100,100],[-100,100],True,'-',facecolor3d,graphLegend)
-    f5= Graph.GraphPlot(figure,figure.grid[0, 2],"GPS","x","y",[-100,100],[-100, 100],facecolor2d,graphLegend,"right",True)
-    f6=Graph.GraphPlot(figure,figure.grid[0:3, 3],"Altitude","time","Altitude (m)",[],[0, 20000],facecolor2d,graphLegend,"right",False)
+    f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0,500000],facecolor2d,graphLegend,"left",False)
+    f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[],[],[],True,'-',facecolor3d,graphLegend)
+    f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[],[],[],True,'-',facecolor3d,graphLegend)
+    f5= Graph.GraphPlot(figure,figure.grid[0, 2],"GPS","x","y",[-100,100],[-100,100],facecolor2d,graphLegend,"right",True)
+    f6=Graph.GraphPlot(figure,figure.grid[0:3, 3],"Altitude","time","Altitude (m)",[],[],facecolor2d,graphLegend,"right",False)
 
     #sensors Creation => see Sensors.py for more details
     #you can create another sensors if you want here
-    temp1=Sensors.Sensors("temperature","","temperature (degres celcius)","",4,0,"2d",f1,"Sensor 1","blue")
-    temp2=Sensors.Sensors("temperature","","temperature (degres celcius)","",5,1,"2d",f1,"Sensor 2","red")
-    pressure1=Sensors.Sensors("pressure","","pressure (Pa)","",6,0,"2d",f2,"Sensor 1","red")
-    pressure2=Sensors.Sensors("pressure","","pressure (Pa)","",7,1,"2d",f2,"Sensor 2","green")
-    altitude=Sensors.Sensors("altitude","","altitude (m)","",8,0,"2d",f6,"","red")
+    temp1=Sensors.Sensors("temperature","","temperature (degres celcius)","",4,0,"2d_time",f1,"Sensor 1","blue")
+    temp2=Sensors.Sensors("temperature","","temperature (degres celcius)","",5,1,"2d_time",f1,"Sensor 2","red")
+    pressure1=Sensors.Sensors("pressure","","pressure (Pa)","",6,0,"2d_time",f2,"Sensor 1","red")
+    pressure2=Sensors.Sensors("pressure","","pressure (Pa)","",7,1,"2d_time",f2,"Sensor 2","green")
+    altitude=Sensors.Sensors("altitude","","altitude (m)","",8,0,"2d_time",f6,"","red")
     acc = Sensors.Sensors("accelerometer","accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)",2,0,"3d",f3,'o','black')
     gyro = Sensors.Sensors("gyroscope","gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)",3,0,"3d",f4,'o','black')
-    gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"gps",f5,"","blue")
+    gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"2d_no_time",f5,"","blue")
 
     #create sensors list
     sensors_list_set_time=[f1,f2,f6]#place here all time graph created (to update the time)

@@ -26,13 +26,13 @@ class Sensors():
         self.graph=graph
 
         #update graph sensor with label and color
-        if self.typeGraph=="2d":
+        if self.typeGraph=="2d_time":
             if(label !=""): # if label
                 self.graph.label.append(label)
             self.graph.color.append(color)
             self.graph.numberGraph+=1 # update number sensor in graph
 
-        if self.typeGraph=="gps":
+        if self.typeGraph=="2d_no_time":
             if(label !=""): # if label
                 self.graph.label.append(label)
             self.graph.color.append(color)
@@ -47,7 +47,7 @@ class Sensors():
 
         for j in range(0,len(line_split)):  
 
-            if self.typeGraph =="2d" : # if graph 2D
+            if self.typeGraph =="2d_time" : # if graph 2D
 
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.nameY: #if sensor is detected
 
@@ -91,7 +91,7 @@ class Sensors():
 
                     self.processed = True # sensors data is processed
 
-            elif self.typeGraph =="gps":
+            elif self.typeGraph =="2d_no_time":
 
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.nameX and line_split[j+7]==self.nameY: #if sensor is detected
 
@@ -111,7 +111,7 @@ class Sensors():
 
         if self.processed==False : # if sensor is not processed
 
-            if self.typeGraph =="2d" : # if graph 2D
+            if self.typeGraph =="2d_time" : # if graph 2d_time
                 Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))
                 self.graph.y[self.idGraph].append(0) # adding data 0 in y axe of sensor graph
                 print("no sensors " + str(self.name) + " " + str(self.idSensor))
@@ -128,7 +128,7 @@ class Sensors():
                 self.graph.z.append(0) # adding data 0 in z axe of sensor graph
                 print("no sensors " + str(self.name) + " " + str(self.idSensor))
             
-            elif self.typeGraph =="gps" : # if graph gps
+            elif self.typeGraph =="2d_no_time" : # if graph 2d_no_time
                 Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))         
                 self.graph.x[self.idGraph].append(0) # adding data 0 in x axe of sensor graph
                 self.graph.y[self.idGraph].append(0) # adding data 0 in y axe of sensor graph

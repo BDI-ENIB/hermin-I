@@ -138,9 +138,9 @@ class GraphPlot(): # 2D Graphe
         self.figure.set_ylabel(self.titleY)
 
         # set axes limits
-        if len(self.ylim)==2:
+        if self.ylim!=[] and len(self.ylim)==2:
             self.figure.set_ylim(self.ylim)
-        if len(self.xlim)==2:
+        if self.xlim!=[] and len(self.xlim)==2:
             self.figure.set_xlim(self.xlim)
         
         #update graph
@@ -201,9 +201,9 @@ class GraphPlot(): # 2D Graphe
         self.figure.grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
 
         # set axes limits
-        if len(self.ylim)==2:
+        if self.ylim!=[] and len(self.ylim)==2:
             self.figure.set_ylim(self.ylim)
-        if len(self.xlim)==2:
+        if self.xlim!=[] and len(self.xlim)==2:
             self.figure.set_xlim(self.xlim)
 
         
@@ -256,12 +256,15 @@ class Graph3d():
         self.figure.set_xlabel(self.titleX)
         self.figure.set_ylabel(self.titleY)
         self.figure.set_zlabel(self.titleZ)
+        self.figure.set_title(self.title,loc='right')
 
         # set axes limits
-        self.figure.set_xlim3d(self.xlim3D)
-        self.figure.set_ylim3d(self.ylim3D)
-        self.figure.set_zlim3d(self.zlim3D)
-        self.figure.set_title(self.title,loc='right')
+        if(self.xlim3D!=[] and len(xlim3D)==2):
+            self.figure.set_xlim3d(self.xlim3D)
+        if(self.ylim3D!=[] and len(ylim3D)==2):
+            self.figure.set_ylim3d(self.ylim3D)
+        if(self.zlim3D!=[] and len(zlim3D)==2):
+            self.figure.set_zlim3d(self.zlim3D)
 
         # update graph (depending graph type)
         # True => display all points and False => display only last point
@@ -295,9 +298,13 @@ class Graph3d():
         self.figure.set_xlabel(self.titleX)
         self.figure.set_ylabel(self.titleY)
         self.figure.set_zlabel(self.titleZ)
-
-        # set axe limits
-        self.figure.set_xlim3d(self.xlim3D)
-        self.figure.set_ylim3d(self.ylim3D)
-        self.figure.set_zlim3d(self.zlim3D)
         self.figure.view_init(azim=-60)
+        
+        # set axes limits
+        if(self.xlim3D!=[] and len(xlim3D)==2):
+            self.figure.set_xlim3d(self.xlim3D)
+        if(self.ylim3D!=[] and len(ylim3D)==2):
+            self.figure.set_ylim3d(self.ylim3D)
+        if(self.zlim3D!=[] and len(zlim3D)==2):
+            self.figure.set_zlim3d(self.zlim3D)
+        

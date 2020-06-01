@@ -341,7 +341,7 @@ def fire_Function_offline(last_windows):
         stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,figure.file,True),10,10,3,3,10,"normal",police,1,1)
         rapport_button = Widgets.ButtonDisplay(fire__offline_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,2,10,"normal",police,1,1)
         Widgets.DisplayTime(fire__offline_interface,colorFont,colorText,3,4,10,"normal",police,1,1)
-        Widgets.TextToPrint(fire__offline_interface,"Rocket Name :" + "\n" + ROCKET_NAME,colorFont,colorText,3,5,10,"normal",police,1,1)
+        Widgets.TextToPrint(fire__offline_interface,"Rocket Name :\n"  + str(ROCKET_NAME),colorFont,colorText,3,5,10,"normal",police,1,1)
         
         #initial conditions :
         #enable start button
@@ -394,7 +394,7 @@ def fire_Function_online(last_windows):
     stop_button = Widgets.ButtonDisplay(fire__online_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,figure.file,True),10,10,3,3,10,"normal",police,1,1)
     rapport_button = Widgets.ButtonDisplay(fire__online_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,2,10,"normal",police,1,1)
     Widgets.DisplayTime(fire__online_interface,colorFont,colorText,3,4,10,"normal",police,1,1)
-    Widgets.TextToPrint(fire__online_interface,"Rocket Name :" + "\n" + str(ROCKET_NAME),colorFont,colorText,3,5,10,"normal",police,1,1)
+    Widgets.TextToPrint(fire__online_interface,"Rocket Name :\n" + str(ROCKET_NAME),colorFont,colorText,3,5,10,"normal",police,1,1)
     Widgets.TextToPrint(fire__online_interface,"Signal :" + "\n",colorFont,colorText,3,6,10,"normal",police,1,1)
 
     #initial conditions :    

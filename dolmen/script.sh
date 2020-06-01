@@ -12,7 +12,7 @@ THEME="normal"
 CSV="report.csv"
 CONFIG_TXT="config.txt"
 NAME_SAVE_FIGURE='report.png'
-ROCKET_NAME="Hermin I"
+ROCKET_NAME="Hermin_I"
 
 testcmd () {
     command -v "$1" >/dev/null

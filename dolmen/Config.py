@@ -177,7 +177,7 @@ def admin_Function(last_windows):
     Log.InfoSaveLog("info",'Entering in admin mode')
 
     #Creating admin_mode_interface windows
-    admin_mode_interface = Windows.Windows("Administrator Mode",colorFont,700,250,lambda: home_Function(admin_mode_interface),1,3)
+    admin_mode_interface = Windows.Windows("Administrator Mode",colorFont,650,150,lambda: home_Function(admin_mode_interface),1,3)
 
     #Adding widgets  
     graph_management_button = Widgets.ButtonDisplay(admin_mode_interface,"Graph management",colorFont,colorText,colorSelect,None,25,10,1,1,10,"normal",police,1,1)
@@ -254,7 +254,7 @@ def about_Function(last_windows):
     Widgets.TextToPrint(about_interface,"Nathan De Saint Just (n6desain@enib.fr):",colorFont,colorText,3,1,10,"italic",police,1,1)
     Widgets.TextToPrint(about_interface,"""
     En tant que président du BDI depuis 2 ans et fondateur du Pôle KSP au sein de celui-ci avec Evan Roué, Il me tenait à coeur de 
-    participer à ce projet que je vois ce développé depuis sa création. Avec grand espoir que tout soit opérationnelle pour la C’space 
+    participer à ce projet que je vois ce développer depuis sa création. Avec grand espoir que tout soit opérationnelle pour la C’space 
     2020 avec le tire de la fusée avec le projet DOLMEN en base sol. Montrer qu’il marche nous permettra de le réutiliser et de la
     partager à tous les autres associations spatiales.
     """,colorFont,colorText,4,1,10,"normal",police,1,1)
@@ -281,6 +281,8 @@ def help_fire_mode():
 -   The Online Fire mode must be use with an emitter to view data in real time 
 
 -   The Offline Fire mode must be use when you don't have an emitter or if you want to simulate a rocket launch
+
+WARNING : ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE
     """
     )
 
@@ -301,7 +303,7 @@ def choose_fire_mode(last_windows):
     config.close()
     
     #Creating fire_mode_interface windows
-    fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,350,100,lambda:home_Function(fire_mode_interface),2,3)
+    fire_mode_interface = Windows.Windows("Fire Mode Choose",colorFont,300,100,lambda:home_Function(fire_mode_interface),2,3)
 
     #Adding widgets 
     Widgets.TextToPrint(fire_mode_interface,"Please choose a fire mode :",colorFont,colorText,1,1,10,"normal",police,1,3)
@@ -339,7 +341,7 @@ def fire_Function_offline(last_windows):
         stop_button = Widgets.ButtonDisplay(fire__offline_interface,"Stop",colorFont,colorText,colorSelect,lambda:Dolmen.state_set_communication(start_button,stop_button,False,currentMode,figure.file,True),10,10,3,3,10,"normal",police,1,1)
         rapport_button = Widgets.ButtonDisplay(fire__offline_interface,"Generate Rapport",colorFont,colorText,colorSelect,Dolmen.report_Function,15,5,3,2,10,"normal",police,1,1)
         Widgets.DisplayTime(fire__offline_interface,colorFont,colorText,3,4,10,"normal",police,1,1)
-        Widgets.TextToPrint(fire__offline_interface,"Rocket Name :" + "\n" + str(ROCKET_NAME),colorFont,colorText,3,5,10,"normal",police,1,1)
+        Widgets.TextToPrint(fire__offline_interface,"Rocket Name :" + "\n" + ROCKET_NAME,colorFont,colorText,3,5,10,"normal",police,1,1)
         
         #initial conditions :
         #enable start button

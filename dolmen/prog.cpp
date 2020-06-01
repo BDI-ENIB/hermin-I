@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
     {
         if(argv[i] != 0)
         {
-            std::cout << i << " = " << argv[i] <<"\n" ;
+            std::cout <<"argv "<< i << " = " << argv[i] <<"\n" ;
         }
     }
 

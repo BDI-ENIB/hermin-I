@@ -44,6 +44,8 @@ Because all python code runs with Anaconda python (if it is installed) and Tkint
          
 ## Run Dolmen ##
 
+Compile the c++ code if you made modification : just open a terminal and execute make
+
 Just open terminal in Dolmen main folder and execute the start script : ./script.sh
          
          

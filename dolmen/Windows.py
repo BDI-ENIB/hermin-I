@@ -56,7 +56,7 @@ class Windows(tk.Frame):
 #when you exit of Dolmen
 def exit():
 
-    if(messageAskyesno("Quit", "Do you want to quit?")):#if exit
+    if(messageAskokcancel("Quit", "Do you want to quit?")):#if exit
             Config.Log.InfoSaveLog("info",' Exit Dolmen')
 
             #close c++ code

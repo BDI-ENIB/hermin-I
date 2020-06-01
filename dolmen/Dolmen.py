@@ -130,15 +130,16 @@ def report_Function(): #report generation
 
         #check if is save folder exist       
         if not os.path.exists(Config.SAVE_REPORT_FOLDER):
-            Config.Log.InfoSaveLog("error",str(Config.SAVE_REPORT_FOLDER + "folder not found => creation"))            
+            Config.Log.InfoSaveLog("error",str(Config.SAVE_REPORT_FOLDER + " folder not found => creation"))            
             os.makedirs(Config.SAVE_REPORT_FOLDER)
 
         if not os.path.exists(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER)):
-            Config.Log.InfoSaveLog("error",str(Config.NAME_SAVE_FOLDER + "folder not found => creation"))
+            Config.Log.InfoSaveLog("error",str(Config.NAME_SAVE_FOLDER + " folder not found => creation"))
             os.makedirs(Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER))
 
         #save report
-        shutil.copy(Config.figure.file,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' ) #copy csv file in save report folder        
+        shutil.copy(Config.figure.file,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' )
+        shutil.copy(Config.CSV,Config.SAVE_REPORT_FOLDER + '/'+ str(Config.NAME_SAVE_FOLDER) + '/' ) #copy csv file in save report folder        
         Config.figure.saveFig(Config.SAVE_REPORT_FOLDER,Config.NAME_SAVE_FOLDER,Config.NAME_SAVE_FIGURE) #save figure in save report folder
         Windows.messageShowinfo("Report generation","Report generation successfully created.")
 

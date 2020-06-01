@@ -151,7 +151,7 @@ def home_Function(last_windows):
     Log.InfoSaveLog("info",'Entering in home mode')
 
     #Creating home_interface windows
-    home_interface = Windows.Windows("Welcome",colorFont,400,500,Windows.exit,4,3)
+    home_interface = Windows.Windows("Welcome",colorFont,400,550,Windows.exit,6,3)
 
     #set Figure size
     xFig_size=home_interface.windows.winfo_screenwidth()/100
@@ -162,8 +162,10 @@ def home_Function(last_windows):
     fire_mode_button = Widgets.ButtonDisplay(home_interface,"Fire Mode",colorFont,colorText,colorSelect,lambda: choose_fire_mode(home_interface),10,2,2,1,10,"normal",police,1,1)
     about_button = Widgets.ButtonDisplay(home_interface,"About Dolmen",colorFont,colorText,colorSelect,lambda: about_Function(home_interface),15,2,2,2,10,"normal",police,1,1)
     admin_mode_button = Widgets.ButtonDisplay(home_interface,"Administrator Mode",colorFont,colorText,colorSelect,lambda: admin_Function(home_interface),15,2,2,3,10,"normal",police,1,1)
-    quit_dolmen_button = Widgets.ButtonDisplay(home_interface,"Quit Dolmen",colorFont,colorText,colorSelect,Windows.exit,10,2,3,2,10,"normal",police,1,1)
-    Widgets.addImage(home_interface,LOGO_IMAGE,colorFont,4,1,1,3,400,400)
+    Widgets.TextToPrint(home_interface,"",colorFont,colorText,3,1,8,"italic",police,1,3)  
+    quit_dolmen_button = Widgets.ButtonDisplay(home_interface,"Quit Dolmen",colorFont,colorText,colorSelect,Windows.exit,10,2,4,2,10,"normal",police,1,1)
+    Widgets.TextToPrint(home_interface,"",colorFont,colorText,5,1,8,"italic",police,1,3)  
+    Widgets.addImage(home_interface,LOGO_IMAGE,colorFont,6,1,1,3,400,400)
     home_interface.windows.mainloop()
     #home_interface.destroy()
 

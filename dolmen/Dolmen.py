@@ -30,41 +30,67 @@ def decodingCSV(): #open and decoding CSV file
     reader = csv.reader(filename, delimiter=';')    
     lines = [line for line in reader] #import list of CSV lines
     filename.close()
-
+    
     # add and find the CSV line to decode
-    if lines==[[]] and count==0: #if CSV is empty
-        return
 
+    
+    if lines==[] and count==0: #if CSV is empty
+        return
+    print(count)
+    if (len(lines)>count):
+        print(lines[count])
+        if lines[count]==['stop']:
+            state_set_communication(Config.start_button,Config.stop_button,False,Config.currentMode,Config.figure.file,False)
+        #find time
+        for j in range(0,len(lines[count])-1):            
+                        
+            if str(lines[count][j])=='0' and str(lines[count][j+1])=='time (s)': # time sensor detected    
+                    
+                if str(lines[count][j+2])!="": # if time data not empty
+                    for sensor in Config.sensors_list_set_time:
+                        sensor.x.append(float(lines[count][j+2]))
+            
+        #decoding current line for each sensors 
+        for sensor in Config.sensors:
+                sensor.decoding(lines[count])
+
+        #verifing if all sensors has been treated
+        for sensor in Config.sensors:
+                sensor.verifing()   
+                
+        #update line        
+        count+=1
+    """
     if lines !=[]: #if CSV is not empty      
             
-        if lines[count]!=['stop']:  #if last line on CSV
+        if 1==1:  #if last line on CSV
 
-            #find time
-            for j in range(0,len(lines[count])-1):            
+        #find time
+        for j in range(0,len(lines[count])-1):            
                         
-                if str(lines[count][j])=='0' and str(lines[count][j+1])=='time (s)': # time sensor detected    
+            if str(lines[count][j])=='0' and str(lines[count][j+1])=='time (s)': # time sensor detected    
                     
-                    if str(lines[count][j+2])!="": # if time data not empty
-                        for sensor in Config.sensors_list_set_time:
-                            sensor.x.append(float(lines[count][j+2]))
+                if str(lines[count][j+2])!="": # if time data not empty
+                    for sensor in Config.sensors_list_set_time:
+                        sensor.x.append(float(lines[count][j+2]))
             
-            #decoding current line for each sensors 
-            for sensor in Config.sensors:
-                    sensor.decoding(lines[count])
+        #decoding current line for each sensors 
+        for sensor in Config.sensors:
+                sensor.decoding(lines[count])
 
-            #verifing if all sensors has been treated
-            for sensor in Config.sensors:
-                    sensor.verifing()   
+        #verifing if all sensors has been treated
+        for sensor in Config.sensors:
+                sensor.verifing()   
                 
-            #update line        
-            count+=1
+        #update line        
+        count+=1
 
-        else:
-            state_set_communication(Config.start_button,Config.stop_button,False,Config.currentMode,Config.figure.file,False)
+    else:
+        state_set_communication(Config.start_button,Config.stop_button,False,Config.currentMode,Config.figure.file,False)
 
     else :
         return
-
+    """
 def fileExist(fileToTest): # detect if file in folder exist
 
     try:

@@ -207,7 +207,7 @@ int main(int argc, char const *argv[])
           //each line is a measurement of the rocket, with datas of each sensor
           std::string line;
           
-          while(std::getline(trame,line))
+          while(std::getline(trame,line) && configuration["decoding_authorised"] == "true")
           {
             std::ofstream ofs{argv[2],std::ios::app};
             //---
@@ -245,6 +245,8 @@ int main(int argc, char const *argv[])
             std::cout << "\n\n---Closing---\n";
             //resetting the line
             dataTxtLine = "";
+            //checking is we're still allowed to decode
+            configuration = dolmen::import_config(argv[1]);
           }
           std::ofstream resetConfig(argv[1]);
           resetConfig<<"false";

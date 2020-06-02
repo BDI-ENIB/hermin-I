@@ -41,13 +41,17 @@ SPACE !!!!!!!
 
 WARNING if you have Anaconda installed you must deactivate conda (conda deactivate) before install tkinter and matplotlib and activate conda after that (conda activate) 
 Because all python code runs with Anaconda python (if it is installed) and Tkinter does not run entirely (for font size and type). You must install the python dependencies with conda disabled in order to install them in the linux python (because Dolmen uses the linux python and not that of Anaconda). Then reactivate conda.
+
+
          
 ## Run Dolmen ##
 
 Compile the c++ code if you made modification : just open a terminal and execute make
 
 Just open terminal in Dolmen main folder and execute the start script : ./script.sh
-         
+
+
+If you want to run the script with the Anaconda python, run in terminal the anaconda script version : scriptAnaconda.sh (but with no font size and type effect)
          
          
          

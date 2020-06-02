@@ -246,6 +246,9 @@ int main(int argc, char const *argv[])
             //resetting the line
             dataTxtLine = "";
           }
+          std::ofstream resetConfig(argv[1]);
+          resetConfig<<"false";
+          resetConfig.close();
         }
       }
     }

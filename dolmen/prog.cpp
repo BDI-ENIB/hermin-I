@@ -241,7 +241,7 @@ int main(int argc, char const *argv[])
             std::cout << "\nline decoded" << dataTxtLine;
             ofs << dataTxtLine;
             ofs << '\n';
-            //ofs.close();
+            ofs.close();
             std::cout << "\n\n---Closing---\n";
             //resetting the line
             dataTxtLine = "";

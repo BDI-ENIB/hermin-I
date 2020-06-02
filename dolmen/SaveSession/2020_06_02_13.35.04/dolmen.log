@@ -1,0 +1,11 @@
+INFO:root:13.35.04 Start Dolmen
+INFO:root:13.35.04 Entering in home mode
+INFO:root:13.35.07 Entering in choose fire mode
+INFO:root:13.35.09 Entering in offline mode
+INFO:root:13.35.13 start decoding
+INFO:root:13.35.33 end CSV file
+ERROR:root:13.35.37 2020_06_02_13.35.04 folder not found => creation
+INFO:root:13.35.39 report generation in SaveSession/2020_06_02_13.35.04
+INFO:root:13.35.41 Entering in choose fire mode
+INFO:root:13.35.44 Entering in home mode
+INFO:root:13.35.47  Exit Dolmen

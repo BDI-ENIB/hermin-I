@@ -25,7 +25,7 @@ SPACE !!!!!!!
         
         -   tkinter https://docs.python.org/fr/3/library/tkinter.html
         
-            for Debian/Ubuntu => apt-get install python-tk
+            for Debian/Ubuntu => sudo apt-get install python-tk
             for Arch/Manjaro => sudo pacman -S tk
             
         -   matplotlib https://matplotlib.org/users/installing.html

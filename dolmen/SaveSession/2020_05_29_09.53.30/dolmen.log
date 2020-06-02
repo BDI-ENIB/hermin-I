@@ -1,0 +1,62 @@
+INFO:root:09.53.30 Start Dolmen
+INFO:root:09.53.30 Entering in home mode
+INFO:root:09.53.31 Entering in choose fire mode
+INFO:root:09.53.33 Entering in offline mode
+INFO:root:09.53.43 start decoding
+WARNING:root:09.53.49 no sensors pressure 7
+WARNING:root:09.53.49 no sensors altitude 8
+WARNING:root:09.53.50 no sensors temperature 5
+WARNING:root:09.53.50 no sensors pressure 7
+WARNING:root:09.53.50 no sensors altitude 8
+WARNING:root:09.53.50 no sensors GPS 1
+WARNING:root:09.53.50 no sensors GPS 1
+WARNING:root:09.53.53 no sensors GPS 1
+WARNING:root:09.53.54 no sensors pressure 7
+WARNING:root:09.53.54 no sensors altitude 8
+WARNING:root:09.53.54 no sensors GPS 1
+WARNING:root:09.53.54 no sensors temperature 5
+WARNING:root:09.53.54 no sensors pressure 7
+WARNING:root:09.53.54 no sensors altitude 8
+WARNING:root:09.53.54 no sensors GPS 1
+WARNING:root:09.53.55 no sensors GPS 1
+WARNING:root:09.53.56 no sensors GPS 1
+WARNING:root:09.53.56 no sensors GPS 1
+WARNING:root:09.53.57 no sensors GPS 1
+WARNING:root:09.53.58 no sensors GPS 1
+WARNING:root:09.53.58 no sensors pressure 7
+WARNING:root:09.53.58 no sensors altitude 8
+WARNING:root:09.53.58 no sensors GPS 1
+WARNING:root:09.53.59 no sensors temperature 5
+WARNING:root:09.53.59 no sensors pressure 7
+WARNING:root:09.53.59 no sensors altitude 8
+WARNING:root:09.53.59 no sensors GPS 1
+WARNING:root:09.53.59 no sensors GPS 1
+WARNING:root:09.54.00 no sensors temperature 5
+WARNING:root:09.54.00 no sensors GPS 1
+WARNING:root:09.54.01 no sensors GPS 1
+WARNING:root:09.54.01 no sensors GPS 1
+WARNING:root:09.54.02 no sensors pressure 7
+WARNING:root:09.54.02 no sensors altitude 8
+WARNING:root:09.54.02 no sensors GPS 1
+WARNING:root:09.54.02 no sensors temperature 5
+WARNING:root:09.54.02 no sensors pressure 7
+WARNING:root:09.54.02 no sensors altitude 8
+WARNING:root:09.54.02 no sensors GPS 1
+WARNING:root:09.54.03 no sensors GPS 1
+WARNING:root:09.54.04 no sensors GPS 1
+WARNING:root:09.54.04 no sensors GPS 1
+WARNING:root:09.54.05 no sensors GPS 1
+WARNING:root:09.54.05 no sensors pressure 7
+WARNING:root:09.54.05 no sensors altitude 8
+WARNING:root:09.54.05 no sensors GPS 1
+INFO:root:09.54.06 end CSV file
+ERROR:root:09.54.14 2020_05_29_09.53.30folder not found => creation
+INFO:root:09.54.16 report generation in SaveSession/2020_05_29_09.53.30
+INFO:root:09.54.23 report generation in SaveSession/2020_05_29_09.53.30
+INFO:root:09.54.26 Entering in choose fire mode
+INFO:root:09.54.30 Entering in home mode
+INFO:root:09.54.37 Entering in admin mode
+INFO:root:09.54.41 Entering in sensor management
+INFO:root:09.54.46 Entering in admin mode
+INFO:root:09.54.47 Entering in home mode
+INFO:root:09.54.50  Exit Dolmen

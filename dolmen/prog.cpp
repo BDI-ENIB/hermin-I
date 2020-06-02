@@ -127,20 +127,22 @@ int main(int argc, char const *argv[])
   {
     //importing the configuration
     std::map<std::string, std::string> configuration = dolmen::import_config(argv[1]);
-    std::ifstream trame(configuration["data_path"]);
-    usleep(100000);
+    //std::ifstream trame(configuration["data_path"]);
+    usleep(1000000);
     if (configuration["decoding_authorised"] == "true")
     {
       
       //using offline mode
       if (configuration["mode"] == "offline")
       {
+        std::ifstream trame(configuration["data_path"]);
         //reading the data trame
         if(trame)
         {
           std::cout << "\n---Launching DolMen in offline mode---\n";
           //each line is a measurement of the rocket, with datas of each sensor
           std::string line;
+          //allow to select another name for the datas
           std::ofstream ofs{argv[2]};
           while(std::getline(trame,line))
           {
@@ -151,7 +153,7 @@ int main(int argc, char const *argv[])
             instant=*localtime(&seconds);
             printf("\n\n%d/%d ; %d:%d:%d", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
             //this is the time in 10-6 seconds to wait until each read
-            usleep(100000);
+            usleep(100);
             //---
 
             //extracting data from each line
@@ -198,20 +200,16 @@ int main(int argc, char const *argv[])
       {
         //ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE
         //reading the data trame
-        
+        std::ifstream trame(configuration["data_path"]);
         if(trame)
         {
           std::cout << "\n---Launching DolMen in online mode---\n";
           //each line is a measurement of the rocket, with datas of each sensor
           std::string line;
-
-          //creating a 10s timer to wait for new lines to be created
-          time_t new_instant = time(NULL);
-          time_t old_instant = time(NULL);
-          double diff = 0.0;
-
-          while(std::getline(trame,line) && (diff < 10))
+          
+          while(std::getline(trame,line))
           {
+            std::ofstream ofs{argv[2],std::ios::app};
             //---
             time_t seconds;
             struct tm instant;
@@ -222,11 +220,6 @@ int main(int argc, char const *argv[])
             //we set here with the time between 2 emissions from our rocket
             usleep(1000000);
             //---
-
-            //calculating the moment the last data was processed
-            diff = difftime(old_instant,new_instant);
-            std::cout << "\ndiff: " << diff;
-            old_instant = new_instant;
 
             //extracting data from each line
             //dataTxtLine is used to detect the empty lines
@@ -244,16 +237,15 @@ int main(int argc, char const *argv[])
                 data = "";
               }
             }
-            //if no data was processed (empty line), we don't add a \n caracter
-            dataTxt += dataTxtLine;
-            if (dataTxtLine != "")
-            {
-              dataTxt += '\n';
-            }
+            //writing the datas in the .csv file
+            std::cout << "\nline decoded" << dataTxtLine;
+            ofs << dataTxtLine;
+            ofs << '\n';
+            //ofs.close();
+            std::cout << "\n\n---Closing---\n";
+            //resetting the line
             dataTxtLine = "";
           }
-          //writing the datas in the .csv file
-          ofs << dataTxt;
         }
       }
     }

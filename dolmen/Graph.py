@@ -259,21 +259,21 @@ class Graph3d():
         self.figure.set_title(self.title,loc='right')
 
         # set axes limits
-        if(self.xlim3D!=[] and len(xlim3D)==2):
+        if(self.xlim3D!=[] and len(self.xlim3D)==2):
             self.figure.set_xlim3d(self.xlim3D)
-        if(self.ylim3D!=[] and len(ylim3D)==2):
+        if(self.ylim3D!=[] and len(self.ylim3D)==2):
             self.figure.set_ylim3d(self.ylim3D)
-        if(self.zlim3D!=[] and len(zlim3D)==2):
+        if(self.zlim3D!=[] and len(self.zlim3D)==2):
             self.figure.set_zlim3d(self.zlim3D)
 
         # update graph (depending graph type)
         # True => display all points and False => display only last point
         if(self.typeGraph==False):
+            if len(self.x)!=0 and len(self.y)!=0 and len(self.z)!=0:
+                self.figure.scatter3D(self.x[-1],self.y[-1],self.z[-1],c=self.color, marker=self.marker)
 
-            self.figure.scatter3D(self.x[-1],self.y[-1],self.z[-1],c=self.color, marker=self.marker)
-
-            if self.linestyle!=None:
-                self.figure.plot3D([self.x[-1], 0], [self.y[-1], 0], [self.z[-1], 0],self.color,linestyle=self.linestyle)
+                if self.linestyle!=None:
+                    self.figure.plot3D([self.x[-1], 0], [self.y[-1], 0], [self.z[-1], 0],self.color,linestyle=self.linestyle)
 
         else:
 
@@ -301,10 +301,10 @@ class Graph3d():
         self.figure.view_init(azim=-60)
         
         # set axes limits
-        if(self.xlim3D!=[] and len(xlim3D)==2):
+        if(self.xlim3D!=[] and len(self.xlim3D)==2):
             self.figure.set_xlim3d(self.xlim3D)
-        if(self.ylim3D!=[] and len(ylim3D)==2):
+        if(self.ylim3D!=[] and len(self.ylim3D)==2):
             self.figure.set_ylim3d(self.ylim3D)
-        if(self.zlim3D!=[] and len(zlim3D)==2):
+        if(self.zlim3D!=[] and len(self.zlim3D)==2):
             self.figure.set_zlim3d(self.zlim3D)
         

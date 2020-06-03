@@ -13,7 +13,7 @@ The DolMen team.
 
 SPACE !!!!!!!
 
-
+---
 
 ### How to use it ? ###
 
@@ -48,16 +48,54 @@ Because all python code runs with Anaconda python (if it is installed) and Tkint
 
 Compile the c++ code if you made modification : just open a terminal and execute make
 
-Just open terminal in Dolmen main folder and execute the start script : ./script.sh
+Just open terminal in Dolmen main folder and execute the start script : ./script.sh or ./scriptAnaconda.sh (it depends on if your computer is using or not the python from anaconda)
 
 
 If you want to run the script with the Anaconda python, run in terminal the anaconda script version : scriptAnaconda.sh (but with no font size and type effect)
          
-         
+
+ 
+## Adding a new sensor or removing one ##        
          
             
-        
-            
+1. Open DolMen, click on administrator mode, then create a new sensor by naming it (in this example, we'll name ou sensor 'johnson').
+
+2. Close DolMen 
+
+3. In the main folder, open johnson.hpp and johnson.cpp:
+   - In johnson.hpp, give your sensor a number of attributes and a column identifier
+   - In johnson.cpp, create the decoding function you'll need for this sensor.
+   This function has a std::string as input "johnsonIdjohnsonData;", and willinsert into the data map the datas from johnson.
+   You can inspire yourself from the others sensors.         
+
+4. In dolmen.hpp, include your johnson.hpp with all the other sensors.
+
+5. In prog.cpp, use the factory to create your new sensor. Here you'll give him the same ID you're using on the data stream.            
+
+6. Compile the c++ by typing 'make' in a terminal opened in the dolmen folder.
+
+7. Open the Config.py file, add your sensor's graph in the createGraph() function.
+
+[optionnal] 7.bis. If you need to add a new sensor type (anything else than 1 data + time or 2 datas + time or 3 datas + time), you'll need to create a new function to print your sensor.
+If this is the case: open the file Sensors.py and add the needed function after the line 108, on the decoding() function.
+
+8. Save and close all files, then open dolmen with your brand new sensor inside.
 
 
+---
 
+
+## About actual version: ##
+
+Sensors:
+
+The ksp project (with alpha version of DolMen) uses: 
+ - 00 time 
+ - 01 gps 
+ - 02 accelerometer 
+ - 03 gyroscope
+ - 04 temperature 1
+ - 05 temperature 2
+ - 06 pressure 1
+ - 07 pressure 2 
+ - 08 altitude

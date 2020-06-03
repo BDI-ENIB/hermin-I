@@ -24,7 +24,6 @@ namespace dolmen
     int id = std::stoi(idstr);
 
     //finding the correct sensor in the sensor list by matching the id with the data frame id
-    //dolmen::Sensor* elem;
     dolmen::Sensor* elem;
     if (auto it = sensorList.find(id); it != sensorList.end())
     {
@@ -61,9 +60,6 @@ namespace dolmen
     if (elem->getID() == id)
     {
       //writing the data identifier
-      //columnValueTxt += elem->getColumnIdentifiers();
-      //columnValueTxt += elem->getName();
-      //columnValueTxt += ";";
       columnValueTxt += std::to_string(elem->getID());
       columnValueTxt += ";";
       //recovering the processed data from the sensor
@@ -95,7 +91,6 @@ namespace dolmen
       dataTxt = "error: Dolmen::decoding() failed ,";
     }
     //we return the string matching our data frame we will write in our csv file
-    //std::cout << "\n\n dataTxt: " << dataTxt << "\n\n";
     return dataTxt;
   }
 } /* dolmen */

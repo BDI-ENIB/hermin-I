@@ -9,10 +9,11 @@
 #include <memory>
 #include <time.h>
 
-//#include "sensorInit.hpp"
-
+//including software hpp files
 #include "factorySensor.hpp"
 #include "sensor.hpp"
+#include "time.hpp"
+//including sensors hpp files
 //insert here your sensors hpp files
 #include "temperature.hpp"
 #include "gyroscope.hpp"
@@ -20,7 +21,7 @@
 #include "altitude.hpp"
 #include "gps.hpp"
 #include "pressure.hpp"
-#include "time.hpp"
+
 
 
 namespace dolmen

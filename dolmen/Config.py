@@ -113,8 +113,8 @@ def createGraph():# function to create and intit graph
     #you can create another graph if you want here => see Graph.py for more details
     f1= Graph.GraphPlot(figure,figure.grid[1, 0:3],"Temperature","time","Temperature (°c)",[],[-100, 100],facecolor2d,graphLegend,"left",False)
     f2= Graph.GraphPlot(figure,figure.grid[2, 0:3],"Pression","time","Pression (Pascal)",[],[0,500000],facecolor2d,graphLegend,"left",False)
-    f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[],[],[],True,'-',facecolor3d,graphLegend)
-    f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[],[],[],True,'-',facecolor3d,graphLegend)
+    f3= Graph.Graph3d(figure,figure.grid[0, 0],"Acceleration","x (ms-2)","y (ms-2)","z (ms-2)",[-5,5],[-5,5],[-5,5],True,'-',facecolor3d,graphLegend)
+    f4= Graph.Graph3d(figure,figure.grid[0, 1],"Gyroscope","x (ms-2)","y (ms-2)","z (ms-2)",[-10,10],[-10,10],[-10,10],True,'-',facecolor3d,graphLegend)
     f5= Graph.GraphPlot(figure,figure.grid[0, 2],"GPS","x","y",[-100,100],[-100,100],facecolor2d,graphLegend,"right",True)
     f6=Graph.GraphPlot(figure,figure.grid[0:3, 3],"Altitude","time","Altitude (m)",[],[],facecolor2d,graphLegend,"right",False)
 
@@ -364,12 +364,12 @@ def fire_Function_offline(last_windows):
         choose_fire_mode(None)
 
 
-#ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE
+#ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NO WORKING MODE
 def fire_Function_online(last_windows):
 
     global start_button, stop_button,currentMode
 
-    Windows.messageShowinfo("Developpment Info", "ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE")
+    Windows.messageShowinfo("Developpment Info", "ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NO WORKING MODE")
     
     #destroy the last windows (if there is one)
     if(last_windows!=None):

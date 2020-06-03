@@ -1,0 +1,31 @@
+INFO:root:12.44.31 Start Dolmen
+INFO:root:12.44.31 Entering in home mode
+INFO:root:12.44.32 Entering in choose fire mode
+INFO:root:12.44.33 Entering in offline mode
+INFO:root:12.44.35 start decoding
+WARNING:root:12.44.37 no time found temperature  4
+WARNING:root:12.44.37 no time found temperature  5
+WARNING:root:12.44.37 no time found pressure  6
+WARNING:root:12.44.37 no time found pressure  7
+WARNING:root:12.44.37 no time found altitude  8
+WARNING:root:12.44.37 no sensors found temperature 4
+WARNING:root:12.44.37 no sensors found pressure 6
+WARNING:root:12.44.38 no time found temperature  4
+WARNING:root:12.44.38 no time found pressure  6
+WARNING:root:12.44.38 no time and sensor found temperature  5
+WARNING:root:12.44.38 no time and sensor found pressure  7
+WARNING:root:12.44.38 no time and sensor found altitude  8
+INFO:root:12.44.46 end CSV file
+WARNING:root:12.44.47 no time and sensor found temperature  4
+WARNING:root:12.44.47 no time and sensor found temperature  5
+WARNING:root:12.44.47 no time and sensor found pressure  6
+WARNING:root:12.44.47 no time and sensor found pressure  7
+WARNING:root:12.44.47 no time and sensor found altitude  8
+WARNING:root:12.44.47 no sensors GPS 1
+WARNING:root:12.44.47 no sensors accelerometer 2
+WARNING:root:12.44.47 no sensors gyroscope 3
+ERROR:root:12.45.04 2020_06_03_12.44.31 folder not found => creation
+INFO:root:12.45.05 report generation in SaveSession/2020_06_03_12.44.31
+INFO:root:12.45.05 Entering in choose fire mode
+INFO:root:12.45.06 Entering in home mode
+INFO:root:12.45.08  Exit Dolmen

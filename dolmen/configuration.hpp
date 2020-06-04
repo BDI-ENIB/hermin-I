@@ -40,6 +40,7 @@ namespace dolmen
           //third line is to read the path to the trame.txt file
           config_map.insert(std::make_pair("data_path",line));
         }
+        //adding new lines in the config file goes there
     }
   }
   return config_map;

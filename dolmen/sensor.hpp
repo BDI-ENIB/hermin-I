@@ -14,7 +14,7 @@ namespace dolmen
     virtual ~Prototype() = default;
   };
 
-  //creating an abstract class (+- interface) for our sensors
+  //creating an abstract class (more or less an interface) for our sensors
   class Sensor : public Prototype<Sensor>
   {
   public:

@@ -17,9 +17,12 @@
 
 int main(int argc, char const *argv[]) 
 {
+  std::cout << "\n\n---Opening DolMen---\n";
   //creating a dolmen element
   dolmen::Dolmen DolMen;
   std::string dataTxt;
+
+  //i don't know what's this is for but this is important because if i delete it, this doesn't works anymore
   for (int i = 0; i < 5; ++i)
     {
         if(argv[i] != 0)
@@ -57,7 +60,7 @@ int main(int argc, char const *argv[])
 
   //the ksp project uses: 00 time / 01 gps / 02 accelerometer / 03 gyroscope/ 04 temperature 1/ 05 temperature 2/ 06 pression 1 / 07 pression 2 / 08 altitude
 
-  //creating the clock
+  //creating the clock with id 00
   factory.registe("clk", [](int arg1, std::string arg2) { return std::make_unique<dolmen::Time>(arg1,arg2); });
   std::unique_ptr<dolmen::Sensor> clock = factory.create("clk", 0, "clk");
   sensor = clock.get();
@@ -127,15 +130,12 @@ int main(int argc, char const *argv[])
   {
     //importing the configuration
     std::map<std::string, std::string> configuration = dolmen::import_config(argv[1]);
-    //std::ifstream trame(configuration["data_path"]);
-    usleep(1000000);
+    std::ifstream trame(configuration["data_path"]);
     if (configuration["decoding_authorised"] == "true")
     {
-      
       //using offline mode
       if (configuration["mode"] == "offline")
       {
-        std::ifstream trame(configuration["data_path"]);
         //reading the data trame
         if(trame)
         {
@@ -146,14 +146,14 @@ int main(int argc, char const *argv[])
           std::ofstream ofs{argv[2]};
           while(std::getline(trame,line))
           {
-            //---
+            //--- printing the time (usefull for debogging)
             time_t seconds;
             struct tm instant;
             time(&seconds);
             instant=*localtime(&seconds);
             printf("\n\n%d/%d ; %d:%d:%d", instant.tm_mday+1, instant.tm_mon+1, instant.tm_hour, instant.tm_min, instant.tm_sec);
             //this is the time in 10-6 seconds to wait until each read
-            usleep(100);
+            //usleep(100);
             //---
 
             //extracting data from each line
@@ -180,7 +180,7 @@ int main(int argc, char const *argv[])
             }
             dataTxtLine = "";
           }
-          //writing the datas in the .csv file
+          //writing the datas in the .csv file and resetting the strings
           dataTxt += "stop\n";
           ofs << dataTxt;          
           dataTxt="";
@@ -198,9 +198,8 @@ int main(int argc, char const *argv[])
       }
       if (configuration["mode"] == "online")
       {
-        //ONLINE MODE IS NOT TESTED, PLEASE CONSIDER THIS AS A NON WORKING MODE
+        //ONLINE MODE IS NOT TESTED IN REAL CONDITIONS, PLEASE CONSIDER THIS AS A NON WORKING MODE
         //reading the data trame
-        std::ifstream trame(configuration["data_path"]);
         if(trame)
         {
           std::cout << "\n---Launching DolMen in online mode---\n";
@@ -210,7 +209,7 @@ int main(int argc, char const *argv[])
           while(std::getline(trame,line) && configuration["decoding_authorised"] == "true")
           {
             std::ofstream ofs{argv[2],std::ios::app};
-            //---
+            //--- printing the time (usefull for debogging)
             time_t seconds;
             struct tm instant;
             time(&seconds);
@@ -238,7 +237,7 @@ int main(int argc, char const *argv[])
               }
             }
             //writing the datas in the .csv file
-            std::cout << "\nline decoded" << dataTxtLine;
+            //std::cout << "\nline decoded" << dataTxtLine;
             ofs << dataTxtLine;
             ofs << '\n';
             ofs.close();
@@ -256,14 +255,13 @@ int main(int argc, char const *argv[])
     }
     else
     {
-      //Error to add
-      //std::cout << "\nDecoding not allowed";
+      //this is the case we aren't allowed to decode
       if (configuration["decoding_authorised"] == "exit")
       {
         exit(0);
       }
     }
   }
-  std::cout << "\n\n---Closing---\n";
+  std::cout << "\n\n---Closing DolMen---\n";
   return 0;
 }

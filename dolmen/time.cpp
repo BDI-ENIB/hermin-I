@@ -1,6 +1,6 @@
 #include "time.hpp"
 
-
+/*Time is used as a sensor*/
 namespace dolmen
 {
   Time::Time (int id, std::string name):Sensor{id,name}{}

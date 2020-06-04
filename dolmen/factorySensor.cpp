@@ -1,3 +1,4 @@
+/*Unused File*/
 #include "factorySensor.hpp"
 
 namespace dolmen

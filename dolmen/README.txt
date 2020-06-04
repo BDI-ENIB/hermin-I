@@ -28,6 +28,8 @@ SPACE !!!!!!!
             for Debian/Ubuntu => sudo apt-get install python-tk
             for Arch/Manjaro => sudo pacman -S tk
             
+            and python Image and ImageTk if there are not installed with tkinter.
+            
         -   matplotlib https://matplotlib.org/users/installing.html
         
             python -m pip install -U matplotlib

@@ -16,13 +16,20 @@ testcmd () {
     command -v "$1" >/dev/null
 }
 #execute Init.py
-init=$(python Init.py 2>&1) 
+init=$(/usr/bin/python3 Init.py 2>&1) 
 
 if testcmd xterm; then
     if [[ -z $init ]]
-    then         
-        xterm -e ./prog  $CONFIG_TXT $CSV   &   
-        python Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER $CSV $NAME_SAVE_FIGURE $CONFIG_TXT $THEME $ROCKET_NAME               
+    then
+        FILE="prog"
+        if test -f "$FILE"; then
+            echo "$FILE exist"         
+            xterm -e ./prog  $CONFIG_TXT $CSV   &   
+            /usr/bin/python3 Main.py $LOG_TYPE $LOCATION $NAME $UPDATE_DELAY $LOG_FILE $SAVE_REPORT_FOLDER $CSV $NAME_SAVE_FIGURE $CONFIG_TXT $THEME $ROCKET_NAME 
+        else
+            echo "no c++ compiled"
+        fi 
+                 
     else
         echo $init
         echo "Exit"

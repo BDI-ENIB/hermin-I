@@ -127,7 +127,7 @@ def createGraph():# function to create and intit graph
     altitude=Sensors.Sensors("altitude","","altitude (m)","",8,0,"2d_time",f6,"","red")
     acc = Sensors.Sensors("accelerometer","accelerometer_X (ms-2)","accelerometer_Y (ms-2)","accelerometer_Z (ms-2)",2,0,"3d",f3,'o','black')
     gyro = Sensors.Sensors("gyroscope","gyroscope_X (ms-2)","gyroscope_Y (ms-2)","gyroscope_Z (ms-2)",3,0,"3d",f4,'o','black')
-    gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"2d_no_time",f5,"","blue")
+    gps = Sensors.Sensors("GPS","gps_latDeg","gps_lonDeg","",1,0,"gps",f5,"","blue")
 
     #create sensors list
     sensors_list_set_time=[f1,f2,f6]#place here all time graph created (to update the time)

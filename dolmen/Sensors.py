@@ -32,7 +32,7 @@ class Sensors():
             self.graph.color.append(color)
             self.graph.numberGraph+=1 # update number sensor in graph
 
-        if self.typeGraph=="2d_no_time":
+        if self.typeGraph=="gps":
             if(label !=""): # if label
                 self.graph.label.append(label)
             self.graph.color.append(color)
@@ -91,7 +91,7 @@ class Sensors():
 
                     self.processed = True # sensors data is processed
 
-            elif self.typeGraph =="2d_no_time":
+            elif self.typeGraph =="gps":
 
                 if line_split[j]==str(self.idSensor) and line_split[j+1]==self.nameX and line_split[j+7]==self.nameY: #if sensor is detected
 
@@ -133,7 +133,7 @@ class Sensors():
                 print("no sensors " + str(self.name) + " " + str(self.idSensor))
 
             
-            elif self.typeGraph =="2d_no_time" : # if graph 2d_no_time
+            elif self.typeGraph =="gps" : # if graph 2d_no_time
 
                 Config.Log.InfoSaveLog("warning",str('no sensors ' + str(self.name) + " " + str(self.idSensor)))         
                 self.graph.x[self.idGraph].append(0) # adding data 0 in x axe of sensor graph

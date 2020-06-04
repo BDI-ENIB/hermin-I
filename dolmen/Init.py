@@ -24,3 +24,8 @@ try:
 except ImportError:
     sys.exit("numpy isn't installed") 
 
+#check if PIL (Image and ImageTk) are installed 
+try:
+    from PIL import Image, ImageTk
+except ImportError:
+    sys.exit("Image or ImageTk are not installed")

@@ -40,7 +40,9 @@ SPACE !!!!!!!
             for Arch/Manjaro => sudo pacman -S xterm
 
 WARNING if you have Anaconda installed you must deactivate conda (conda deactivate) before install tkinter and matplotlib and activate conda after that (conda activate) 
-Because all python code runs with Anaconda python (if it is installed) and Tkinter does not run entirely (for font size and type). You must install the python dependencies with conda disabled in order to install them in the linux python (because Dolmen uses the linux python and not that of Anaconda). Then reactivate conda.
+Because all python code runs with Anaconda python (if it is installed) and Tkinter does not run entirely (for font size and type). You must install the python dependencies with conda disabled in order to install them in the linux python (because Dolmen uses the linux python and not that of Anaconda). Then reactivate conda. 
+But if you want, you can use Dolmen with the Anaconda's Python but without font size and type. Just install the Python Requirement without deactivate conda.
+
 
 
          
@@ -48,12 +50,10 @@ Because all python code runs with Anaconda python (if it is installed) and Tkint
 
 Compile the c++ code if you made modification : just open a terminal and execute make
 
-Just open terminal in Dolmen main folder and execute the start script : ./script.sh or ./scriptAnaconda.sh (it depends on if your computer is using or not the python from anaconda)
 
-
-If you want to run the script with the Anaconda python, run in terminal the anaconda script version : scriptAnaconda.sh (but with no font size and type effect)
+If you want to run the script with the Anaconda python or with the Linux Python, run in terminal the anaconda script version : script.sh (but with no font size and type effect with the Anaconda Python)
          
-
+Or if you want to use the Linux Python with Anaconda installed just open terminal in Dolmen main folder and execute the start script : /scriptNoAnaconda.sh 
  
 ## Adding a new sensor or removing one ##        
          
@@ -74,10 +74,10 @@ If you want to run the script with the Anaconda python, run in terminal the anac
 
 6. Compile the c++ by typing 'make' in a terminal opened in the dolmen folder.
 
-7. Open the Config.py file, add your sensor's graph in the createGraph() function.
-
+7. Open the Config.py file, add your sensor in the createGraph() function.
+[optionnal] 7.bis. If you want you can create another graphe for this sensor you can create it in createGraph function (don't forget to add it in the sensors list (and in the sensors_list_set_time if you create a 2D temporal graph)
 [optionnal] 7.bis. If you need to add a new sensor type (anything else than 1 data + time or 2 datas + time or 3 datas + time), you'll need to create a new function to print your sensor.
-If this is the case: open the file Sensors.py and add the needed function after the line 108, on the decoding() function.
+If this is the case: open the file Sensors.py and add the needed function after the line 108, on the decoding() function and verifing() function.
 
 8. Save and close all files, then open dolmen with your brand new sensor inside.
 
@@ -99,3 +99,11 @@ The ksp project (with alpha version of DolMen) uses:
  - 06 pressure 1
  - 07 pressure 2 
  - 08 altitude
+ 
+ 
+ ## Other Informations ##
+ 
+ You can find two frame : 
+ 
+ one named trame.txt => clear frame with all time and data
+ one named trametest.txt => frame with no time and no data sensor and no sensor => for testing Dolmen

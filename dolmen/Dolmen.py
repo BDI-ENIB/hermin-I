@@ -13,15 +13,16 @@ import Config
 import Sensors
 import Error
 
-
 count=0 # current line in CSV
 state_communication=False #if True => start decoding
 
 def currentTime(): # return the current time
     return str(time.strftime('%H.' '%M.' '%S'))
 
+
 def currentDate(): # return the current date
     return str(time.strftime('%Y_' '%m_' '%d_'))
+
 
 def decodingCSV(): #open and decoding CSV file
     global count
@@ -33,12 +34,14 @@ def decodingCSV(): #open and decoding CSV file
     
     # add and find the CSV line to decode
 
-    
     if lines==[] and count==0: #if CSV is empty
         return
+
+        
     if (len(lines)>count):
         if lines[count]==['stop']:
             state_set_communication(Config.start_button,Config.stop_button,False,Config.currentMode,Config.figure.file,False)
+
         #find time
         for j in range(0,len(lines[count])-1):            
                         
@@ -121,7 +124,7 @@ def initFigure(): #init and reset graph
         sensor.graph.initGraph()
                 
 def report_Function(): #report generation
-    global state_communication
+    global state_communication,save
 
     if (state_communication == False): # if decoding is stopped
 
@@ -178,7 +181,7 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,ask
     #if the user click on the stop button
     elif(state==False):
 
-        #check if ask stop decoding
+        #check if ask stop decoding if true ask confirmation
         if askToStop== True:
             if (Windows.messageAskyesno("End of data receive", "Do you want to stop the data receive ?")):
                 Config.Log.InfoSaveLog("info",'stop decoding')
@@ -186,6 +189,8 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,ask
                 start_button.disable()
                 #disable stop button
                 stop_button.disable()
+                print("stop decoding")
+                
 
         #disable decoding
         state_communication=False
@@ -196,16 +201,19 @@ def state_set_communication(start_button,stop_button,state,currentMode,frame,ask
         config.write("\n")
         config.write(str(currentMode))
 
+        if askToStop == True:
+            Windows.messageShowinfo("","Don't forget to gererate\nreport if you want")
+
         if askToStop==False :
             print("end CSV file")
-            Config.Log.InfoSaveLog("info",'end CSV file')
+            Config.Log.InfoSaveLog("info","end CSV file")
 
             #disable start button
             start_button.disable()
             #disable stop button
             stop_button.disable()
 
-            Windows.messageShowinfo("","End CSV file")
+            Windows.messageShowinfo("","End CSV file\nDon't forget to gererate\nreport if you want")
         
 def add_sensor_save_Function(add_sensor_interface,sensor_add_name):
     

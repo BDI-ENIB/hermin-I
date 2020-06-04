@@ -1,0 +1,29 @@
+INFO:root:16.46.50 Start Dolmen
+INFO:root:16.46.50 Entering in home mode
+INFO:root:16.46.52 Entering in choose fire mode
+INFO:root:16.46.53 Entering in offline mode
+INFO:root:16.46.55 start decoding
+INFO:root:16.47.00 stop decoding
+INFO:root:16.47.09 Entering in choose fire mode
+INFO:root:16.47.11 Entering in online mode
+INFO:root:16.47.12 start decoding
+WARNING:root:16.47.15 no time and sensor found temperature  4
+WARNING:root:16.47.15 no time and sensor found temperature  5
+WARNING:root:16.47.15 no time and sensor found pressure  6
+WARNING:root:16.47.15 no time and sensor found pressure  7
+WARNING:root:16.47.15 no time and sensor found altitude  8
+WARNING:root:16.47.15 no sensors GPS 1
+WARNING:root:16.47.15 no sensors accelerometer 2
+WARNING:root:16.47.15 no sensors gyroscope 3
+WARNING:root:16.47.16 no time and sensor found temperature  4
+WARNING:root:16.47.16 no time and sensor found temperature  5
+WARNING:root:16.47.16 no time and sensor found pressure  6
+WARNING:root:16.47.16 no time and sensor found pressure  7
+WARNING:root:16.47.16 no time and sensor found altitude  8
+WARNING:root:16.47.16 no sensors GPS 1
+WARNING:root:16.47.16 no sensors accelerometer 2
+WARNING:root:16.47.16 no sensors gyroscope 3
+INFO:root:16.47.24 stop decoding
+INFO:root:16.50.17 Entering in choose fire mode
+INFO:root:16.50.20 Entering in home mode
+INFO:root:16.50.22  Exit Dolmen

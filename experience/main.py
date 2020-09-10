@@ -35,6 +35,7 @@ nombreLigneParFichier = 100
 uart_gps = UART(1,9600)
 envoyerDonneeGPS=0
 def fonction_gps():
+    global envoyerDonneeGPS
     gps_byte=uart_gps.readline()
     if envoyerDonneeGPS<=5:
         uart_gps.write(b'$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n')
@@ -58,7 +59,7 @@ def fonction_mpu():
     writeFile(mpu_str,file)
 liste_capteur["mpu"] = {"frequence":1,"fonction":fonction_mpu}
 #thermistance 1
-adc_1 = machine.ADC(0)
+adc = machine.ADC(0)
 adc_c1 = adc.channel(pin='P13',attn=machine.ADC.ATTN_0DB) #pour une pile de 0.629V , print(adc_c.value()) donne 2070
 def fonction_thermi_1():
     adc_c1()
@@ -67,7 +68,7 @@ def fonction_thermi_1():
     writeFile(str(tension_thermi_1),file)
 liste_capteur["thermi_1"] = {"frequence":1,"fonction":fonction_thermi_1}
 #thermistance 2
-adc_2 = machine.ADC(0)
+# adc_2 = machine.ADC(0)
 adc_c2 = adc.channel(pin='P16',attn=machine.ADC.ATTN_0DB) #pour une pile de 0.629V , print(adc_c.value()) donne 2070
 def fonction_thermi_2():
     adc_c2()
@@ -76,7 +77,7 @@ def fonction_thermi_2():
     writeFile(str(tension_thermi_2),file)
 liste_capteur["thermi_2"] = {"frequence":1,"fonction":fonction_thermi_2}
 #capteur pression 1
-adc_3 = machine.ADC(2)
+# adc_3 = machine.ADC(2)
 adc_c3 = adc.channel(pin='P14',attn=machine.ADC.ATTN_0DB) #pour une pile de 0.629V , print(adc_c.value()) donne 2070
 def fonction_pression_1():
     adc_c3()
@@ -85,9 +86,9 @@ def fonction_pression_1():
     writeFile(str(tension_pression_1),file)
 liste_capteur["pression_1"] = {"frequence":1,"fonction":fonction_pression_1}
 #capteur pression 2
-adc_4 = machine.ADC(2)
+# adc_4 = machine.ADC(2)
 adc_c4 = adc.channel(pin='P17',attn=machine.ADC.ATTN_0DB) #pour une pile de 0.629V , print(adc_c.value()) donne 2070
-def fonction_pression_1():
+def fonction_pression_2():
     adc_c4()
     tension_pression_2 = adc_c4.value()
     print(tension_pression_2)
@@ -117,8 +118,7 @@ ref_time = time.ticks_us()
 while True:
     start_time = time.ticks_us()
     writeFile(str(start_time),file)
-
-    for capteur in liste_capteur:
+    for capteur in liste_capteur.values():
         if numero_cycle % capteur["frequence"] ==0:
             capteur["fonction"]()
 

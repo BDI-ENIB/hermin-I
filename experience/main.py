@@ -39,7 +39,7 @@ pycom.rgbled(0x001100)
 while True:
     #Debut boucle de simulation
     start_time = time.ticks_us()
-    writeFile("S:"+str(start_time),file)
+    writeFile("S"+str(start_time),file)
 
     #appelle des fonctions des capteurs
     for capteur in liste_capteur.values():

@@ -13,7 +13,7 @@ def fonction_gps(file):
     gps_byte=uart_gps.readline()
     init_gps()
     gps_str=str(gps_byte)
-    gps_str=gps_str[2:-5]
+    gps_str=gps_str[2:-3]
     splited_gps_str=split(gps_str)
     if ("A"  in splited_gps_str) :
         pycom.rgbled(0x00FF00)

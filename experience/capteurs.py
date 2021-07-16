@@ -1,6 +1,7 @@
 #IMPORT
 import pycom
 import machine
+import math
 from fileLib import *
 from machine import UART,I2C,Pin
 from mpu9250 import MPU9250
@@ -35,6 +36,20 @@ def fonction_mpu(file):
     mpu_str = str('a'+str(sensor.acceleration)+'g'+str(sensor.gyro)+'m'+str(sensor.magnetic))
     writeFile(mpu_str,file)
 
+acceleration_norm_historic=[0]*60 #une liste vide de 60 elements : [0,0,0,...,0,0,0]
+def detect_launch():
+    acceleration_norm = math.sqrt((sensor.acceleration[0])**2 + (sensor.acceleration[1])**2 + (sensor.acceleration[2])**2)
+    acceleration_norm_historic.pop()
+    acceleration_norm_historic.insert(0,acceleration_norm)
+    acceleration_norm_historic_som=0
+    for elem in acceleration_norm_historic:
+        acceleration_norm_historic_som+=elem
+    print("acceleration_norm_historic_som",acceleration_norm_historic_som)
+    if acceleration_norm_historic_som>1000:
+        return 1
+    else:
+        return 0
+
 #thermistance 1
 adc = machine.ADC(0)
 adc_c1 = adc.channel(pin='P13',attn=machine.ADC.ATTN_0DB) #pour une pile de 0.629V , print(adc_c.value()) donne 2070
@@ -68,10 +83,10 @@ def fonction_pression_2(file):
 #init liste_capteur
 def init_iste_capteur():
     liste_capteur = {} #dictionnaire qui stoque la fréquence d'enregistrement et la marche à suivre pour récuperer et enregistrer les données de chaque capteurs
-    liste_capteur["gps"] = {"frequence":2,"fonction":fonction_gps} # ["frequence":n] => le GPS est enregistré tous les "n" cycles
-    liste_capteur["mpu"] = {"frequence":1,"fonction":fonction_mpu}
-    liste_capteur["thermi_1"] = {"frequence":1,"fonction":fonction_thermi_1}
-    liste_capteur["thermi_2"] = {"frequence":1,"fonction":fonction_thermi_2}
-    liste_capteur["pression_1"] = {"frequence":1,"fonction":fonction_pression_1}
-    liste_capteur["pression_2"] = {"frequence":1,"fonction":fonction_pression_2}
+    liste_capteur["gps"] = {"frequence_normal":50,"frequence_burst":5,"fonction":fonction_gps} # ["frequence":n] => le GPS est enregistré tous les "n" cycles
+    liste_capteur["mpu"] = {"frequence_normal":10,"frequence_burst":1,"fonction":fonction_mpu}
+    liste_capteur["thermi_1"] = {"frequence_normal":10,"frequence_burst":1,"fonction":fonction_thermi_1}
+    liste_capteur["thermi_2"] = {"frequence_normal":10,"frequence_burst":1,"fonction":fonction_thermi_2}
+    liste_capteur["pression_1"] = {"frequence_normal":10,"frequence_burst":1,"fonction":fonction_pression_1}
+    liste_capteur["pression_2"] = {"frequence_normal":10,"frequence_burst":1,"fonction":fonction_pression_2}
     return liste_capteur

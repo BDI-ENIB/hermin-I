@@ -45,6 +45,8 @@ while True:
     for capteur in liste_capteur.values():
         if numero_cycle_from_start % capteur["frequence"] ==0:
             capteur["fonction"](file)
+    if capteurs.detect_launch(): #si on detecte le decolage de la fusee
+        pycom.rgbled(0x222222)  #alors on allume la LED en blanc
 
     numero_cycle_from_start +=1
     numero_cycle +=1

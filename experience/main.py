@@ -28,12 +28,17 @@ nom=str("fichier"+str(numeroRun))
 file=createFile(nom+('-')+str(numeroFichier))
 
 #Parametrage
-periode_cycle = 200000 #la période d'une boucle de simulation ( en microseconde)
+periode_cycle = 100000 #la période d'une boucle de simulation ( en microseconde)
 nombreCycleParFichier = 100 #le nombre de cylce par fichier
 
+this_frequence = 0 ##la frequence n'est pas la meme en mode normal ou burst
 
 numero_cycle_from_start = 0
 numero_cycle=0
+
+launch_detection_time=0 #en micro seconde (time.ticks_us())
+did_launch_has_been_detected_once = False
+is_in_burst_mode= False
 
 pycom.rgbled(0x001100)
 while True:
@@ -43,12 +48,26 @@ while True:
 
     #appelle des fonctions des capteurs
     for capteur in liste_capteur.values():
-        if numero_cycle_from_start % capteur["frequence"] ==0:
+        if is_in_burst_mode:
+            this_frequence = capteur["frequence_burst"]
+        else: #if is in normal mode
+            this_frequence = capteur["frequence_normal"]
+        if numero_cycle_from_start % this_frequence ==0:
             capteur["fonction"](file)
+
+    if did_launch_has_been_detected_once && (time.ticks_us() - launch_detection_time)<30000:
+        pycom.rgbled(0x222222)
+        is_in_burst_mode=True
+    else if capteurs.detect_launch(): #si on detecte le decolage de la fusee
+        launch_detection_time=time.ticks_us()
+        did_launch_has_been_detected_once=True
+        is_in_burst_mode=False
+        pycom.rgbled(0x000000)  #alors on allume la LED en blanc
 
     numero_cycle_from_start +=1
     numero_cycle +=1
     if numero_cycle>=nombreCycleParFichier:
+        print("je vais essayer de close")
         pycom.rgbled(0x000011)
         file.close()
         numero_cycle=0
